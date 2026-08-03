@@ -47,3 +47,44 @@ po/*~
 
 # RStudio Connect folder
 rsconnect/
+
+# Raw sequencing reads
+data/reads/
+
+# Genome assemblies
+data/assembly/
+
+# Large intermediate and output files
+results/
+
+# R session files
+.Rhistory
+.RData
+.Ruserdata
+
+# Positron / VS Code
+.vscode/
+
+# macOS
+.DS_Store
+
+# Raw data
+data/reads/
+
+# Optional: ignore assembly if you don't want to version it
+# data/assembly/
+
+# Large mapping files
+results/mapping/
+
+# Temporary files
+results/tmp/
+results/cache/
+
+# R session
+.Rhistory
+.RData
+.Ruserdata
+
+# IDE
+.vscode/
