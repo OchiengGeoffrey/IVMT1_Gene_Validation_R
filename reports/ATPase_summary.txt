@@ -1,0 +1,15 @@
+======================================================================
+SUPPLEMENTARY MATERIAL & RESULTS DRAFT: ATPase VALIDATION
+======================================================================
+
+SUPPLEMENTARY TABLE INDEX:
+ - Table S1: ATPase summary
+ - Table S2: ATPF1G dyskinetoplastic diagnostic markers
+ - Table S3: ATPF1G amino acid substitutions
+ - Table S4: ATPF1A amino acid differences (technical comparison only)
+
+MANUSCRIPT RESULTS DRAFT:
+
+ATPase gamma (ATPF1G) was recovered as a complete coding sequence (915 bp; 305 amino acids) with 99.34% amino acid identity to the T. brucei TREU927 reference. Only 2 amino acid substitutions (F119Y and G191A) were identified. Critically, residues previously associated with dyskinetoplastic adaptation (L262, A273, A281, and M282) remained identical to the reference sequence, and the A273P substitution was absent.
+
+ATPase alpha (ATPF1A) could not be reconstructed as a complete coding sequence from the genome assembly. Although tblastn identified the genomic locus, translation of the recovered genomic fragment yielded only 389 of the expected 584 amino acids (66.6% coverage). Because ATPF1A is intron-containing in Trypanosoma, reconstruction of the mature coding sequence requires exon-aware gene prediction or transcript evidence. Consequently, ATPF1A sequence conservation was not evaluated further.
