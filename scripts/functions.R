@@ -1,9 +1,35 @@
 ###############################################################
-## Utility functions
-## IVMT1 Gene Validation
+## Utility Functions
+##
+## IVMT1_Gene_Validation_R
+##
+## This file contains reusable helper functions for:
+##   - FASTA input/output
+##   - Sequence summaries
+##   - BLAST automation
+##   - Genomic region extraction
+##
+## Author: Geoffrey Omondi
 ###############################################################
 
 library(Biostrings)
+
+save_blast_results <- function(tbl, filename){
+
+  directory <- dirname(filename)
+
+  if(!dir.exists(directory)){
+    dir.create(directory,
+               recursive = TRUE)
+  }
+
+  write.csv(
+    tbl,
+    filename,
+    row.names = FALSE
+  )
+
+}
 
 ###############################################################
 ## Read a FASTA sequence
@@ -11,23 +37,49 @@ library(Biostrings)
 
 read_dna_fasta <- function(file){
 
-  if(!file.exists(file))
+  if(!file.exists(file)){
     stop("File not found: ", file)
+  }
 
   dna <- readDNAStringSet(file)
 
-  return(dna)
+  if(length(dna) == 0){
+    stop("No DNA sequences found in ", file)
+  }
+
+  dna
 
 }
 
 read_protein_fasta <- function(file){
 
-  if(!file.exists(file))
+  if(!file.exists(file)){
     stop("File not found: ", file)
+  }
 
   aa <- readAAStringSet(file)
 
-  return(aa)
+  if(length(aa) == 0){
+    stop("No protein sequences found in ", file)
+  }
+
+  aa
+
+}
+
+save_fasta <- function(sequence, filename){
+
+  directory <- dirname(filename)
+
+  if(!dir.exists(directory)){
+    dir.create(directory, recursive = TRUE)
+  }
+
+  Biostrings::writeXStringSet(
+    sequence,
+    filepath = filename,
+    format = "fasta"
+  )
 
 }
 
@@ -52,6 +104,10 @@ sequence_summary <- function(sequence){
 ###############################################################
 
 print_sequence_info <- function(sequence){
+
+  if(length(sequence) == 0){
+    stop("Sequence object is empty.")
+  }
 
   cat("\n")
 
@@ -79,7 +135,7 @@ print_sequence_info <- function(sequence){
 
 aa_composition <- function(sequence){
 
-  x <- strsplit(as.character(sequence), "")[[1]]
+  x <- strsplit(as.character(sequence)[1], "")[[1]]
 
   sort(table(x), decreasing = TRUE)
 
@@ -101,19 +157,6 @@ project_header <- function(title){
 }
 
 ###############################################################
-## save FASTA
-###############################################################
-save_fasta <- function(sequence, filename){
-
-  Biostrings::writeXStringSet(
-    sequence,
-    filepath = filename,
-    format = "fasta"
-  )
-
-}
-
-###############################################################
 ## Calculate Identity
 ###############################################################
 percent_identity <- function(a, b){
@@ -126,7 +169,7 @@ percent_identity <- function(a, b){
 
   identical_positions <- sum(a == b)
 
-  return(100 * identical_positions / length(a))
+  100 * identical_positions / length(a)
 
 }
 
@@ -146,7 +189,7 @@ translate_cds <- function(cds){
 
   aa <- Biostrings::translate(cds)
 
-  return(aa)
+  aa
 
 }
 
@@ -182,6 +225,51 @@ assembly_statistics <- function(assembly){
 }
 
 ###############################################################
+## Extract genomic region
+###############################################################
+
+extract_region <- function(assembly, contig, start, end, flank = 0){
+
+  matches <- startsWith(names(assembly), contig)
+
+  if(sum(matches) == 0)
+    stop("Contig not found: ", contig)
+
+  if(sum(matches) > 1)
+    stop("Multiple contigs matched: ", contig)
+
+  chr <- assembly[matches][[1]]
+
+  chr_length <- nchar(as.character(chr))
+
+  left  <- max(1, min(start, end) - flank)
+  right <- min(chr_length, max(start, end) + flank)
+
+  region <- Biostrings::subseq(
+    chr,
+    start = left,
+    end = right
+  )
+
+  if(start > end){
+    region <- Biostrings::reverseComplement(region)
+  }
+
+  region_set <- Biostrings::DNAStringSet(region)
+
+  names(region_set) <- paste0(
+    contig,
+    ":",
+    left,
+    "-",
+    right
+  )
+
+  return(region_set)
+
+}
+
+###############################################################
 ## Create BLAST database
 ###############################################################
 
@@ -208,14 +296,18 @@ create_blast_database <- function(
              recursive = TRUE,
              showWarnings = FALSE)
 
-  system2(
-    "makeblastdb",
-    args = c(
-      "-in", fasta,
-      "-dbtype", dbtype,
-      "-out", db_name
-    )
+  status <- system2(
+  "makeblastdb",
+  args = c(
+    "-in", fasta,
+    "-dbtype", dbtype,
+    "-out", db_name
   )
+)
+
+if(status != 0){
+  stop("makeblastdb failed.")
+}
 
 }
 
@@ -249,6 +341,10 @@ run_tblastn <- function(
 
 read_blast_table <- function(file){
 
+  if(!file.exists(file)){
+    stop("BLAST output not found: ", file)
+  }
+
   cols <- c(
     "qseqid",
     "sseqid",
@@ -280,6 +376,10 @@ read_blast_table <- function(file){
 
 run_tblastn <- function(query, db, output){
 
+  if(!file.exists(query)){
+    stop("Query FASTA not found: ", query)
+  }
+
   cmd <- paste(
     "tblastn",
     "-query", shQuote(query),
@@ -292,7 +392,15 @@ run_tblastn <- function(query, db, output){
 
   cat(cmd, "\n\n")
 
-  system(cmd)
+  status <- system(cmd)
+
+  if(status != 0){
+    stop("tblastn failed.")
+  }
+
+  if(!file.exists(output)){
+    stop("tblastn completed but no output file was produced.")
+  }
 
 }
 
@@ -302,10 +410,122 @@ run_tblastn <- function(query, db, output){
 
 save_blast_results <- function(tbl, filename){
 
+  directory <- dirname(filename)
+
+  if(!dir.exists(directory)){
+    dir.create(directory,
+               recursive = TRUE)
+  }
+
   write.csv(
     tbl,
     filename,
     row.names = FALSE
   )
 
+}
+
+###############################################################
+## Gene Validation
+###############################################################
+validate_gene <- function(
+    protein_fasta,
+    gene_name,
+    database,
+    output_prefix
+){
+
+  ###############################################################
+  ## Header
+  ###############################################################
+
+  project_header(paste(gene_name, "validation"))
+
+  ###############################################################
+  ## Input checks
+  ###############################################################
+
+  if (!file.exists(protein_fasta)) {
+    stop("Protein FASTA not found: ", protein_fasta)
+  }
+
+  ###############################################################
+  ## Load protein
+  ###############################################################
+
+  protein <- read_protein_fasta(protein_fasta)
+
+  ###############################################################
+  ## Assembly summary
+  ###############################################################
+
+  assembly <- read_dna_fasta(PATHS$assembly)
+
+  cat("Assembly contigs :", length(assembly), "\n")
+  cat("Reference length :", width(protein), "aa\n\n")
+
+  ###############################################################
+  ## Run tblastn
+  ###############################################################
+
+  blast_output <- file.path(
+    PATHS$blast,
+    paste0(output_prefix, "_tblastn.tsv")
+  )
+
+  run_tblastn(
+    query = protein_fasta,
+    db = database,
+    output = blast_output
+  )
+
+  ###############################################################
+  ## Read BLAST results
+  ###############################################################
+
+  hits <- read_blast_table(blast_output)
+
+  cat("Number of hits :", nrow(hits), "\n\n")
+
+  ###############################################################
+  ## Best hit
+  ###############################################################
+
+  best_hit <- hits |>
+    dplyr::arrange(dplyr::desc(bitscore)) |>
+    dplyr::slice(1)
+
+  cat("Best hit\n")
+  cat("-------------------------\n")
+  cat("Contig      :", best_hit$sseqid, "\n")
+  cat("Identity    :", round(best_hit$pident, 2), "%\n")
+  cat("Alignment   :", best_hit$length, "aa\n")
+  cat("E-value     :", best_hit$evalue, "\n")
+  cat("Bit score   :", best_hit$bitscore, "\n")
+  cat(
+    "Coordinates :",
+    best_hit$sstart,
+    "-",
+    best_hit$send,
+    "\n\n"
+  )
+
+  ###############################################################
+  ## Save results
+  ###############################################################
+
+  report_file <- file.path(
+    PATHS$reports,
+    paste0(output_prefix, "_tblastn_results.csv")
+  )
+
+  save_blast_results(
+    hits,
+    report_file
+  )
+
+  cat("Results saved to:\n")
+  cat(report_file, "\n")
+
+  invisible(best_hit)
 }

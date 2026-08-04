@@ -2,7 +2,6 @@ packages <- c(
   "BiocManager",
   "Biostrings",
   "DECIPHER",
-  "msa",
   "ape",
   "seqinr",
   "tidyverse",
