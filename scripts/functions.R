@@ -250,7 +250,6 @@ run_tblastn <- function(
 read_blast_table <- function(file){
 
   cols <- c(
-
     "qseqid",
     "sseqid",
     "pident",
@@ -263,14 +262,50 @@ read_blast_table <- function(file){
     "send",
     "evalue",
     "bitscore"
-
   )
 
   read.delim(
     file,
     header = FALSE,
     sep = "\t",
-    col.names = cols
+    col.names = cols,
+    stringsAsFactors = FALSE
+  )
+
+}
+
+###############################################################
+## Run tblastn
+###############################################################
+
+run_tblastn <- function(query, db, output){
+
+  cmd <- paste(
+    "tblastn",
+    "-query", shQuote(query),
+    "-db", shQuote(db),
+    "-out", shQuote(output),
+    "-outfmt 6",
+    "-max_target_seqs 5",
+    "-evalue 1e-5"
+  )
+
+  cat(cmd, "\n\n")
+
+  system(cmd)
+
+}
+
+###############################################################
+## Save BLAST results
+###############################################################
+
+save_blast_results <- function(tbl, filename){
+
+  write.csv(
+    tbl,
+    filename,
+    row.names = FALSE
   )
 
 }

@@ -1,0 +1,2 @@
+"qseqid","sseqid","pident","length","mismatch","gapopen","qstart","qend","sstart","send","evalue","bitscore"
+"Tb927.10.180:mRNA-p1","CM010681.1",99.344,305,2,0,1,305,52732,53646,0,625

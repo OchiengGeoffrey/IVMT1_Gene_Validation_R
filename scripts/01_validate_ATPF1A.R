@@ -2,36 +2,63 @@ source("scripts/functions.R")
 
 project_header("ATPase alpha validation")
 
-assembly_file <-
-  "data/assembly/Tequiperdum_IVMt1.fasta"
+###############################################################
+# Input files
+###############################################################
 
-reference_file <-
-  "data/reference/ATPF1A.fasta"
+assembly_file  <- "data/assembly/Tequiperdum_IVMt1.fasta"
+reference_file <- "data/reference/ATPF1A.fasta"
 
-blast_db <-
-  "data/blastdb/IVMT1"
-
-blast_output <-
-  "results/blast/ATPF1A_tblastn.tsv"
+###############################################################
+# Load data
+###############################################################
 
 assembly <- read_dna_fasta(assembly_file)
 
-alpha <- read_protein_fasta(reference_file)
+reference <- read_protein_fasta(reference_file)
 
 cat("Assembly contigs :", length(assembly), "\n")
-cat("Reference length :", width(alpha), "aa\n")
+cat("Reference length :", width(reference), "aa\n\n")
 
-create_blast_database(
-  fasta = assembly_file,
-  db_name = blast_db
-)
+###############################################################
+# Run tblastn
+###############################################################
+
+blast_output <- "results/blast/ATPF1A_tblastn.tsv"
 
 run_tblastn(
   query = reference_file,
-  database = blast_db,
+  database = "results/blast/IVMT1",
   output = blast_output
 )
 
+###############################################################
+# Read results
+###############################################################
+
 hits <- read_blast_table(blast_output)
 
-hits
+cat("Number of hits :", nrow(hits), "\n\n")
+
+###############################################################
+# Top hit
+###############################################################
+
+best_hit <- hits |>
+  dplyr::arrange(desc(bitscore)) |>
+  dplyr::slice(1)
+
+print(best_hit)
+
+###############################################################
+# Save table
+###############################################################
+
+write.csv(
+  hits,
+  "reports/ATPF1A_tblastn_results.csv",
+  row.names = FALSE
+)
+
+cat("\nResults saved to:\n")
+cat("reports/ATPF1A_tblastn_results.csv\n")
