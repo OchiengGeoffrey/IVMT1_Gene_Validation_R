@@ -318,20 +318,22 @@ if(status != 0){
 run_tblastn <- function(
     query,
     database,
-    output
+    output,
+    max_target_seqs = 5,
+    evalue = "1e-10"
 ){
 
-  system2(
-    "tblastn",
-    args = c(
-      "-query", query,
-      "-db", database,
-      "-outfmt", "6",
-      "-evalue", "1e-10",
-      "-max_target_seqs", "5",
-      "-out", output
+    system2(
+        "tblastn",
+        args = c(
+            "-query", query,
+            "-db", database,
+            "-outfmt", "6",
+            "-evalue", evalue,
+            "-max_target_seqs", max_target_seqs,
+            "-out", output
+        )
     )
-  )
 
 }
 
@@ -367,40 +369,6 @@ read_blast_table <- function(file){
     col.names = cols,
     stringsAsFactors = FALSE
   )
-
-}
-
-###############################################################
-## Run tblastn
-###############################################################
-
-run_tblastn <- function(query, db, output){
-
-  if(!file.exists(query)){
-    stop("Query FASTA not found: ", query)
-  }
-
-  cmd <- paste(
-    "tblastn",
-    "-query", shQuote(query),
-    "-db", shQuote(db),
-    "-out", shQuote(output),
-    "-outfmt 6",
-    "-max_target_seqs 5",
-    "-evalue 1e-5"
-  )
-
-  cat(cmd, "\n\n")
-
-  status <- system(cmd)
-
-  if(status != 0){
-    stop("tblastn failed.")
-  }
-
-  if(!file.exists(output)){
-    stop("tblastn completed but no output file was produced.")
-  }
 
 }
 
@@ -528,4 +496,104 @@ validate_gene <- function(
   cat(report_file, "\n")
 
   invisible(best_hit)
+}
+
+###############################################################
+## Summarize recovered gene
+###############################################################
+
+summarize_gene <- function(
+    gene,
+    ref_protein,
+    qry_protein,
+    qry_cds = NULL,
+    mutations = NULL,
+    sequence_source = NA_character_,
+    notes = "",
+    status = "Complete CDS recovered",
+    evaluate_start_codon = TRUE
+){
+
+    ref_len <- Biostrings::width(ref_protein)[1]
+    qry_len <- Biostrings::width(qry_protein)[1]
+
+    ref_cds_bp <- ref_len * 3
+
+    if(is.null(qry_cds)){
+    cds_len <- NA_integer_
+    start_codon <- NA_character_
+
+    } else {
+
+        cds_len <- Biostrings::width(qry_cds)[1]
+
+        if(evaluate_start_codon){
+
+            start_codon <- as.character(
+                Biostrings::subseq(qry_cds[[1]], start = 1, width = 3)
+            )
+
+        } else {
+
+            start_codon <- NA_character_
+
+        }
+
+    }
+
+    coverage <- round(100 * qry_len / ref_len, 1)
+
+    prot_chars <- strsplit(as.character(qry_protein[[1]]), "")[[1]]
+    internal_stops <- sum(head(prot_chars, -1) == "*")
+
+    if(is.null(mutations)){
+
+        n_mut <- NA_integer_
+        ident <- NA_real_
+        mut_string <- NA_character_
+
+    } else {
+
+        n_mut <- nrow(mutations)
+
+        ident <- round(
+            100 * (qry_len - n_mut) / qry_len,
+            2
+        )
+
+        if(n_mut == 0){
+
+            mut_string <- "None"
+
+        } else {
+
+            mut_string <- paste(
+                mutations$Mutation,
+                collapse = "; "
+            )
+
+        }
+
+    }
+
+    data.frame(
+
+        Gene                     = gene,
+        ReferenceCDS_bp          = ref_cds_bp,
+        RecoveredCDS_bp          = cds_len,
+        FullLength_aa            = ref_len,
+        RecoveredProtein_aa      = qry_len,
+        Coverage_pct             = coverage,
+        ProteinIdentity_pct      = ident,
+        Substitutions            = n_mut,
+        ObservedSubstitutions    = mut_string,
+        StartCodon               = start_codon,
+        InternalStops_evalRegion = internal_stops,
+        SequenceSource           = sequence_source,
+        Status                   = status,
+        Notes                    = notes,
+
+        stringsAsFactors = FALSE
+    )
+
 }

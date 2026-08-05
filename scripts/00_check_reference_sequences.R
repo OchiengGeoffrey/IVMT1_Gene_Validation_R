@@ -1,4 +1,4 @@
-source("scripts/00_project_setup.R")
+source("scripts/01_project_setup.R")
 
 project_header("Reference proteins")
 
