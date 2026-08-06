@@ -174,30 +174,6 @@ percent_identity <- function(a, b){
 }
 
 ###############################################################
-## Translate extracted genomic sequence
-###############################################################
-
-translate_genomic_sequence <- function(
-    genomic_fasta,
-    protein_fasta
-){
-
-    dna <- Biostrings::readDNAStringSet(genomic_fasta)
-
-    protein <- Biostrings::translate(
-        dna,
-        if.fuzzy.codon = "X"
-    )
-
-    Biostrings::writeXStringSet(
-        protein,
-        filepath = protein_fasta
-    )
-
-    invisible(protein)
-}
-
-###############################################################
 ## Reverse Complement
 ###############################################################
 reverse_complement <- function(seq){
@@ -907,27 +883,6 @@ recover_gene_from_tblastn <- function(
 }
 
 ###############################################################
-## Save BLAST results
-###############################################################
-
-save_blast_results <- function(tbl, filename){
-
-  directory <- dirname(filename)
-
-  if(!dir.exists(directory)){
-    dir.create(directory,
-               recursive = TRUE)
-  }
-
-  write.csv(
-    tbl,
-    filename,
-    row.names = FALSE
-  )
-
-}
-
-###############################################################
 ## Gene Validation
 ###############################################################
 validate_gene <- function(
@@ -1045,7 +1000,8 @@ summarize_gene <- function(
     sequence_source = NA_character_,
     notes = "",
     status = "Complete CDS recovered",
-    evaluate_start_codon = TRUE
+    evaluate_start_codon = TRUE,
+    coverage_pct = NULL
 ){
 
     ref_len <- Biostrings::width(ref_protein)[1]
@@ -1075,7 +1031,31 @@ summarize_gene <- function(
 
     }
 
-    coverage <- round(100 * qry_len / ref_len, 1)
+    ## Coverage_pct definition
+    ##
+    ## When `coverage_pct` is supplied (e.g. by recover_gene_from_tblastn(),
+    ## which computes true local-alignment coverage in
+    ## local_alignment_metrics()/score_orf_against_reference()/find_best_orf()
+    ## as 100 * aligned reference residues / reference length), that value is
+    ## used directly so Coverage_pct always reflects genuine sequence
+    ## homology rather than raw sequence length.
+    ##
+    ## When no alignment-based coverage is available (curated CDS extraction
+    ## scripts that call summarize_gene() directly without an ORF search),
+    ## coverage falls back to the length ratio recovered/reference protein
+    ## length. This fallback is only a valid proxy for true coverage when the
+    ## recovered sequence is a clean, in-frame CDS translation; it will
+    ## overstate coverage if the extracted region contains undetected
+    ## frameshifts (e.g. uncorrected introns).
+    if(is.null(coverage_pct)){
+
+        coverage <- round(100 * qry_len / ref_len, 1)
+
+    } else {
+
+        coverage <- round(coverage_pct, 1)
+
+    }
 
     prot_chars <- strsplit(as.character(qry_protein[[1]]), "")[[1]]
     internal_stops <- sum(head(prot_chars, -1) == "*")
