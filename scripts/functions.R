@@ -452,6 +452,460 @@ extract_tblastn_hit <- function(
 
     invisible(region)
 }
+
+###############################################################
+## Translate a single reading frame
+###############################################################
+
+translate_reading_frame <- function(dna, frame){
+
+  dna <- Biostrings::DNAString(dna)
+
+  seq_length <- length(dna)
+
+  remainder <- (seq_length - frame + 1) %% 3
+
+  if(remainder > 0){
+    dna <- Biostrings::subseq(
+      dna,
+      start = 1,
+      end   = seq_length - remainder
+    )
+  }
+
+  dna <- Biostrings::subseq(dna, start = frame)
+
+  Biostrings::translate(
+    dna,
+    if.fuzzy.codon = "X"
+  )
+
+}
+
+###############################################################
+## Extract candidate ORFs from one translated frame
+###############################################################
+
+extract_candidate_orfs <- function(
+    translated_aa,
+    min_length = 30
+){
+
+  residues <- as.character(translated_aa)
+
+  segments <- strsplit(residues, "\\*", fixed = FALSE)[[1]]
+
+  segments <- segments[nchar(segments) >= min_length]
+
+  if(length(segments) == 0){
+    return(character(0))
+  }
+
+  segments
+
+}
+
+###############################################################
+## Local alignment metrics (base R)
+###############################################################
+
+local_alignment_metrics <- function(
+    pattern,
+    subject,
+    match_score = 1,
+    mismatch_score = -1,
+    gap_score = -1
+){
+
+  pattern <- strsplit(as.character(pattern), "")[[1]]
+  subject <- strsplit(as.character(subject), "")[[1]]
+
+  n <- length(pattern)
+  m <- length(subject)
+
+  if(n == 0 || m == 0){
+    return(list(
+      identity   = 0,
+      coverage   = 0,
+      aligned_ref = 0
+    ))
+  }
+
+  score_matrix <- matrix(
+    0,
+    nrow = n + 1,
+    ncol = m + 1
+  )
+
+  best_score <- 0
+  best_i <- 0
+  best_j <- 0
+
+  for(i in seq_len(n)){
+    for(j in seq_len(m)){
+
+      diagonal <- score_matrix[i, j] +
+        if(pattern[i] == subject[j]) match_score else mismatch_score
+
+      current <- max(
+        0,
+        diagonal,
+        score_matrix[i, j + 1] + gap_score,
+        score_matrix[i + 1, j] + gap_score
+      )
+
+      score_matrix[i + 1, j + 1] <- current
+
+      if(current > best_score){
+        best_score <- current
+        best_i <- i
+        best_j <- j
+      }
+
+    }
+  }
+
+  if(best_score <= 0){
+    return(list(
+      identity    = 0,
+      coverage    = 0,
+      aligned_ref = 0
+    ))
+  }
+
+  aligned_ref <- 0
+  matches <- 0
+  i <- best_i
+  j <- best_j
+
+  while(i > 0 && j > 0 && score_matrix[i + 1, j + 1] > 0){
+
+    aligned_ref <- aligned_ref + 1
+
+    if(pattern[i] == subject[j]){
+      matches <- matches + 1
+    }
+
+    diagonal <- score_matrix[i, j]
+    up <- score_matrix[i, j + 1]
+    left <- score_matrix[i + 1, j]
+    current <- score_matrix[i + 1, j + 1]
+
+    if(current == diagonal + if(pattern[i] == subject[j])
+      match_score else mismatch_score){
+      i <- i - 1
+      j <- j - 1
+    } else if(current == up + gap_score){
+      j <- j - 1
+    } else {
+      i <- i - 1
+    }
+
+  }
+
+  list(
+    identity    = if(aligned_ref > 0) 100 * matches / aligned_ref else 0,
+    coverage    = 100 * aligned_ref / n,
+    aligned_ref = aligned_ref
+  )
+
+}
+
+###############################################################
+## Score one ORF against a reference protein
+##
+## Composite ORF score (higher is better):
+##
+##   score = (identity / 100) * (coverage / 100) * length_factor
+##           - (0.10 * internal_stops)
+##
+## where:
+##   identity      = local pairwise alignment identity to reference (%)
+##   coverage      = aligned reference residues / reference length (%)
+##   length_factor = min(orf_length / reference_length, 1)
+##   internal_stops = number of in-frame stop codons within the ORF
+##
+## Tie-breaking (applied by find_best_orf):
+##   higher identity, then higher coverage, then longer ORF.
+###############################################################
+
+score_orf_against_reference <- function(
+    orf,
+    reference
+){
+
+  orf <- Biostrings::AAString(orf)
+
+  reference <- Biostrings::AAString(reference)
+
+  orf_length <- length(orf)
+
+  ref_length <- length(reference)
+
+  if(orf_length == 0 || ref_length == 0){
+    return(NULL)
+  }
+
+  orf_chars <- strsplit(as.character(orf), "")[[1]]
+
+  internal_stops <- sum(orf_chars == "*")
+
+  alignment <- local_alignment_metrics(
+    pattern = reference,
+    subject = orf
+  )
+
+  identity <- alignment$identity
+  coverage <- alignment$coverage
+
+  length_factor <- min(orf_length / ref_length, 1)
+
+  score <- (identity / 100) *
+    (coverage / 100) *
+    length_factor -
+    (0.10 * internal_stops)
+
+  list(
+    protein        = orf,
+    identity       = identity,
+    coverage       = coverage,
+    orf_length     = as.integer(orf_length),
+    internal_stops = as.integer(internal_stops),
+    score          = score
+  )
+
+}
+
+###############################################################
+## Evaluate translated ORFs and return the best match
+###############################################################
+
+find_best_orf <- function(
+    genomic_sequence,
+    reference_protein,
+    min_orf_length = 30
+){
+
+  genomic_sequence <- Biostrings::DNAString(genomic_sequence)
+
+  reference_protein <- Biostrings::AAString(reference_protein)
+
+  ref_length <- length(reference_protein)
+
+  min_length <- max(
+    min_orf_length,
+    floor(ref_length * 0.10)
+  )
+
+  candidates <- list()
+
+  orientations <- c("plus", "minus")
+
+  frames <- 1:3
+
+  for(orientation in orientations){
+
+    if(orientation == "plus"){
+      template <- genomic_sequence
+    } else {
+      template <- Biostrings::reverseComplement(genomic_sequence)
+    }
+
+    for(frame in frames){
+
+      translated <- translate_reading_frame(
+        template,
+        frame
+      )
+
+      orfs <- extract_candidate_orfs(
+        translated,
+        min_length = min_length
+      )
+
+      if(length(orfs) == 0){
+        next
+      }
+
+      for(orf in orfs){
+
+        scored <- score_orf_against_reference(
+          orf,
+          reference_protein
+        )
+
+        if(is.null(scored)){
+          next
+        }
+
+        scored$frame <- frame
+        scored$orientation <- orientation
+
+        candidates[[length(candidates) + 1]] <- scored
+
+      }
+
+    }
+
+  }
+
+  if(length(candidates) == 0){
+    stop("No candidate ORFs met the minimum length threshold.")
+  }
+
+  candidate_table <- do.call(
+    rbind,
+    lapply(candidates, function(x){
+      data.frame(
+        frame          = x$frame,
+        orientation    = x$orientation,
+        identity       = x$identity,
+        coverage       = x$coverage,
+        orf_length     = x$orf_length,
+        internal_stops = x$internal_stops,
+        score          = x$score,
+        stringsAsFactors = FALSE
+      )
+    })
+  )
+
+  best_idx <- order(
+    -candidate_table$score,
+    -candidate_table$identity,
+    -candidate_table$coverage,
+    -candidate_table$orf_length
+  )[1]
+
+  best <- candidates[[best_idx]]
+
+  list(
+    protein        = best$protein,
+    frame          = best$frame,
+    orientation    = best$orientation,
+    identity       = best$identity,
+    coverage       = best$coverage,
+    orf_length     = best$orf_length,
+    internal_stops = best$internal_stops,
+    score          = best$score
+  )
+
+}
+
+###############################################################
+## Recover a gene from the best tblastn hit using six-frame ORFs
+###############################################################
+
+recover_gene_from_tblastn <- function(
+    reference_protein,
+    assembly,
+    blast_database,
+    gene_name,
+    output_directory,
+    flank = 0,
+    max_target_seqs = 5,
+    evalue = "1e-10"
+){
+
+  if(!file.exists(reference_protein)){
+    stop("Reference protein not found: ", reference_protein)
+  }
+
+  if(!file.exists(assembly)){
+    stop("Assembly not found: ", assembly)
+  }
+
+  dir.create(
+    output_directory,
+    recursive = TRUE,
+    showWarnings = FALSE
+  )
+
+  tblastn_file <- file.path(
+    output_directory,
+    paste0(gene_name, "_tblastn.tsv")
+  )
+
+  genomic_file <- file.path(
+    output_directory,
+    paste0(gene_name, "_genomic.fasta")
+  )
+
+  protein_file <- file.path(
+    output_directory,
+    paste0(gene_name, "_protein.fasta")
+  )
+
+  ref_protein <- read_protein_fasta(reference_protein)
+
+  run_tblastn(
+    query           = reference_protein,
+    database        = blast_database,
+    output          = tblastn_file,
+    max_target_seqs = max_target_seqs,
+    evalue          = evalue
+  )
+
+  hits <- read_blast_table(tblastn_file)
+
+  if(nrow(hits) == 0){
+    stop("No tblastn hits recovered for ", gene_name, ".")
+  }
+
+  best_hit <- hits[
+    order(-hits$bitscore),
+  ][1, , drop = FALSE]
+
+  genomic <- extract_tblastn_hit(
+    assembly_fasta = assembly,
+    blast_row      = best_hit,
+    outfile        = genomic_file,
+    flank          = flank
+  )
+
+  minus_strand <- best_hit$sstart > best_hit$send
+
+  if(minus_strand){
+    genomic <- Biostrings::reverseComplement(genomic)
+    names(genomic) <- paste0(names(genomic), "_oriented")
+  }
+
+  best_orf <- find_best_orf(
+    genomic_sequence  = genomic[[1]],
+    reference_protein = ref_protein[[1]]
+  )
+
+  save_fasta(genomic, genomic_file)
+
+  recovered_protein <- Biostrings::AAStringSet(best_orf$protein)
+
+  names(recovered_protein) <- paste0(gene_name, "_recovered")
+
+  save_fasta(recovered_protein, protein_file)
+
+  statistics <- list(
+    frame          = best_orf$frame,
+    orientation    = best_orf$orientation,
+    identity       = best_orf$identity,
+    coverage       = best_orf$coverage,
+    orf_length     = best_orf$orf_length,
+    internal_stops = best_orf$internal_stops,
+    score          = best_orf$score,
+    blast_contig   = best_hit$sseqid,
+    blast_strand   = ifelse(minus_strand, "minus", "plus"),
+    blast_pident   = best_hit$pident,
+    blast_evalue   = best_hit$evalue,
+    blast_bitscore = best_hit$bitscore
+  )
+
+  list(
+    protein    = recovered_protein,
+    genomic    = genomic,
+    tblastn    = hits,
+    statistics = statistics
+  )
+
+}
+
 ###############################################################
 ## Save BLAST results
 ###############################################################

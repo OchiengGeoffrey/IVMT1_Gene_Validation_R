@@ -2,91 +2,64 @@ source("scripts/01_project_setup.R")
 
 project_header("Verify ATOM40 Presence")
 
-###############################################################
-## Input files
-###############################################################
-
-reference_file <- PATHS$atom40
-assembly_file  <- PATHS$assembly
-assembly_db    <- file.path(PATHS$blast, "IVMT1")
-
-###############################################################
-## Output files
-###############################################################
-
-blast_csv      <- file.path(PATHS$reports, "ATOM40_tblastn_results.csv")
-genomic_fasta  <- file.path(PATHS$extracted, "ATOM40_genomic.fasta")
-protein_fasta  <- file.path(PATHS$extracted, "ATOM40_protein.fasta")
-
-dir.create(PATHS$reports, recursive = TRUE, showWarnings = FALSE)
+dir.create(PATHS$reports,   recursive = TRUE, showWarnings = FALSE)
 dir.create(PATHS$extracted, recursive = TRUE, showWarnings = FALSE)
 
-###############################################################
-## Step 1. Search assembly
-###############################################################
-
-cat("Searching for ATOM40 in the IVM-t1 genome assembly...\n\n")
-
-run_tblastn(
-    query    = reference_file,
-    database = assembly_db,
-    output   = blast_csv
+result <- recover_gene_from_tblastn(
+  reference_protein = PATHS$atom40,
+  assembly          = PATHS$assembly,
+  blast_database    = file.path(PATHS$blast, "IVMT1"),
+  gene_name         = "ATOM40",
+  output_directory  = PATHS$extracted
 )
 
-###############################################################
-## Step 2. Read BLAST results
-###############################################################
+cat("\nRecovered ORF statistics:\n")
+cat("-------------------------\n")
+cat("Frame          :", result$statistics$frame, "\n")
+cat("Orientation    :", result$statistics$orientation, "\n")
+cat("Identity       :", round(result$statistics$identity, 2), "%\n")
+cat("Coverage       :", round(result$statistics$coverage, 2), "%\n")
+cat("ORF length     :", result$statistics$orf_length, "aa\n")
+cat("Internal stops :", result$statistics$internal_stops, "\n")
+cat("Score          :", round(result$statistics$score, 4), "\n\n")
 
-blast <- read.csv(
-    blast_csv,
-    header = FALSE,
-    sep = "\t",
-    stringsAsFactors = FALSE
+reference_protein <- read_protein_fasta(PATHS$atom40)
+
+summary_row <- summarize_gene(
+  gene                 = "ATOM40",
+  ref_protein          = reference_protein,
+  qry_protein          = result$protein,
+  sequence_source      = paste0(
+    result$statistics$blast_contig,
+    " (",
+    result$statistics$blast_strand,
+    " strand; ORF frame ",
+    result$statistics$frame,
+    ")"
+  ),
+  status               = "ORF recovered via six-frame translation",
+  evaluate_start_codon = FALSE,
+  notes                = paste0(
+    "ORF score=",
+    round(result$statistics$score, 4),
+    "; alignment identity=",
+    round(result$statistics$identity, 2),
+    "%; reference coverage=",
+    round(result$statistics$coverage, 2),
+    "%"
+  )
 )
 
-if (nrow(blast) == 0) {
-    stop("No BLAST hits were recovered for ATOM40.")
-}
-
-colnames(blast) <- c(
-    "qseqid","sseqid","pident","length",
-    "mismatch","gapopen","qstart","qend",
-    "sstart","send","evalue","bitscore"
+save_blast_results(
+  result$tblastn,
+  file.path(PATHS$reports, "ATOM40_tblastn_results.csv")
 )
 
-best_hit <- blast[1, ]
+cat("Summary:\n")
+print(summary_row, row.names = FALSE)
 
-cat("Top tblastn hit:\n")
-print(best_hit[, c(
-    "qseqid",
-    "sseqid",
-    "pident",
-    "length",
-    "evalue",
-    "bitscore"
-)])
-
-###############################################################
-## Step 3. Extract genomic region
-###############################################################
-
-extract_tblastn_hit(
-    assembly_fasta = assembly_file,
-    blast_row      = best_hit,
-    outfile        = genomic_fasta
-)
-
-###############################################################
-## Step 4. Translate genomic fragment
-###############################################################
-
-translate_genomic_sequence(
-    genomic_fasta = genomic_fasta,
-    protein_fasta = protein_fasta
-)
-
-cat("\nATOM40 genomic fragment written to:\n")
-cat(genomic_fasta, "\n")
-
-cat("\nTranslated protein written to:\n")
-cat(protein_fasta, "\n")
+cat("\nOutputs written:\n")
+cat("  Genomic :", file.path(PATHS$extracted, "ATOM40_genomic.fasta"), "\n")
+cat("  Protein :", file.path(PATHS$extracted, "ATOM40_protein.fasta"), "\n")
+cat("  BLAST   :", file.path(PATHS$extracted, "ATOM40_tblastn.tsv"), "\n")
+cat("  Report  :", file.path(PATHS$reports, "ATOM40_tblastn_results.csv"), "\n")

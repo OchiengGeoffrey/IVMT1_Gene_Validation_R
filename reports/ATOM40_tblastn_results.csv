@@ -1,1 +1,2 @@
-Tb927.9.9660:mRNA-p1	CM010680.1	100.000	351	0	0	1	351	963059	962007	0.0	700
+"qseqid","sseqid","pident","length","mismatch","gapopen","qstart","qend","sstart","send","evalue","bitscore"
+"Tb927.9.9660:mRNA-p1","CM010680.1",100,351,0,0,1,351,963059,962007,0,700
