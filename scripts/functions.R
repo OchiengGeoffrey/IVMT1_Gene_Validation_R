@@ -174,6 +174,30 @@ percent_identity <- function(a, b){
 }
 
 ###############################################################
+## Translate extracted genomic sequence
+###############################################################
+
+translate_genomic_sequence <- function(
+    genomic_fasta,
+    protein_fasta
+){
+
+    dna <- Biostrings::readDNAStringSet(genomic_fasta)
+
+    protein <- Biostrings::translate(
+        dna,
+        if.fuzzy.codon = "X"
+    )
+
+    Biostrings::writeXStringSet(
+        protein,
+        filepath = protein_fasta
+    )
+
+    invisible(protein)
+}
+
+###############################################################
 ## Reverse Complement
 ###############################################################
 reverse_complement <- function(seq){
@@ -372,6 +396,62 @@ read_blast_table <- function(file){
 
 }
 
+###############################################################
+## Extract genomic region from top tblastn hit
+###############################################################
+
+extract_tblastn_hit <- function(
+    assembly_fasta,
+    blast_row,
+    outfile,
+    flank = 0
+){
+
+    genome <- Biostrings::readDNAStringSet(assembly_fasta)
+
+    seqname <- blast_row$sseqid
+
+    idx <- grep(
+        paste0("^", seqname),
+        names(genome)
+    )
+
+    if(length(idx) == 0){
+        stop("Contig ", seqname, " not found in assembly.")
+    }
+
+    idx <- idx[1]
+
+    start <- min(blast_row$sstart, blast_row$send)
+    end   <- max(blast_row$sstart, blast_row$send)
+
+    seq_length <- length(genome[[idx]])
+
+    start <- max(1, start - flank)
+    end   <- min(seq_length, end + flank)
+
+    region <- Biostrings::subseq(
+        genome[[idx]],
+        start = start,
+        end   = end
+    )
+
+    region <- Biostrings::DNAStringSet(region)
+
+    names(region) <- paste0(
+        blast_row$qseqid,
+        "_",
+        seqname,
+        "_",
+        start,
+        "_",
+        end
+    )
+
+    Biostrings::writeXStringSet(region, outfile)
+
+    invisible(region)
+}
 ###############################################################
 ## Save BLAST results
 ###############################################################
