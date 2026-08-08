@@ -6,8 +6,8 @@
 
 # 1. Startup Banner ------------------------------------------------------------
 cat("======================================================\n")
-cat(" Phase II: Candidate Gene Recovery from Raw Reads      \n")
-cat(" Organism: Trypanosoma equiperdum IVM-t1               \n")
+cat(" Phase II: Candidate Gene Recovery from Raw Reads       \n")
+cat(" Organism: Trypanosoma equiperdum IVM-t1                \n")
 cat(" Accession: SRR7910035                                 \n")
 cat(" Pipeline Infrastructure: Setup (00_setup.R)           \n")
 cat("======================================================\n\n")
@@ -36,21 +36,24 @@ suppressPackageStartupMessages({
 
 # 3. Absolute Path Definitions -------------------------------------------------
 PATHS <- list(
-  root      = here::here("raw_read_analysis"),
-  reads     = here::here("data", "reads"),
-  # Protein FASTA references are shared with the established project pipeline.
-  # The annotation manifest remains in raw_read_analysis/reference (below).
-  ref       = here::here("data", "reference"),
-  mapped    = here::here("raw_read_analysis", "results", "mapped_reads"),
-  consensus = here::here("raw_read_analysis", "results", "consensus"),
-  proteins  = here::here("raw_read_analysis", "results", "proteins"),
-  reports   = here::here("raw_read_analysis", "reports"),
-  scripts   = here::here("raw_read_analysis", "scripts"),
-  logs      = here::here("raw_read_analysis", "logs")
+  root                    = here::here("raw_read_analysis"),
+  reads                   = here::here("data", "reads"),
+  ref                     = here::here("data", "reference"),
+  mapped                  = here::here("raw_read_analysis", "results", "mapped_reads"),
+  consensus               = here::here("raw_read_analysis", "results", "consensus"),
+  proteins                = here::here("raw_read_analysis", "results", "proteins"),
+  reports                 = here::here("raw_read_analysis", "reports"),
+  scripts                 = here::here("raw_read_analysis", "scripts"),
+  logs                    = here::here("raw_read_analysis", "logs"),
+  intermediate            = here::here("raw_read_analysis", "results", "intermediate"),
+  raw_recovery_derivative = here::here("raw_read_analysis", "results", "raw_read_derivative"),
+  blastdb                 = here::here("raw_read_analysis", "results", "raw_read_derivative", "blastdb"),
+  tblastn_raw             = here::here("raw_read_analysis", "results", "intermediate", "tblastn_raw")
 )
 
 # Directory Creation
-lapply(PATHS[c("ref", "mapped", "consensus", "proteins", "reports", "scripts", "logs")], function(p) {
+lapply(PATHS[c("ref", "mapped", "consensus", "proteins", "reports", "scripts", "logs", 
+               "intermediate", "raw_recovery_derivative", "blastdb", "tblastn_raw")], function(p) {
   if (!dir.exists(p)) dir.create(p, recursive = TRUE, showWarnings = FALSE)
 })
 
@@ -78,19 +81,31 @@ PROJECT <- list(
 
 # Documented Pipeline Settings
 CONFIG <- list(
-  threads              = 8,      # Maximum CPU cores allocated for parallel operations (Rsubread/samtools)
-  min_mapping_quality  = 20,     # Minimum MAPQ threshold to exclude ambiguous alignments
-  min_base_quality     = 20,     # Minimum Phred quality score for consensus base calling
-  consensus_fraction   = 0.75,   # Minimum allele frequency threshold required to call a clear consensus base
-  min_depth            = 10,      # Minimum read depth required to avoid calling missing/ambiguous bases (N)
-  genome_size_bp       = 35e6,    # NEW: Approx T. equiperdum nuclear genome
-  qc_sample_size       = 1e5,     # Number of reads per mate sampled for QC
+  threads                       = 8,      # Maximum CPU cores allocated for parallel operations
+  min_mapping_quality           = 20,     # Minimum MAPQ threshold to exclude ambiguous alignments
+  min_base_quality              = 20,     # Minimum Phred quality score for consensus base calling
+  consensus_fraction            = 0.75,   # Minimum allele frequency threshold required to call a clear consensus base
+  min_depth                     = 10,     # Minimum read depth required to avoid calling missing/ambiguous bases (N)
+  genome_size_bp                = 35e6,   # Approx T. equiperdum nuclear genome
+  qc_sample_size                = 1e5,    # Number of reads per mate sampled for QC
   expected_sequencing_chemistry = "Illumina MiSeq PE301",
-  expected_read_length = 301,     # Instrument read length before adapter/quality trimming
-  warn_min_read_length = 30,      # bp: shorter reads often map ambiguously
-  warn_short50_fraction = 0.10,   # fraction: flags potentially over-trimmed libraries
-  warn_mean_length_fraction = 0.80, # fraction of expected length retained on average
-  report_read_length_fraction = 0.80 # report fraction of reads retaining this expected length
+  expected_read_length          = 301,    # Instrument read length before adapter/quality trimming
+  warn_min_read_length          = 30,     # bp: shorter reads often map ambiguously
+  warn_short50_fraction         = 0.10,   # fraction: flags potentially over-trimmed libraries
+  warn_mean_length_fraction     = 0.80,   # fraction of expected length retained on average
+  report_read_length_fraction   = 0.80,   # report fraction of reads retaining this expected length
+  translation_genetic_code     = 1       # Standard genetic code for nucleotide translations
+)
+
+# ---- Raw Read Recovery Parameters ----
+CONFIG$raw_recovery <- list(
+  blast_evalue            = 1e-10,
+  blast_threads           = 8,
+  blast_max_target_seqs   = 5000000,
+  blast_outfmt            = "6 qseqid sseqid pident length mismatch gapopen qstart qend sstart send evalue bitscore",
+  min_alignment_length_aa = NULL,
+  min_pident              = NULL,
+  depth_report_thresholds = c(1, 5, 10)
 )
 
 # Record explicit package versions
@@ -103,7 +118,7 @@ log_info("Saved package_versions.csv to reports directory", LOG_FILE)
 PATHS$fastq_r1 <- detect_fastq(here::here("data", "reads", "SRR7910035_1"), LOG_FILE)
 PATHS$fastq_r2 <- detect_fastq(here::here("data", "reads", "SRR7910035_2"), LOG_FILE)
 
-# 6. Candidate Gene Metadata Table (Robust CSV Parser & Validator) ------------
+# 6. Candidate Gene Metadata Table ---------------------------------------------
 annotation_csv <- here::here("raw_read_analysis", "reference", "gene_annotations.csv")
 
 if (!file.exists(annotation_csv)) {
@@ -111,7 +126,6 @@ if (!file.exists(annotation_csv)) {
   stop("Execution halted: Missing reference/gene_annotations.csv")
 }
 
-# Auto-detect delimiter
 first_line <- readLines(annotation_csv, n = 1)
 
 if (grepl(";", first_line)) {
@@ -125,7 +139,6 @@ if (grepl(";", first_line)) {
   log_info("Detected comma (,) delimiter in gene_annotations.csv", LOG_FILE)
 }
 
-# Diagnostics & Column Assertion
 cat("\n[DIAGNOSTIC] Column names imported from CSV:\n")
 print(colnames(TARGETS))
 
@@ -138,7 +151,6 @@ if (!"reference_file" %in% colnames(TARGETS)) {
 TARGETS <- TARGETS |>
   dplyr::mutate(reference_file = file.path(PATHS$ref, reference_file))
 
-# Save TARGETS table in RDS and CSV formats
 saveRDS(TARGETS, file = file.path(PATHS$reports, "target_genes_metadata.rds"))
 write.csv(TARGETS, file = file.path(PATHS$reports, "target_genes_metadata.csv"), row.names = FALSE)
 log_info("Successfully loaded gene_annotations.csv and exported target_genes_metadata (RDS and CSV)", LOG_FILE)
@@ -147,17 +159,17 @@ log_info("Successfully loaded gene_annotations.csv and exported target_genes_met
 verify_write_permissions(PATHS, LOG_FILE)
 verify_inputs_and_fastas(PATHS, TARGETS, LOG_FILE)
 
-# Check software dependencies
+# Required external executable tools
+check_program("makeblastdb", required = TRUE, log_file = LOG_FILE)
+check_program("tblastn", required = TRUE, log_file = LOG_FILE)
 check_program("samtools", required = FALSE, log_file = LOG_FILE)
 check_program("diamond", required = FALSE, log_file = LOG_FILE)
 
-# Diagnostic & Session Info Export
 log_system_memory(LOG_FILE)
 capture.output(sessionInfo(), file = file.path(PATHS$reports, "sessionInfo.txt"))
 log_info("Session info saved to reports/sessionInfo.txt", LOG_FILE)
 log_info("Step 0 Project Setup completed successfully.", LOG_FILE)
 
-# Replicate complete session log to latest_execution.log
 file.copy(LOG_FILE, file.path(PATHS$logs, "latest_execution.log"), overwrite = TRUE)
 
-cat("\n[SUCCESS] Setup finished. Infrastructure, logging, package versions, and targets table initialized.\n")
+cat("\n[SUCCESS] Setup finished. Infrastructure, logging, package versions, tBLASTn config, and targets table initialized.\n")
