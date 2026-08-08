@@ -1,0 +1,84 @@
+==================================
+REFERENCE VALIDATION REPORT
+==================================
+
+Date: 2026-08-08
+Pipeline: IVM-t1 Raw Read Candidate Gene Validation
+Organism: Trypanosoma equiperdum IVM-t1
+Reference file directory: F:/PROJECTS/IVMT1_Gene_Validation_R/data/reference
+Total genes: 6
+Overall status: PASS
+Header uniqueness explicitly checked: PASS
+
+All target references passed the checks applicable to their declared sequence type.
+No Rsubread index is constructed in this validation step.
+
+==================================
+DETAILED STATISTICS
+==================================
+ATPF1G: PASS
+  File: ATPF1G.fasta
+  Header: Tb927.10.180:mRNA-p1 | transcript=Tb927.10.180:mRNA | gene=Tb927.10.180 | organism=Trypanosoma_brucei_brucei_TREU927 | gene_product=ATP synthase F1 subunit gamma protein, putative | transcript_product=ATP synthase F1 subunit gamma protein, putative | location=Tb927_10_v5.1:72375-73292(+) | protein_length=305 | sequence_SO=chromosome | SO=protein_coding_gene | is_pseudo=false
+  Sequence MD5: 63578bcb7cee2f759444db2a6c076b73
+  Header valid/contains target alias/unique: TRUE / FALSE / TRUE
+  CDS length: NA bp (expected NA; match NA; divisible by 3 NA)
+  Start/stop: NA (NA) / NA (NA)
+  Protein length: 305 aa including terminal stop; 305 aa excluding terminal stop (expected 305; match TRUE)
+  Internal stops: 0; ambiguous residues/bases: 0; translation success: TRUE
+  Validation reason: OK
+
+ATPF1B: PASS
+  File: ATPF1B.fasta
+  Header: Tb927.3.1380:mRNA-p1 | transcript=Tb927.3.1380:mRNA | gene=Tb927.3.1380 | organism=Trypanosoma_brucei_brucei_TREU927 | gene_product=ATP synthase subunit beta, mitochondrial | transcript_product=ATP synthase subunit beta, mitochondrial | location=Tb927_03_v5.1:344483-346042(+) | protein_length=519 | sequence_SO=chromosome | SO=protein_coding_gene | is_pseudo=false
+  Sequence MD5: 146a2c364b8758a3eabe4f0cf067a231
+  Header valid/contains target alias/unique: TRUE / FALSE / TRUE
+  CDS length: NA bp (expected NA; match NA; divisible by 3 NA)
+  Start/stop: NA (NA) / NA (NA)
+  Protein length: 519 aa including terminal stop; 519 aa excluding terminal stop (expected 519; match TRUE)
+  Internal stops: 0; ambiguous residues/bases: 0; translation success: TRUE
+  Validation reason: OK
+
+POLIB: PASS
+  File: POLIB.fasta
+  Header: Tb927.11.4690:mRNA-p1 | transcript=Tb927.11.4690:mRNA | gene=Tb927.11.4690 | organism=Trypanosoma_brucei_brucei_TREU927 | gene_product=mitochondrial DNA polymerase I protein B | transcript_product=mitochondrial DNA polymerase I protein B | location=Tb927_11_v5.1:1352395-1356609(+) | protein_length=1404 | sequence_SO=chromosome | SO=protein_coding_gene | is_pseudo=false
+  Sequence MD5: f66f35746ad8c9151a1eb307287e8d5a
+  Header valid/contains target alias/unique: TRUE / FALSE / TRUE
+  CDS length: NA bp (expected NA; match NA; divisible by 3 NA)
+  Start/stop: NA (NA) / NA (NA)
+  Protein length: 1404 aa including terminal stop; 1404 aa excluding terminal stop (expected 1404; match TRUE)
+  Internal stops: 0; ambiguous residues/bases: 0; translation success: TRUE
+  Validation reason: OK
+
+ATOM40: PASS
+  File: ATOM40.fasta
+  Header: Tb927.9.9660:mRNA-p1 | transcript=Tb927.9.9660:mRNA | gene=Tb927.9.9660 | organism=Trypanosoma_brucei_brucei_TREU927 | gene_product=Mitochondrial import receptor subunit ATOM40 | transcript_product=Mitochondrial import receptor subunit ATOM40 | location=Tb927_09_v5.1:1538667-1539722(-) | protein_length=351 | sequence_SO=chromosome | SO=protein_coding_gene | is_pseudo=false
+  Sequence MD5: 5423c0e18d9667565a655491714c6535
+  Header valid/contains target alias/unique: TRUE / TRUE / TRUE
+  CDS length: NA bp (expected NA; match NA; divisible by 3 NA)
+  Start/stop: NA (NA) / NA (NA)
+  Protein length: 351 aa including terminal stop; 351 aa excluding terminal stop (expected 351; match TRUE)
+  Internal stops: 0; ambiguous residues/bases: 0; translation success: TRUE
+  Validation reason: OK
+
+TAC102: PASS
+  File: TAC102.fasta
+  Header: Tb927.7.2390:mRNA-p1 | transcript=Tb927.7.2390:mRNA | gene=Tb927.7.2390 | organism=Trypanosoma_brucei_brucei_TREU927 | gene_product=Tripartite attachment complex protein 102 | transcript_product=Tripartite attachment complex protein 102 | location=Tb927_07_v5.1:613867-616722(-) | protein_length=951 | sequence_SO=chromosome | SO=protein_coding_gene | is_pseudo=false
+  Sequence MD5: 4e3c5f351180b6d94a46ff25f70052c6
+  Header valid/contains target alias/unique: TRUE / FALSE / TRUE
+  CDS length: NA bp (expected NA; match NA; divisible by 3 NA)
+  Start/stop: NA (NA) / NA (NA)
+  Protein length: 951 aa including terminal stop; 951 aa excluding terminal stop (expected 951; match TRUE)
+  Internal stops: 0; ambiguous residues/bases: 0; translation success: TRUE
+  Validation reason: OK
+
+ATPF1A: PASS
+  File: ATPF1A.fasta
+  Header: Tb927.7.7420:mRNA-p1 | transcript=Tb927.7.7420:mRNA | gene=Tb927.7.7420 | organism=Trypanosoma_brucei_brucei_TREU927 | gene_product=ATP synthase F1, alpha subunit | transcript_product=ATP synthase F1, alpha subunit | location=Tb927_07_v5.1:2133007-2134761(-) | protein_length=584 | sequence_SO=chromosome | SO=protein_coding_gene | is_pseudo=false
+  Sequence MD5: b576956e6098dce4aa7ae15ac8098c29
+  Header valid/contains target alias/unique: TRUE / FALSE / TRUE
+  CDS length: NA bp (expected NA; match NA; divisible by 3 NA)
+  Start/stop: NA (NA) / NA (NA)
+  Protein length: 584 aa including terminal stop; 584 aa excluding terminal stop (expected 584; match TRUE)
+  Internal stops: 0; ambiguous residues/bases: 0; translation success: TRUE
+  Validation reason: OK
+

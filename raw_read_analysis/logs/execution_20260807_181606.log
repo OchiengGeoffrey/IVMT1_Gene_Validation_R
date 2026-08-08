@@ -1,0 +1,10 @@
+[2026-08-07 18:16:06] INFO: Initialized Phase II project setup 
+[2026-08-07 18:16:06] INFO: Saved package_versions.csv to reports directory 
+[2026-08-07 18:16:06] INFO: Detected tab (\t) delimiter in gene_annotations.csv 
+[2026-08-07 18:16:06] INFO: Successfully loaded gene_annotations.csv and exported target_genes_metadata (RDS and CSV) 
+[2026-08-07 18:16:06] INFO: Creating directory: F:/PROJECTS/IVMT1_Gene_Validation_R/data/reads/SRR7910035_1.fastq 
+[2026-08-07 18:16:06] INFO: Creating directory: F:/PROJECTS/IVMT1_Gene_Validation_R/data/reads/SRR7910035_2.fastq 
+[2026-08-07 18:16:06] INFO: All directories have write permission 
+[2026-08-07 18:16:06] INFO: FASTQ R1: F:/PROJECTS/IVMT1_Gene_Validation_R/data/reads/SRR7910035_1.fastq 
+[2026-08-07 18:16:06] INFO: FASTQ R2: F:/PROJECTS/IVMT1_Gene_Validation_R/data/reads/SRR7910035_2.fastq 
+[2026-08-07 18:16:06] ERROR: Reference FASTA missing: F:/PROJECTS/IVMT1_Gene_Validation_R/raw_read_analysis/reference/ATPF1G.fasta 

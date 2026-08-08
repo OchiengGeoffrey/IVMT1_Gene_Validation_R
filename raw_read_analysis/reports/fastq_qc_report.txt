@@ -1,0 +1,29 @@
+=====================================
+FASTQ QUALITY REPORT
+=====================================
+
+Read pairs: 28,337,187
+Read-length assessment:
+R1 read-length assessment: PASS
+Expected sequencing: Illumina MiSeq PE301
+Expected length: 301 bp; observed mean: 297.66 bp; observed median: 301.00 bp.
+Range/SD (bp): min 35; max 301; SD 17.80; P05/P25/P75/P95: 298.00/300.00/301.00/301.00.
+Distribution: 64.91% at max; 97.91% >=80% expected length; 0.06% <100 bp; 0.01% <50 bp.
+Variable read lengths are consistent with adapter/quality trimming; no evidence of excessive trimming.
+R2 read-length assessment: PASS
+Expected sequencing: Illumina MiSeq PE301
+Expected length: 301 bp; observed mean: 297.86 bp; observed median: 301.00 bp.
+Range/SD (bp): min 35; max 301; SD 18.50; P05/P25/P75/P95: 299.00/300.00/301.00/301.00.
+Distribution: 66.34% at max; 98.03% >=80% expected length; 0.10% <100 bp; 0.01% <50 bp.
+Variable read lengths are consistent with adapter/quality trimming; no evidence of excessive trimming.
+
+Mean Quality (R1/R2): 33.6 / 28.7
+Q30 Bases (R1/R2): 81.3% / 60.9%
+Mean GC (R1/R2): 43.2% / 43.5%
+Mean N% (R1/R2): 0.01% / 0.02%
+
+Throughput: 16.88 Gb (16875.42 Mb)
+Genome assumption: 35.00 Mb
+Estimated coverage: 482.15x
+
+=====================================

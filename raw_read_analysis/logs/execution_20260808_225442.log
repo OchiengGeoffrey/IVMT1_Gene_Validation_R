@@ -1,0 +1,69 @@
+[2026-08-08 22:54:42] INFO: Initialized Phase II project setup 
+[2026-08-08 22:54:42] INFO: Saved package_versions.csv to reports directory 
+[2026-08-08 22:54:42] INFO: Detected tab (\t) delimiter in gene_annotations.csv 
+[2026-08-08 22:54:42] INFO: Successfully loaded gene_annotations.csv and exported target_genes_metadata (RDS and CSV) 
+[2026-08-08 22:54:42] INFO: All directories have write permission 
+[2026-08-08 22:54:42] INFO: FASTQ R1: F:/PROJECTS/IVMT1_Gene_Validation_R/data/reads/SRR7910035_1.fastq 
+[2026-08-08 22:54:42] INFO: FASTQ R2: F:/PROJECTS/IVMT1_Gene_Validation_R/data/reads/SRR7910035_2.fastq 
+[2026-08-08 22:54:42] INFO: Reference FASTA OK: ATPF1G.fasta 
+[2026-08-08 22:54:42] INFO: Reference FASTA OK: ATPF1B.fasta 
+[2026-08-08 22:54:42] INFO: Reference FASTA OK: POLIB.fasta 
+[2026-08-08 22:54:42] INFO: Reference FASTA OK: ATOM40.fasta 
+[2026-08-08 22:54:42] INFO: Reference FASTA OK: TAC102.fasta 
+[2026-08-08 22:54:42] INFO: Reference FASTA OK: ATPF1A.fasta 
+[2026-08-08 22:54:42] INFO: Program 'samtools' not found in PATH. (optional, skipping) 
+[2026-08-08 22:54:42] INFO: Program 'diamond' not found in PATH. (optional, skipping) 
+[2026-08-08 22:54:43] INFO: Memory info (Windows): {"TotalVisibleMemorySize":66742808,"FreePhysicalMemory":44022496} 
+[2026-08-08 22:54:44] INFO: Session info saved to reports/sessionInfo.txt 
+[2026-08-08 22:54:44] INFO: Step 0 Project Setup completed successfully. 
+[2026-08-08 22:55:49] INFO: Starting Step 1: FASTQ Quality Assessment... 
+[2026-08-08 22:55:49] INFO: Counting total reads... 
+[2026-08-08 22:55:49] INFO: Counting absolute total reads in SRR7910035_1.fastq... 
+[2026-08-08 22:57:38] INFO: Counting absolute total reads in SRR7910035_2.fastq... 
+[2026-08-08 22:59:26] INFO: Paired-end symmetry confirmed: 28,337,187 read pairs. 
+[2026-08-08 22:59:26] INFO: Sampling reads for quality distributions... 
+[2026-08-08 22:59:26] INFO: Sampling 1e+05 reads from SRR7910035_1.fastq for deep QC metrics... 
+[2026-08-08 23:00:06] INFO: Sampling 1e+05 reads from SRR7910035_2.fastq for deep QC metrics... 
+[2026-08-08 23:00:49] INFO: Coverage Estimation Assumptions: 
+[2026-08-08 23:00:49] INFO:   Genome size assumed : 35.00 Mb 
+[2026-08-08 23:00:49] INFO:   Total bases yielded : 16875.42 Mb 
+[2026-08-08 23:00:49] INFO:   Estimated coverage  : 482.15x 
+[2026-08-08 23:00:49] INFO: Generating diagnostic QC plots (PDF & PNG)... 
+[2026-08-08 23:00:54] INFO: Saved 2-page 6-panel QC plots (PDF) and separate mate PNGs to reports directory. 
+[2026-08-08 23:00:54] INFO: R1 read-length statistics: min 35 bp; max 301 bp; mean 297.66 bp; median 301.00 bp; SD 17.80 bp. 
+[2026-08-08 23:00:54] INFO: R1 read-length distribution: 64.91% at maximum length; 0.06% <100 bp; 0.01% <50 bp. 
+[2026-08-08 23:00:54] INFO: R1 expected sequencing: Illumina MiSeq PE301; expected length 301 bp; observed percentiles (P05/P25/P75/P95): 298.00/300.00/301.00/301.00 bp. 
+[2026-08-08 23:00:54] INFO: R1: Variable read lengths detected (35-301 bp). This pattern is consistent with adapter/quality trimming and is generally compatible with Rsubread alignment. 
+[2026-08-08 23:00:54] INFO: R1 read-length assessment: PASS. Variable read lengths are consistent with adapter/quality trimming; no evidence of excessive trimming. 
+[2026-08-08 23:00:54] INFO: R2 read-length statistics: min 35 bp; max 301 bp; mean 297.86 bp; median 301.00 bp; SD 18.50 bp. 
+[2026-08-08 23:00:54] INFO: R2 read-length distribution: 66.34% at maximum length; 0.10% <100 bp; 0.01% <50 bp. 
+[2026-08-08 23:00:54] INFO: R2 expected sequencing: Illumina MiSeq PE301; expected length 301 bp; observed percentiles (P05/P25/P75/P95): 299.00/300.00/301.00/301.00 bp. 
+[2026-08-08 23:00:54] INFO: R2: Variable read lengths detected (35-301 bp). This pattern is consistent with adapter/quality trimming and is generally compatible with Rsubread alignment. 
+[2026-08-08 23:00:54] INFO: R2 read-length assessment: PASS. Variable read lengths are consistent with adapter/quality trimming; no evidence of excessive trimming. 
+[2026-08-08 23:00:54] INFO: Saved human-readable text report to reports/fastq_qc_report.txt 
+[2026-08-08 23:00:55] INFO: Memory info (Windows): {"TotalVisibleMemorySize":66742808,"FreePhysicalMemory":43631500} 
+[2026-08-08 23:00:55] INFO: Step 1 FASTQ Quality Assessment completed successfully. 
+[2026-08-08 23:08:20] INFO: Starting Step 2: Reference Integrity Verification... 
+[2026-08-08 23:08:20] WARN: CONFIG does not define translation_genetic_code; nucleotide validation uses Biostrings' existing default (standard genetic code). Confirm this scientific assumption before use. 
+[2026-08-08 23:08:20] INFO: 
+--- Validating: ATPF1G --- 
+[2026-08-08 23:08:20] INFO:   [INFO] Header uses a source gene identifier rather than project alias 'ATPF1G'. 
+[2026-08-08 23:08:20] INFO: 
+--- Validating: ATPF1B --- 
+[2026-08-08 23:08:20] INFO:   [INFO] Header uses a source gene identifier rather than project alias 'ATPF1B'. 
+[2026-08-08 23:08:20] INFO: 
+--- Validating: POLIB --- 
+[2026-08-08 23:08:20] INFO:   [INFO] Header uses a source gene identifier rather than project alias 'POLIB'. 
+[2026-08-08 23:08:20] INFO: 
+--- Validating: ATOM40 --- 
+[2026-08-08 23:08:20] INFO: 
+--- Validating: TAC102 --- 
+[2026-08-08 23:08:21] INFO:   [INFO] Header uses a source gene identifier rather than project alias 'TAC102'. 
+[2026-08-08 23:08:21] INFO: 
+--- Validating: ATPF1A --- 
+[2026-08-08 23:08:21] INFO:   [INFO] Header uses a source gene identifier rather than project alias 'ATPF1A'. 
+[2026-08-08 23:08:21] INFO: Saved reference_summary.csv to reports directory. 
+[2026-08-08 23:08:21] INFO: Saved reference_validation_report.txt to reports directory. 
+[2026-08-08 23:08:21] INFO: Validated protein translations saved to: F:/PROJECTS/IVMT1_Gene_Validation_R/raw_read_analysis/results/intermediate/reference_sequences.rds 
+[2026-08-08 23:08:21] INFO: Memory info (Windows): {"TotalVisibleMemorySize":66742808,"FreePhysicalMemory":43912532} 
+[2026-08-08 23:08:21] INFO: Step 2 Reference Integrity Verification complete: PASS. 

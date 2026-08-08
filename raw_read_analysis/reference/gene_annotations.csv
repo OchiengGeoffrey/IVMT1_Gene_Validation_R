@@ -1,0 +1,7 @@
+gene	reference_file	reference_type	expected_aa_len	CDS_expected_bp_length	retrieval_strategy	strand	notes
+ATPF1G	ATPF1G.fasta	protein	305	918	Option_B_mapping	NA	Wild-type substitution validation target
+ATPF1B	ATPF1B.fasta	protein	519	1560	Option_B_mapping	NA	Assembly recovery validation
+POLIB	POLIB.fasta	protein	1404	4215	Option_B_mapping	NA	Assembly recovery validation
+ATOM40	ATOM40.fasta	protein	351	1056	Option_B_mapping	NA	Assembly recovery validation
+TAC102	TAC102.fasta	protein	951	2856	Option_B_mapping	NA	Kinetoplast partial recovery test
+ATPF1A	ATPF1A.fasta	protein	584	1755	Option_A_protein_search	NA	Intron disruption and splicing validation

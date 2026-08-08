@@ -1,0 +1,4 @@
+[2026-08-07 18:13:50] INFO: Initialized Phase II project setup 
+[2026-08-07 18:13:50] INFO: Saved package_versions.csv to reports directory 
+[2026-08-07 18:13:50] INFO: Detected tab (\t) delimiter in gene_annotations.csv 
+[2026-08-07 18:13:50] ERROR: Column 'reference_file' not found. Imported columns are: Column1, Column2, Column3, Column4, Column5, Column6, Column7, Column8 
