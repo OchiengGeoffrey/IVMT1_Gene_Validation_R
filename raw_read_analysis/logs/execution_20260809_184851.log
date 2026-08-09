@@ -1,0 +1,75 @@
+[2026-08-09 18:48:51] INFO: Initialized Phase II project setup 
+[2026-08-09 18:48:51] INFO: Saved package_versions.csv to reports directory 
+[2026-08-09 18:48:51] INFO: Detected tab (\t) delimiter in gene_annotations.csv 
+[2026-08-09 18:48:51] INFO: Successfully loaded gene_annotations.csv and exported target_genes_metadata (RDS and CSV) 
+[2026-08-09 18:48:51] INFO: All directories have write permission 
+[2026-08-09 18:48:51] INFO: FASTQ R1: F:/PROJECTS/IVMT1_Gene_Validation_R/data/reads/SRR7910035_1.fastq 
+[2026-08-09 18:48:51] INFO: FASTQ R2: F:/PROJECTS/IVMT1_Gene_Validation_R/data/reads/SRR7910035_2.fastq 
+[2026-08-09 18:48:51] INFO: Reference FASTA OK: ATPF1G.fasta 
+[2026-08-09 18:48:51] INFO: Reference FASTA OK: ATPF1B.fasta 
+[2026-08-09 18:48:51] INFO: Reference FASTA OK: POLIB.fasta 
+[2026-08-09 18:48:51] INFO: Reference FASTA OK: ATOM40.fasta 
+[2026-08-09 18:48:51] INFO: Reference FASTA OK: TAC102.fasta 
+[2026-08-09 18:48:51] INFO: Reference FASTA OK: ATPF1A.fasta 
+[2026-08-09 18:48:51] INFO: Program 'makeblastdb' found at: C:\PROGRA~1\NCBI\BLAST-~1.0_\bin\MAKEBL~1.EXE 
+[2026-08-09 18:48:51] INFO: Program 'tblastn' found at: C:\PROGRA~1\NCBI\BLAST-~1.0_\bin\tblastn.exe 
+[2026-08-09 18:48:51] INFO: Program 'samtools' not found in PATH. (optional, skipping) 
+[2026-08-09 18:48:51] INFO: Program 'diamond' not found in PATH. (optional, skipping) 
+[2026-08-09 18:48:52] INFO: Memory info (Windows): {"TotalVisibleMemorySize":66742808,"FreePhysicalMemory":47249356} 
+[2026-08-09 18:48:52] INFO: Session info saved to reports/sessionInfo.txt 
+[2026-08-09 18:48:52] INFO: Step 0 Project Setup completed successfully. 
+[2026-08-09 19:01:58] INFO: Starting Step 3: Raw Read Recovery... 
+[2026-08-09 19:01:58] INFO: Loaded 6 validated protein reference(s) from Step 2. 
+[2026-08-09 19:01:58] INFO: Derivative FASTA already exists, reusing: SRR7910035_1.fasta 
+[2026-08-09 19:01:58] INFO: Derivative FASTA already exists, reusing: SRR7910035_2.fasta 
+[2026-08-09 19:01:58] INFO: Sample R1 read ID: SRR7910035.1 1 length=301 
+[2026-08-09 19:01:58] INFO: Sample R2 read ID: SRR7910035.1 1 length=301 
+[2026-08-09 19:01:58] INFO: Detected read-ID pairing convention: 'first_token' (100% match on 500-record sample). 
+[2026-08-09 19:01:58] INFO: BLAST db already exists, reusing: ivm_t1_R1_blastdb 
+[2026-08-09 19:01:58] INFO: BLAST db already exists, reusing: ivm_t1_R2_blastdb 
+[2026-08-09 19:01:58] INFO: expected_aa_len built for 6 gene(s): ATPF1G=305, ATPF1B=519, POLIB=1404, ATOM40=351, TAC102=951, ATPF1A=584 
+[2026-08-09 19:01:59] INFO: ATPF1G (R1): Layer A output already exists, reusing. 
+[2026-08-09 19:01:59] INFO: ATPF1G (R2): Layer A output already exists, reusing. 
+[2026-08-09 19:01:59] INFO: ATPF1B (R1): Layer A output already exists, reusing. 
+[2026-08-09 19:01:59] INFO: ATPF1B (R2): Layer A output already exists, reusing. 
+[2026-08-09 19:01:59] INFO: POLIB (R1): Layer A output already exists, reusing. 
+[2026-08-09 19:01:59] INFO: POLIB (R2): Layer A output already exists, reusing. 
+[2026-08-09 19:01:59] INFO: ATOM40 (R1): Layer A output already exists, reusing. 
+[2026-08-09 19:01:59] INFO: ATOM40 (R2): Layer A output already exists, reusing. 
+[2026-08-09 19:01:59] INFO: TAC102 (R1): Layer A output already exists, reusing. 
+[2026-08-09 19:01:59] INFO: TAC102 (R2): Layer A output already exists, reusing. 
+[2026-08-09 19:01:59] INFO: ATPF1A (R1): Layer A output already exists, reusing. 
+[2026-08-09 19:01:59] INFO: ATPF1A (R2): Layer A output already exists, reusing. 
+[2026-08-09 19:01:59] INFO: Layer A' consolidated HSP rows: 6000 
+[2026-08-09 19:02:10] INFO: Saved Layer B (deduplicated reads): 6000 rows. 
+[2026-08-09 19:02:10] INFO: Saved raw_read_recovery_summary.csv (Layer C). 
+[2026-08-09 19:02:11] INFO: Memory info (Windows): {"TotalVisibleMemorySize":66742808,"FreePhysicalMemory":46916284} 
+[2026-08-09 19:02:11] INFO: Step 3 Raw Read Recovery completed successfully. 
+[2026-08-09 20:25:35] INFO: Starting Step 3: Raw Read Recovery... 
+[2026-08-09 20:25:35] INFO: Loaded 6 validated protein reference(s) from Step 2. 
+[2026-08-09 20:25:35] INFO: Derivative FASTA already exists, reusing: SRR7910035_1.fasta 
+[2026-08-09 20:25:35] INFO: Derivative FASTA already exists, reusing: SRR7910035_2.fasta 
+[2026-08-09 20:25:35] INFO: Sample R1 read ID: SRR7910035.1 1 length=301 
+[2026-08-09 20:25:35] INFO: Sample R2 read ID: SRR7910035.1 1 length=301 
+[2026-08-09 20:25:35] INFO: Detected read-ID pairing convention: 'first_token' (100% match on 500-record sample). 
+[2026-08-09 20:25:35] INFO: BLAST db already exists, reusing: ivm_t1_R1_blastdb 
+[2026-08-09 20:25:35] INFO: BLAST db already exists, reusing: ivm_t1_R2_blastdb 
+[2026-08-09 20:25:35] INFO: expected_aa_len built for 6 gene(s): ATPF1G=305, ATPF1B=519, POLIB=1404, ATOM40=351, TAC102=951, ATPF1A=584 
+[2026-08-09 20:25:35] INFO: ATPF1G (R1): Layer A output already exists, reusing. 
+[2026-08-09 20:25:35] INFO: ATPF1G (R2): Layer A output already exists, reusing. 
+[2026-08-09 20:25:35] INFO: ATPF1B (R1): Layer A output already exists, reusing. 
+[2026-08-09 20:25:35] INFO: ATPF1B (R2): Layer A output already exists, reusing. 
+[2026-08-09 20:25:35] INFO: POLIB (R1): Layer A output already exists, reusing. 
+[2026-08-09 20:25:35] INFO: POLIB (R2): Layer A output already exists, reusing. 
+[2026-08-09 20:25:35] INFO: ATOM40 (R1): Layer A output already exists, reusing. 
+[2026-08-09 20:25:35] INFO: ATOM40 (R2): Layer A output already exists, reusing. 
+[2026-08-09 20:25:35] INFO: TAC102 (R1): Layer A output already exists, reusing. 
+[2026-08-09 20:25:35] INFO: TAC102 (R2): Layer A output already exists, reusing. 
+[2026-08-09 20:25:35] INFO: ATPF1A (R1): Layer A output already exists, reusing. 
+[2026-08-09 20:25:35] INFO: ATPF1A (R2): Layer A output already exists, reusing. 
+[2026-08-09 20:25:35] INFO: Layer A' consolidated HSP rows: 6000 
+[2026-08-09 20:25:44] INFO: Saved Layer B (deduplicated reads): 6000 rows. 
+[2026-08-09 20:25:45] INFO: Saved raw_read_recovery_summary.csv (Layer C). 
+[2026-08-09 20:25:45] INFO: Saved raw_read_recovery_report.txt. 
+[2026-08-09 20:25:45] INFO: Memory info (Windows): {"TotalVisibleMemorySize":66742808,"FreePhysicalMemory":46195936} 
+[2026-08-09 20:25:45] INFO: Step 3 Raw Read Recovery completed successfully. 

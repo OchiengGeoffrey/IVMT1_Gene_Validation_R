@@ -2,7 +2,7 @@
 REFERENCE VALIDATION REPORT
 ==================================
 
-Date: 2026-08-08
+Date: 2026-08-09
 Pipeline: IVM-t1 Raw Read Candidate Gene Validation
 Organism: Trypanosoma equiperdum IVM-t1
 Reference file directory: F:/PROJECTS/IVMT1_Gene_Validation_R/data/reference

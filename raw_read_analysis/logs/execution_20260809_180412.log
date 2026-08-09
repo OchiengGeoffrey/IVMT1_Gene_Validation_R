@@ -1,0 +1,93 @@
+[2026-08-09 18:04:12] INFO: Initialized Phase II project setup 
+[2026-08-09 18:04:12] INFO: Saved package_versions.csv to reports directory 
+[2026-08-09 18:04:12] INFO: Detected tab (\t) delimiter in gene_annotations.csv 
+[2026-08-09 18:04:12] INFO: Successfully loaded gene_annotations.csv and exported target_genes_metadata (RDS and CSV) 
+[2026-08-09 18:04:12] INFO: All directories have write permission 
+[2026-08-09 18:04:12] INFO: FASTQ R1: F:/PROJECTS/IVMT1_Gene_Validation_R/data/reads/SRR7910035_1.fastq 
+[2026-08-09 18:04:12] INFO: FASTQ R2: F:/PROJECTS/IVMT1_Gene_Validation_R/data/reads/SRR7910035_2.fastq 
+[2026-08-09 18:04:12] INFO: Reference FASTA OK: ATPF1G.fasta 
+[2026-08-09 18:04:12] INFO: Reference FASTA OK: ATPF1B.fasta 
+[2026-08-09 18:04:12] INFO: Reference FASTA OK: POLIB.fasta 
+[2026-08-09 18:04:12] INFO: Reference FASTA OK: ATOM40.fasta 
+[2026-08-09 18:04:12] INFO: Reference FASTA OK: TAC102.fasta 
+[2026-08-09 18:04:12] INFO: Reference FASTA OK: ATPF1A.fasta 
+[2026-08-09 18:04:12] INFO: Program 'makeblastdb' found at: C:\PROGRA~1\NCBI\BLAST-~1.0_\bin\MAKEBL~1.EXE 
+[2026-08-09 18:04:12] INFO: Program 'tblastn' found at: C:\PROGRA~1\NCBI\BLAST-~1.0_\bin\tblastn.exe 
+[2026-08-09 18:04:12] INFO: Program 'samtools' not found in PATH. (optional, skipping) 
+[2026-08-09 18:04:12] INFO: Program 'diamond' not found in PATH. (optional, skipping) 
+[2026-08-09 18:04:13] INFO: Memory info (Windows): {"TotalVisibleMemorySize":66742808,"FreePhysicalMemory":46899552} 
+[2026-08-09 18:04:13] INFO: Session info saved to reports/sessionInfo.txt 
+[2026-08-09 18:04:13] INFO: Step 0 Project Setup completed successfully. 
+[2026-08-09 18:04:56] INFO: Starting Step 1: FASTQ Quality Assessment... 
+[2026-08-09 18:04:56] INFO: Counting total reads... 
+[2026-08-09 18:04:56] INFO: Counting absolute total reads in SRR7910035_1.fastq... 
+[2026-08-09 18:06:52] INFO: Counting absolute total reads in SRR7910035_2.fastq... 
+[2026-08-09 18:08:45] INFO: Paired-end symmetry confirmed: 28,337,187 read pairs. 
+[2026-08-09 18:08:45] INFO: Sampling reads for quality distributions... 
+[2026-08-09 18:08:45] INFO: Sampling 1e+05 reads from SRR7910035_1.fastq for deep QC metrics... 
+[2026-08-09 18:09:27] INFO: Sampling 1e+05 reads from SRR7910035_2.fastq for deep QC metrics... 
+[2026-08-09 18:10:10] INFO: Coverage Estimation Assumptions: 
+[2026-08-09 18:10:10] INFO:   Genome size assumed : 35.00 Mb 
+[2026-08-09 18:10:10] INFO:   Total bases yielded : 16875.42 Mb 
+[2026-08-09 18:10:10] INFO:   Estimated coverage  : 482.15x 
+[2026-08-09 18:10:10] INFO: Generating diagnostic QC plots (PDF & PNG)... 
+[2026-08-09 18:10:20] INFO: Saved 2-page 6-panel QC plots (PDF) and separate mate PNGs to reports directory. 
+[2026-08-09 18:10:20] INFO: R1 read-length statistics: min 35 bp; max 301 bp; mean 297.66 bp; median 301.00 bp; SD 17.80 bp. 
+[2026-08-09 18:10:20] INFO: R1 read-length distribution: 64.91% at maximum length; 0.06% <100 bp; 0.01% <50 bp. 
+[2026-08-09 18:10:20] INFO: R1 expected sequencing: Illumina MiSeq PE301; expected length 301 bp; observed percentiles (P05/P25/P75/P95): 298.00/300.00/301.00/301.00 bp. 
+[2026-08-09 18:10:20] INFO: R1: Variable read lengths detected (35-301 bp). This pattern is consistent with adapter/quality trimming and is generally compatible with Rsubread alignment. 
+[2026-08-09 18:10:20] INFO: R1 read-length assessment: PASS. Variable read lengths are consistent with adapter/quality trimming; no evidence of excessive trimming. 
+[2026-08-09 18:10:20] INFO: R2 read-length statistics: min 35 bp; max 301 bp; mean 297.86 bp; median 301.00 bp; SD 18.50 bp. 
+[2026-08-09 18:10:20] INFO: R2 read-length distribution: 66.34% at maximum length; 0.10% <100 bp; 0.01% <50 bp. 
+[2026-08-09 18:10:20] INFO: R2 expected sequencing: Illumina MiSeq PE301; expected length 301 bp; observed percentiles (P05/P25/P75/P95): 299.00/300.00/301.00/301.00 bp. 
+[2026-08-09 18:10:20] INFO: R2: Variable read lengths detected (35-301 bp). This pattern is consistent with adapter/quality trimming and is generally compatible with Rsubread alignment. 
+[2026-08-09 18:10:20] INFO: R2 read-length assessment: PASS. Variable read lengths are consistent with adapter/quality trimming; no evidence of excessive trimming. 
+[2026-08-09 18:10:20] INFO: Saved human-readable text report to reports/fastq_qc_report.txt 
+[2026-08-09 18:10:21] INFO: Memory info (Windows): {"TotalVisibleMemorySize":66742808,"FreePhysicalMemory":46068220} 
+[2026-08-09 18:10:21] INFO: Step 1 FASTQ Quality Assessment completed successfully. 
+[2026-08-09 18:18:37] INFO: Starting Step 2: Reference Integrity Verification... 
+[2026-08-09 18:18:37] INFO: 
+--- Validating: ATPF1G --- 
+[2026-08-09 18:18:37] INFO:   [INFO] Header uses a source gene identifier rather than project alias 'ATPF1G'. 
+[2026-08-09 18:18:37] INFO: 
+--- Validating: ATPF1B --- 
+[2026-08-09 18:18:37] INFO:   [INFO] Header uses a source gene identifier rather than project alias 'ATPF1B'. 
+[2026-08-09 18:18:37] INFO: 
+--- Validating: POLIB --- 
+[2026-08-09 18:18:38] INFO:   [INFO] Header uses a source gene identifier rather than project alias 'POLIB'. 
+[2026-08-09 18:18:38] INFO: 
+--- Validating: ATOM40 --- 
+[2026-08-09 18:18:38] INFO: 
+--- Validating: TAC102 --- 
+[2026-08-09 18:18:38] INFO:   [INFO] Header uses a source gene identifier rather than project alias 'TAC102'. 
+[2026-08-09 18:18:38] INFO: 
+--- Validating: ATPF1A --- 
+[2026-08-09 18:18:38] INFO:   [INFO] Header uses a source gene identifier rather than project alias 'ATPF1A'. 
+[2026-08-09 18:18:38] INFO: Saved reference_summary.csv to reports directory. 
+[2026-08-09 18:18:38] INFO: Saved reference_validation_report.txt to reports directory. 
+[2026-08-09 18:18:38] INFO: Validated protein translations saved to: F:/PROJECTS/IVMT1_Gene_Validation_R/raw_read_analysis/results/intermediate/reference_sequences.rds 
+[2026-08-09 18:18:38] INFO: Memory info (Windows): {"TotalVisibleMemorySize":66742808,"FreePhysicalMemory":46256212} 
+[2026-08-09 18:18:38] INFO: Step 2 Reference Integrity Verification complete: PASS. 
+[2026-08-09 18:19:21] INFO: Starting Step 3: Raw Read Recovery... 
+[2026-08-09 18:19:21] INFO: Loaded 6 validated protein reference(s) from Step 2. 
+[2026-08-09 18:19:21] INFO: Derivative FASTA already exists, reusing: SRR7910035_1.fasta 
+[2026-08-09 18:19:21] INFO: Derivative FASTA already exists, reusing: SRR7910035_2.fasta 
+[2026-08-09 18:19:21] INFO: Sample R1 read ID: SRR7910035.1 1 length=301 
+[2026-08-09 18:19:21] INFO: Sample R2 read ID: SRR7910035.1 1 length=301 
+[2026-08-09 18:19:21] INFO: Detected read-ID pairing convention: 'first_token' (100% match on 500-record sample). 
+[2026-08-09 18:19:21] INFO: BLAST db already exists, reusing: ivm_t1_R1_blastdb 
+[2026-08-09 18:19:21] INFO: BLAST db already exists, reusing: ivm_t1_R2_blastdb 
+[2026-08-09 18:19:21] INFO: ATPF1G (R1): Layer A output already exists, reusing. 
+[2026-08-09 18:19:21] INFO: ATPF1G (R2): Layer A output already exists, reusing. 
+[2026-08-09 18:19:21] INFO: ATPF1B (R1): Layer A output already exists, reusing. 
+[2026-08-09 18:19:21] INFO: ATPF1B (R2): Layer A output already exists, reusing. 
+[2026-08-09 18:19:21] INFO: POLIB (R1): Layer A output already exists, reusing. 
+[2026-08-09 18:19:21] INFO: POLIB (R2): Layer A output already exists, reusing. 
+[2026-08-09 18:19:21] INFO: ATOM40 (R1): Layer A output already exists, reusing. 
+[2026-08-09 18:19:21] INFO: ATOM40 (R2): Layer A output already exists, reusing. 
+[2026-08-09 18:19:21] INFO: TAC102 (R1): Layer A output already exists, reusing. 
+[2026-08-09 18:19:21] INFO: TAC102 (R2): Layer A output already exists, reusing. 
+[2026-08-09 18:19:21] INFO: ATPF1A (R1): Layer A output already exists, reusing. 
+[2026-08-09 18:19:21] INFO: ATPF1A (R2): Layer A output already exists, reusing. 
+[2026-08-09 18:19:21] INFO: Layer A' consolidated HSP rows: 6000 
+[2026-08-09 18:19:35] INFO: Saved Layer B (deduplicated reads): 6000 rows. 

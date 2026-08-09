@@ -1,0 +1,72 @@
+[2026-08-09 20:39:48] INFO: Initialized Phase II project setup 
+[2026-08-09 20:39:48] INFO: Saved package_versions.csv to reports directory 
+[2026-08-09 20:39:48] INFO: Detected tab (\t) delimiter in gene_annotations.csv 
+[2026-08-09 20:39:48] INFO: Successfully loaded gene_annotations.csv and exported target_genes_metadata (RDS and CSV) 
+[2026-08-09 20:39:48] INFO: All directories have write permission 
+[2026-08-09 20:39:48] INFO: FASTQ R1: F:/PROJECTS/IVMT1_Gene_Validation_R/data/reads/SRR7910035_1.fastq 
+[2026-08-09 20:39:48] INFO: FASTQ R2: F:/PROJECTS/IVMT1_Gene_Validation_R/data/reads/SRR7910035_2.fastq 
+[2026-08-09 20:39:48] INFO: Reference FASTA OK: ATPF1G.fasta 
+[2026-08-09 20:39:48] INFO: Reference FASTA OK: ATPF1B.fasta 
+[2026-08-09 20:39:48] INFO: Reference FASTA OK: POLIB.fasta 
+[2026-08-09 20:39:48] INFO: Reference FASTA OK: ATOM40.fasta 
+[2026-08-09 20:39:48] INFO: Reference FASTA OK: TAC102.fasta 
+[2026-08-09 20:39:48] INFO: Reference FASTA OK: ATPF1A.fasta 
+[2026-08-09 20:39:48] INFO: Program 'makeblastdb' found at: C:\PROGRA~1\NCBI\BLAST-~1.0_\bin\MAKEBL~1.EXE 
+[2026-08-09 20:39:48] INFO: Program 'tblastn' found at: C:\PROGRA~1\NCBI\BLAST-~1.0_\bin\tblastn.exe 
+[2026-08-09 20:39:48] INFO: Program 'samtools' not found in PATH. (optional, skipping) 
+[2026-08-09 20:39:48] INFO: Program 'diamond' not found in PATH. (optional, skipping) 
+[2026-08-09 20:39:49] INFO: Memory info (Windows): {"TotalVisibleMemorySize":66742808,"FreePhysicalMemory":46504768} 
+[2026-08-09 20:39:49] INFO: Session info saved to reports/sessionInfo.txt 
+[2026-08-09 20:39:49] INFO: Step 0 Project Setup completed successfully. 
+[2026-08-09 20:40:17] INFO: Starting Step 3: Raw Read Recovery... 
+[2026-08-09 20:40:17] INFO: Loaded 6 validated protein reference(s) from Step 2. 
+[2026-08-09 20:40:17] INFO: Derivative FASTA already exists, reusing: SRR7910035_1.fasta 
+[2026-08-09 20:40:17] INFO: Derivative FASTA already exists, reusing: SRR7910035_2.fasta 
+[2026-08-09 20:40:17] INFO: Sample R1 read ID: SRR7910035.1 1 length=301 
+[2026-08-09 20:40:17] INFO: Sample R2 read ID: SRR7910035.1 1 length=301 
+[2026-08-09 20:40:17] INFO: Detected read-ID pairing convention: 'first_token' (100% match on 500-record sample). 
+[2026-08-09 20:40:17] INFO: BLAST db already exists, reusing: ivm_t1_R1_blastdb 
+[2026-08-09 20:40:17] INFO: BLAST db already exists, reusing: ivm_t1_R2_blastdb 
+[2026-08-09 20:40:17] INFO: expected_aa_len built for 6 gene(s): ATPF1G=305, ATPF1B=519, POLIB=1404, ATOM40=351, TAC102=951, ATPF1A=584 
+[2026-08-09 20:40:17] INFO: ATPF1G (R1): running tblastn against ivm_t1_R1_blastdb ... 
+[2026-08-09 20:40:19] ERROR: ATPF1G (R1): tblastn exited with status 1. See log: tblastn_ATPF1G_R1.log 
+[2026-08-09 20:43:25] INFO: Starting Step 3: Raw Read Recovery... 
+[2026-08-09 20:43:25] INFO: Loaded 6 validated protein reference(s) from Step 2. 
+[2026-08-09 20:43:25] INFO: Derivative FASTA already exists, reusing: SRR7910035_1.fasta 
+[2026-08-09 20:43:25] INFO: Derivative FASTA already exists, reusing: SRR7910035_2.fasta 
+[2026-08-09 20:43:25] INFO: Sample R1 read ID: SRR7910035.1 1 length=301 
+[2026-08-09 20:43:25] INFO: Sample R2 read ID: SRR7910035.1 1 length=301 
+[2026-08-09 20:43:25] INFO: Detected read-ID pairing convention: 'first_token' (100% match on 500-record sample). 
+[2026-08-09 20:43:25] INFO: BLAST db already exists, reusing: ivm_t1_R1_blastdb 
+[2026-08-09 20:43:25] INFO: BLAST db already exists, reusing: ivm_t1_R2_blastdb 
+[2026-08-09 20:43:25] INFO: expected_aa_len built for 6 gene(s): ATPF1G=305, ATPF1B=519, POLIB=1404, ATOM40=351, TAC102=951, ATPF1A=584 
+[2026-08-09 20:43:25] INFO: ATPF1G (R1): running tblastn against ivm_t1_R1_blastdb ... 
+[2026-08-09 20:44:01] INFO: ATPF1G (R1): tblastn complete, 959 raw HSP row(s) (Layer A). 
+[2026-08-09 20:44:01] INFO: ATPF1G (R2): running tblastn against ivm_t1_R2_blastdb ... 
+[2026-08-09 20:44:40] INFO: ATPF1G (R2): tblastn complete, 915 raw HSP row(s) (Layer A). 
+[2026-08-09 20:44:40] INFO: ATPF1B (R1): running tblastn against ivm_t1_R1_blastdb ... 
+[2026-08-09 20:45:23] INFO: ATPF1B (R1): tblastn complete, 1074 raw HSP row(s) (Layer A). 
+[2026-08-09 20:45:23] INFO: ATPF1B (R2): running tblastn against ivm_t1_R2_blastdb ... 
+[2026-08-09 20:46:06] INFO: ATPF1B (R2): tblastn complete, 1154 raw HSP row(s) (Layer A). 
+[2026-08-09 20:46:06] INFO: POLIB (R1): running tblastn against ivm_t1_R1_blastdb ... 
+[2026-08-09 20:47:27] INFO: POLIB (R1): tblastn complete, 4179 raw HSP row(s) (Layer A). 
+[2026-08-09 20:47:27] INFO: POLIB (R2): running tblastn against ivm_t1_R2_blastdb ... 
+[2026-08-09 20:48:52] INFO: POLIB (R2): tblastn complete, 3918 raw HSP row(s) (Layer A). 
+[2026-08-09 20:48:52] INFO: ATOM40 (R1): running tblastn against ivm_t1_R1_blastdb ... 
+[2026-08-09 20:49:33] INFO: ATOM40 (R1): tblastn complete, 846 raw HSP row(s) (Layer A). 
+[2026-08-09 20:49:33] INFO: ATOM40 (R2): running tblastn against ivm_t1_R2_blastdb ... 
+[2026-08-09 20:50:15] INFO: ATOM40 (R2): tblastn complete, 845 raw HSP row(s) (Layer A). 
+[2026-08-09 20:50:15] INFO: TAC102 (R1): running tblastn against ivm_t1_R1_blastdb ... 
+[2026-08-09 20:51:14] INFO: TAC102 (R1): tblastn complete, 1913 raw HSP row(s) (Layer A). 
+[2026-08-09 20:51:14] INFO: TAC102 (R2): running tblastn against ivm_t1_R2_blastdb ... 
+[2026-08-09 20:52:16] INFO: TAC102 (R2): tblastn complete, 1863 raw HSP row(s) (Layer A). 
+[2026-08-09 20:52:16] INFO: ATPF1A (R1): running tblastn against ivm_t1_R1_blastdb ... 
+[2026-08-09 20:53:11] INFO: ATPF1A (R1): tblastn complete, 4477 raw HSP row(s) (Layer A). 
+[2026-08-09 20:53:11] INFO: ATPF1A (R2): running tblastn against ivm_t1_R2_blastdb ... 
+[2026-08-09 20:54:06] INFO: ATPF1A (R2): tblastn complete, 4480 raw HSP row(s) (Layer A). 
+[2026-08-09 20:54:07] INFO: Layer A' consolidated HSP rows: 26623 
+[2026-08-09 20:54:58] INFO: Saved Layer B (deduplicated reads): 26596 rows. 
+[2026-08-09 20:54:59] INFO: Saved raw_read_recovery_summary.csv (Layer C). 
+[2026-08-09 20:54:59] INFO: Saved raw_read_recovery_report.txt. 
+[2026-08-09 20:55:00] INFO: Memory info (Windows): {"TotalVisibleMemorySize":66742808,"FreePhysicalMemory":46207996} 
+[2026-08-09 20:55:00] INFO: Step 3 Raw Read Recovery completed successfully. 

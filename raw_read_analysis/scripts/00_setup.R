@@ -101,8 +101,8 @@ CONFIG <- list(
 CONFIG$raw_recovery <- list(
   blast_evalue            = 1e-10,
   blast_threads           = 8,
-  blast_max_target_seqs   = 5000000,
   blast_outfmt            = "6 qseqid sseqid pident length mismatch gapopen qstart qend sstart send evalue bitscore",
+  blast_max_target_seqs    = 5000000,
   min_alignment_length_aa = NULL,
   min_pident              = NULL,
   depth_report_thresholds = c(1, 5, 10)

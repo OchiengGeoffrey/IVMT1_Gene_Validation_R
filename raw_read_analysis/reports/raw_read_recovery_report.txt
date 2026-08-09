@@ -1,0 +1,80 @@
+==================================
+RAW READ RECOVERY REPORT (Step 3)
+==================================
+
+Date: 2026-08-09
+Strategy: translated-read protein homology (tblastn), protein query vs. raw reads
+Evalue threshold: 1e-10 | threads: 8 | max_target_seqs: 5000000
+Additional filters applied: min_alignment_length_aa=none, min_pident=none
+Read-ID pairing convention detected: first_token (confirmed: TRUE)
+
+Evidence layers:
+  Layer A  : results/intermediate/tblastn_raw/<gene>_<mate>.tsv  (untouched BLAST output)
+  Layer A' : raw_read_recovery_all_hsps.csv  (annotated/normalized DERIVATIVE of Layer A — not itself untouched output; *_raw columns preserve original BLAST values)
+  Layer B  : raw_read_recovery_per_read.csv  (deduplicated read-level evidence, query AND subject coordinates)
+  Layer C  : raw_read_recovery_summary.csv   (gene-level empirical summary)
+
+IMPORTANT: 'support_depth' below is TBLASTN/PROTEIN-HOMOLOGY SUPPORT DEPTH —
+the number of reads producing significant protein-level homology at a given
+protein position — NOT conventional nucleotide sequencing depth/coverage.
+
+NOTE: observation_status is a purely descriptive coverage-based label
+(NO_SIGNIFICANT_SUPPORT / DETECTED_PARTIAL_COVERAGE / DETECTED_FULL_LENGTH_COVERAGE).
+It is NOT a biological recovery/quality classification. Interpretation belongs
+to the PI role, pending inspection of empirical distributions across all six genes.
+
+==================================
+ATPF1G: DETECTED_FULL_LENGTH_COVERAGE
+  Protein length: 305 aa
+  Supporting reads: R1=959, R2=915, total=1874
+  Query coverage: 100.00%
+  Support depth (mean/median/min/max): 531.84 / 551 / 325 / 603
+  Identity (mean/median/min/max): 95.94 / 98 / 47.31 / 100
+  E-value (min/median/max): 1.05e-67 / 4.025e-60 / 9.95e-11
+  Read pairs with support (any / both mates): 1114 / 760 (concordance: 68.22)
+
+ATPF1B: DETECTED_FULL_LENGTH_COVERAGE
+  Protein length: 519 aa
+  Supporting reads: R1=1073, R2=1152, total=2225
+  Query coverage: 100.00%
+  Support depth (mean/median/min/max): 389.68 / 408 / 159 / 480
+  Identity (mean/median/min/max): 94.67 / 97.98 / 50 / 100
+  E-value (min/median/max): 8.45e-65 / 2.7e-50 / 1.85e-11
+  Read pairs with support (any / both mates): 1289 / 936 (concordance: 72.61)
+
+POLIB: DETECTED_FULL_LENGTH_COVERAGE
+  Protein length: 1404 aa
+  Supporting reads: R1=4174, R2=3917, total=8091
+  Query coverage: 100.00%
+  Support depth (mean/median/min/max): 534.29 / 445 / 293 / 1248
+  Identity (mean/median/min/max): 85.61 / 96.97 / 33.66 / 100
+  E-value (min/median/max): 1.18e-64 / 1.15e-54 / 9.84e-11
+  Read pairs with support (any / both mates): 4827 / 3264 (concordance: 67.62)
+
+ATOM40: DETECTED_FULL_LENGTH_COVERAGE
+  Protein length: 351 aa
+  Supporting reads: R1=844, R2=845, total=1689
+  Query coverage: 100.00%
+  Support depth (mean/median/min/max): 415.88 / 427 / 272 / 458
+  Identity (mean/median/min/max): 95.32 / 98.21 / 43.62 / 100
+  E-value (min/median/max): 2.13e-67 / 3.25e-53 / 4.98e-11
+  Read pairs with support (any / both mates): 1030 / 659 (concordance: 63.98)
+
+TAC102: DETECTED_PARTIAL_COVERAGE
+  Protein length: 951 aa
+  Supporting reads: R1=1911, R2=1862, total=3773
+  Query coverage: 91.17%
+  Support depth (mean/median/min/max): 357.09 / 413 / 0 / 480
+  Identity (mean/median/min/max): 94.87 / 97.75 / 46.81 / 100
+  E-value (min/median/max): 4.45e-63 / 8.99e-51 / 9.67e-11
+  Read pairs with support (any / both mates): 2166 / 1607 (concordance: 74.19)
+
+ATPF1A: DETECTED_FULL_LENGTH_COVERAGE
+  Protein length: 584 aa
+  Supporting reads: R1=4467, R2=4477, total=8944
+  Query coverage: 100.00%
+  Support depth (mean/median/min/max): 1407.07 / 1391 / 397 / 1782
+  Identity (mean/median/min/max): 95.15 / 98 / 43.62 / 100
+  E-value (min/median/max): 1.2e-65 / 6.26e-56 / 7.62e-11
+  Read pairs with support (any / both mates): 5064 / 3880 (concordance: 76.62)
+
