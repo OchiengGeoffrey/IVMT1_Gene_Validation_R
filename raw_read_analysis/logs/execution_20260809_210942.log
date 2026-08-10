@@ -46,3 +46,25 @@
 [2026-08-09 21:10:36] INFO: Saved raw_read_recovery_report.txt. 
 [2026-08-09 21:10:37] INFO: Memory info (Windows): {"TotalVisibleMemorySize":66742808,"FreePhysicalMemory":46071132} 
 [2026-08-09 21:10:37] INFO: Step 3 Raw Read Recovery completed successfully. 
+[2026-08-09 21:50:10] INFO: Starting Step 4A: TAC102 gap characterization. 
+[2026-08-09 21:50:10] INFO: Loaded 3773 TAC102 read-level evidence rows. 
+[2026-08-09 21:56:47] INFO: Starting Step 4A: TAC102 gap characterization. 
+[2026-08-09 21:56:47] INFO: Loaded 3773 TAC102 read-level evidence rows. 
+[2026-08-09 21:56:47] INFO: TAC102 support coverage: 91.17%; uncovered: 8.83%. 
+[2026-08-09 21:56:47] INFO: Identified 1 continuous zero-support interval(s). 
+[2026-08-09 21:56:47] INFO: Step 4A TAC102 gap characterization completed. 
+[2026-08-09 22:28:49] INFO: Starting Step 4B.1: TAC102 gap-region reference characterization. 
+[2026-08-09 22:28:49] INFO: Loaded gap interval from Step 4A: 649-732 aa (84 aa). 
+[2026-08-09 22:28:49] INFO: Extracted TAC102 residues 649-732 (84 aa). 
+[2026-08-09 22:28:49] INFO: Saved gap-region FASTA: tac102_gap_region_sequence.fasta 
+[2026-08-09 22:28:49] INFO: Saved amino-acid composition table: tac102_gap_region_composition.csv 
+[2026-08-09 22:28:49] INFO: Saved gap-region characterization report: tac102_gap_region_report.txt 
+[2026-08-09 22:28:49] INFO: Step 4B.1 TAC102 reference-region characterization completed. 
+[2026-08-09 23:15:03] INFO: Starting Step 4B.2: TAC102 flanking HSP & boundary characterization. 
+[2026-08-09 23:15:04] INFO: Saved flanking HSP report: tac102_flanking_hsps_report.txt 
+[2026-08-09 23:15:04] INFO: Step 4B.2 TAC102 flanking HSP characterization completed. 
+[2026-08-09 23:54:13] INFO: Starting Step 4B.3a: Extracting geometry for 41 both-flank pairs. 
+[2026-08-09 23:56:08] INFO: Starting Step 4B.3a: Extracting geometry for 41 both-flank pairs. 
+[2026-08-09 23:56:09] INFO: Saved 41-pair geometry report to F:/PROJECTS/IVMT1_Gene_Validation_R/raw_read_analysis/reports/tac102_41pairs_geometry.csv 
+[2026-08-10 00:22:31] INFO: Starting TAC102 Step 4B.3b pre-flight HSP validation. 
+[2026-08-10 00:22:31] INFO: TAC102 Step 4B.3b pre-flight validation completed. 

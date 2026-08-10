@@ -1,0 +1,31 @@
+==============================================
+TAC102 GAP-REGION REFERENCE CHARACTERIZATION
+==============================================
+
+Date: 2026-08-09
+Gene: TAC102 (reference: TREU927, 951 aa)
+Gap region (from Step 4A): residues 649-732 (84 aa)
+
+IMPORTANT SCOPE NOTE:
+This step characterizes the REFERENCE sequence at the gap coordinates only.
+It does NOT establish why tBLASTn failed to detect homology there - that
+requires the separate nucleotide-evidence analysis (Step 4B.3).
+
+-- Sequence --
+TVATKETKKVGTTEGEEKGEATKKRKAEKKASEKKKKDKEDARKKAGKKLSKAAKKSGKEKKGGKTKKGKDKEEGEEKRTRGRK
+
+-- Compositional bias screen --
+Shannon entropy, gap region:    2.749 bits (max possible: 4.322)
+Shannon entropy, whole protein: 4.014 bits (max possible: 4.322)
+Entropy reduction in gap region: 1.265 bits (68.5% of whole-protein entropy)
+
+Residues enriched >=2x relative to whole-protein frequency AND >=15% of gap region:
+  K: 36.90% of gap region (vs 9.15% whole-protein, 4.03x enrichment)
+
+Simple tandem-repeat scan (descriptive only):
+  No dipeptide repeats (>=3x) found.
+  No tripeptide repeats (>=3x) found.
+
+-- Full amino-acid composition table --
+See: tac102_gap_region_composition.csv
+==============================================

@@ -1,0 +1,27 @@
+==============================================
+TAC102 FLANKING HSP & BOUNDARY REPORT
+==============================================
+
+Date: 2026-08-09
+Gene: TAC102 (reference: TREU927, 951 aa)
+Gap interval: residues 649-732 aa (84 aa)
+
+-- Direct HSP Overlap With Zero-Support Interval --
+HSPs overlapping residues 649-732: 0
+No tBLASTn HSP directly overlaps the zero-support interval.
+
+-- Boundary Precision Metrics --
+N-flank maximum qend (HSPs starting <= 648): 648 aa
+C-flank minimum qstart (HSPs ending >= 733): 733 aa
+Boundary precision gap: 649-732 aa (84 aa missing)
+
+-- Flanking Read-Support Counts --
+N-flank zone (550-648 aa) unique read pairs: 478
+C-flank zone (733-830 aa) unique read pairs: 405
+Read pairs with support on both flanks:    41
+
+NOTE ON TERMINOLOGY:
+'Read pairs with support on both flanks' indicates that the read-pair ID
+contains HSP hits in both flanking windows. Physical gap bridging requires
+direct nucleotide mapping and insert-size validation in Step 4B.3.
+==============================================

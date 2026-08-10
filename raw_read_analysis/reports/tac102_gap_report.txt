@@ -1,0 +1,29 @@
+==============================================
+TAC102 RAW-READ SUPPORT GAP REPORT
+==============================================
+
+Date: 2026-08-09
+Gene: TAC102
+Protein length: 951 aa
+
+Evidence basis:
+Protein-vs-translated-read tBLASTn evidence from Step 3.
+Support depth represents the number of distinct read-level
+protein-homology observations covering each reference residue.
+
+Supported residues: 867 / 951 (91.17%)
+Uncovered residues: 84 / 951 (8.83%)
+
+Continuous zero-support intervals:
+  649-732 aa (84 aa)
+
+IMPORTANT:
+Zero tBLASTn support does not by itself establish gene absence.
+Possible explanations include sequence divergence, low complexity,
+repetitive sequence, read/assembly limitations, or true absence.
+
+The uncovered intervals should therefore be compared against:
+1. the Phase 1B assembly-based TAC102 recovery, and
+2. the underlying raw-read sequence evidence.
+
+==============================================
