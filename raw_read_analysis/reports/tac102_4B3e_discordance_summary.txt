@@ -1,0 +1,18 @@
+Step 4B.3e: TAC102 Sequence Discordance Audit
+==============================================================
+
+Target range: 649 - 732
+Target length: 84 AA
+Qualifying pairs: 28
+Usable translated sequences: 56
+Expanded positional observations: 2316
+
+Positions observed: 84
+Mean depth: 27.57
+Mean positional concordance: 56.3 %
+Positions >=90% concordance: 3
+Positions with 100% concordance: 1
+Variable positions: 83
+
+Consensus peptide:
+TVATMETKKVGTTEGEEKGEATKKRKAEKKASEKKKKDKEDARKKAKKKGSKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKK

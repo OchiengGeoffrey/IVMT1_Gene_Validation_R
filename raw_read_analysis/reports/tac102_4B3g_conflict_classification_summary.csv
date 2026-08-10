@@ -1,0 +1,5 @@
+conflict_class,conflict_count,percentage
+frame_inconsistent_tail,114,65.52
+nucleotide_identical_translation_discrepancy,55,31.61
+nonsynonymous_nucleotide_difference,4,2.3
+low_complexity_Lys_Glu_region,1,0.57

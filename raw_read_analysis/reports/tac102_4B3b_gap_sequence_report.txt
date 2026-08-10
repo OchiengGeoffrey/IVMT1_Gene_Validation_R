@@ -27,14 +27,14 @@ FASTQ RECOVERY
   Reads missing sequence: 0
 
 CANDIDATE LENGTH
-  Candidates >= 30 nt: 75
-  Candidates < 30 nt: 7
+  Candidates >= 30 nt: 69
+  Candidates < 30 nt: 13
 
 PRE-REGISTERED CLASSIFICATION
   Class A: 63
-  Class B: 4
+  Class B: 2
   Class C: 2
-  Class D: 13
+  Class D: 15
 
 THRESHOLDS
   Minimum candidate: 30 nt

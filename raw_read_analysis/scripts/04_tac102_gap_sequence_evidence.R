@@ -1161,167 +1161,56 @@ get_gap_facing_nt <- function(
     hsp,
     side
 ) {
-
   read_len <- length(read_seq)
-
-  sstart <- as.integer(
-    hsp$sstart_raw
-  )
-
-  send <- as.integer(
-    hsp$send_raw
-  )
-
-
-  forward <- (
-    sstart < send
-  )
-
+  sstart   <- as.integer(hsp$sstart_raw)
+  send     <- as.integer(hsp$send_raw)
+  forward  <- (sstart < send)
 
   if (side == "N") {
-
-    # N-side reference coordinates increase toward the gap.
-    #
-    # Forward HSP:
-    #   gap-facing read segment is after send.
-    #
-    # Reverse HSP:
-    #   gap-facing read segment is before send in read coordinates.
-
     if (forward) {
-
       candidate_start <- send + 1L
-      candidate_end <- read_len
-
-      if (
-        candidate_start > candidate_end
-      ) {
-
-        return(
-          list(
-            sequence = DNAString(""),
-            nt_start = NA_integer_,
-            nt_end = NA_integer_,
-            orientation = "forward"
-          )
-        )
-      }
-
-      seq <- Biostrings::subseq(
-        read_seq,
-        start = candidate_start,
-        end = candidate_end
-      )
-
+      candidate_end   <- read_len
+      do_rc           <- FALSE
     } else {
-
       candidate_start <- 1L
-      candidate_end <- send - 1L
-
-      if (
-        candidate_end < candidate_start
-      ) {
-
-        return(
-          list(
-            sequence = DNAString(""),
-            nt_start = NA_integer_,
-            nt_end = NA_integer_,
-            orientation = "reverse"
-          )
-        )
-      }
-
-      seq <- Biostrings::reverseComplement(
-        Biostrings::subseq(
-          read_seq,
-          start = candidate_start,
-          end = candidate_end
-        )
-      )
-
-      # After reverse-complementing, sequence orientation is now toward the
-      # reference/gap direction.
+      candidate_end   <- send - 1L
+      do_rc           <- TRUE
     }
-
-
-  } else {
-
-    # C-side reference coordinates increase away from the gap.
-    #
-    # Forward HSP:
-    #   gap-facing sequence is before sstart.
-    #
-    # Reverse HSP:
-    #   gap-facing sequence is after sstart.
-
+  } else { # side == "C"
     if (forward) {
-
       candidate_start <- 1L
-      candidate_end <- sstart - 1L
-
-      if (
-        candidate_end < candidate_start
-      ) {
-
-        return(
-          list(
-            sequence = DNAString(""),
-            nt_start = NA_integer_,
-            nt_end = NA_integer_,
-            orientation = "forward"
-          )
-        )
-      }
-
-      seq <- Biostrings::reverseComplement(
-        Biostrings::subseq(
-          read_seq,
-          start = candidate_start,
-          end = candidate_end
-        )
-      )
-
+      candidate_end   <- sstart - 1L
+      do_rc           <- FALSE
     } else {
-
-      candidate_start <- send + 1L
-      candidate_end <- read_len
-
-      if (
-        candidate_start > candidate_end
-      ) {
-
-        return(
-          list(
-            sequence = DNAString(""),
-            nt_start = NA_integer_,
-            nt_end = NA_integer_,
-            orientation = "reverse"
-          )
-        )
-      }
-
-      seq <- Biostrings::subseq(
-        read_seq,
-        start = candidate_start,
-        end = candidate_end
-      )
+      candidate_start <- sstart + 1L
+      candidate_end   <- read_len
+      do_rc           <- TRUE
     }
   }
 
+  if (is.na(candidate_start) || is.na(candidate_end) ||
+      candidate_start > candidate_end || 
+      candidate_start < 1L || candidate_end > read_len) {
+    return(list(
+      sequence    = Biostrings::DNAString(""),
+      nt_start    = NA_integer_,
+      nt_end      = NA_integer_,
+      orientation = if (forward) "forward" else "reverse"
+    ))
+  }
+
+  seq <- Biostrings::subseq(read_seq, start = candidate_start, end = candidate_end)
+  if (do_rc) {
+    seq <- Biostrings::reverseComplement(seq)
+  }
 
   list(
-    sequence = seq,
-    nt_start = candidate_start,
-    nt_end = candidate_end,
-    orientation = if (forward) {
-      "forward"
-    } else {
-      "reverse"
-    }
+    sequence    = seq,
+    nt_start    = candidate_start,
+    nt_end      = candidate_end,
+    orientation = if (forward) "forward" else "reverse"
   )
 }
-
 
 # ==============================================================================
 # 11. CODON-ANCHORED GAP EXTENSION

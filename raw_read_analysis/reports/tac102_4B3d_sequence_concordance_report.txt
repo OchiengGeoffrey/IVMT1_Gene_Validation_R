@@ -1,0 +1,33 @@
+==============================================================
+TAC102 PAIR-TO-PAIR SEQUENCE CONCORDANCE
+Step 4B.3d
+==============================================================
+
+Target region: TAC102 AA 649 - 732
+Target length: 84 aa
+
+COHORT
+Qualifying full-gap pairs: 28
+Positionally usable translated sequences: 56
+
+POSITIONAL COVERAGE
+Positions covered: 84
+Positions missing: 0
+Mean depth: 27.57
+Positions >=90% concordant: 3
+Positions 100% concordant: 1
+
+CONSENSUS
+Consensus length: 84
+TVATMETKKVGTTEGEEKGEATKKRKAEKKASEKKKKDKEDARKKAKKKGSKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKK
+
+METHODOLOGICAL LIMITATION
+TAC102 nucleotide reference is unavailable.
+Therefore this analysis is not nucleotide-level identity validation.
+Sequence reconstruction uses the original-HSP-frame,
+codon-anchored translated candidate sequences generated in
+Step 4B.3b.
+
+==============================================================
+END Step 4B.3d
+==============================================================

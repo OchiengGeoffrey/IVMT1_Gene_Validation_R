@@ -1,0 +1,52 @@
+Step 4B.3g: TAC102 Internal Pair-Conflict Resolution Audit
+==============================================================
+Total internal N/C conflicts: 174
+Nucleotide sequence column: gap_facing_sequence
+
+Conflict classification summary:
+# A tibble: 4 × 3
+  conflict_class                  conflict_count percentage
+  <chr>                                    <int>      <dbl>
+1 frame_inconsistent_tail                    114      65.5 
+2 nucleotide_identical_translati…             55      31.6 
+3 nonsynonymous_nucleotide_diffe…              4       2.3 
+4 low_complexity_Lys_Glu_region                1       0.57
+
+Frame / low-complexity diagnostics:
+# A tibble: 1 × 8
+  total_conflicts frame_inconsistent_N frame_inconsistent_C
+            <int>                <int>                <int>
+1             174                  140                  103
+# ℹ 5 more variables: Lys_N <int>, Lys_C <int>,
+#   Glu_N <int>, Glu_C <int>,
+#   low_complexity_conflicts <int>
+
+Most common amino-acid conflicts:
+# A tibble: 20 × 3
+   aa_N  aa_C  conflict_count
+   <chr> <chr>          <int>
+ 1 K     G                 19
+ 2 K     E                 15
+ 3 K     R                 12
+ 4 A     K                 10
+ 5 E     K                  8
+ 6 A     G                  7
+ 7 S     K                  6
+ 8 D     K                  5
+ 9 G     K                  5
+10 K     T                  5
+11 A     R                  4
+12 D     G                  4
+13 K     D                  4
+14 R     E                  4
+15 R     G                  4
+16 R     K                  4
+17 S     E                  4
+18 K     S                  3
+19 M     K                  3
+20 T     K                  3
+
+Outputs:
+raw_read_analysis/reports/tac102_4B3g_conflict_detailed_audit.csv
+raw_read_analysis/reports/tac102_4B3g_conflict_classification_summary.csv
+raw_read_analysis/reports/tac102_4B3g_resolution_summary.txt

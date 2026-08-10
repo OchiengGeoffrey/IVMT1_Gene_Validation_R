@@ -1,0 +1,30 @@
+Step 4B.3f: Pair-Normalized TAC102 Sequence Concordance
+==============================================================
+
+Target range: 649 - 732 ( 84 AA)
+Qualifying complete-gap pairs: 28
+Maximum theoretical pair depth: 28
+Observed maximum pair depth: 28
+Mean pair depth per position: 24.95
+Mean pair-normalized concordance: 56.32 %
+Positions >=90% concordance: 3
+Positions >=95% concordance: 2
+Positions with 100% concordance: 1
+Positions <75% concordance: 62
+Internal N/C pair conflicts: 174
+
+Pair-Normalized Consensus Peptide (649-732):
+TVATMETKKVGTTEGEEKGEATKKRKAEKKASEKKKKDKEDKRKKKKKKGGKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKK
+
+Analytical unit:
+Complete paired-end read pair.
+
+N and C flank observations from the same pair are not treated
+as independent observations. When both cover the same position
+they are collapsed to one pair-level call.
+Exact N/C disagreements are retained as internal pair conflicts.
+
+Outputs:
+raw_read_analysis/reports/tac102_4B3f_pair_normalized_position_concordance.csv
+raw_read_analysis/reports/tac102_4B3f_pair_conflicts.csv
+raw_read_analysis/reports/tac102_4B3f_pair_normalized_summary.txt
