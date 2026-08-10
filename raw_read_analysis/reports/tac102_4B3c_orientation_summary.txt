@@ -1,0 +1,41 @@
+==============================================================
+TAC102 ORIENTATION / COORDINATE DIAGNOSTIC
+Step 4B.3c
+==============================================================
+
+Candidate rows analysed: 82 
+TAC102 reference length: 951 aa
+
+Reported HSP strand:
+
+forward reverse 
+     41      41 
+
+Best biologically meaningful orientation:
+
+             as_is reverse_complement               <NA> 
+                45                 24                 13 
+
+Reference length match:
+
+TRUE <NA> 
+  69   13 
+
+Reversal-control diagnostics:
+Rows with >=20 percentage-point reversal-control excess: 1 
+
+Diagnostic notes:
+
+Independent reconstruction; reported HSP strand = reverse 
+                                                       36 
+Independent reconstruction; reported HSP strand = forward 
+                                                       33 
+                                 insufficient coordinates 
+                                                       13 
+
+Interpretation rule:
+The biologically meaningful comparison is candidate translation
+ versus the forward TAC102 reference.
+ The reversed-reference comparison is diagnostic only.
+ A strong match to the reversed reference is suspicious for
+ sequence-orientation/reversal handling errors.

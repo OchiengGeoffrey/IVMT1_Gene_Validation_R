@@ -1,0 +1,75 @@
+==============================================================
+TAC102 GAP-FACING SEQUENCE EVIDENCE
+Step 4B.3b
+==============================================================
+
+Date: 2026-08-10
+
+PROJECT ARCHITECTURE
+  Analysis type: independent R/Bioconductor raw-read analysis
+  External executables: none
+  Conda/WSL: not used
+
+INPUT FASTQ
+  R1: F:/PROJECTS/IVMT1_Gene_Validation_R/data/reads/SRR7910035_1.fastq
+  R2: F:/PROJECTS/IVMT1_Gene_Validation_R/data/reads/SRR7910035_2.fastq
+
+REFERENCE
+  TAC102 protein length: 951 aa
+  Gap region: 649-732
+
+PAIR RECONSTRUCTION
+  Both-flank pairs: 41
+  Candidate flank reads: 82
+
+FASTQ RECOVERY
+  Reads with sequence recovered: 82
+  Reads missing sequence: 0
+
+CANDIDATE LENGTH
+  Candidates >= 30 nt: 75
+  Candidates < 30 nt: 7
+
+PRE-REGISTERED CLASSIFICATION
+  Class A: 63
+  Class B: 4
+  Class C: 2
+  Class D: 13
+
+THRESHOLDS
+  Minimum candidate: 30 nt
+  Class A: >=10 aa matched AND >=50% identity
+  Class B: >=6 aa matched AND >=30% identity, failing A
+  Class C: >=30 nt interpretable, failing A/B
+  Class D: <30 nt or technically uninterpretable
+
+FRAME / ORIENTATION
+  Mate role determined dynamically from reference coordinates.
+  R1/R2 fixed-role assumption is NOT used.
+  Original HSP strand is retained.
+  Primary comparison uses original-HSP-frame codon anchoring.
+  Six-frame translation is descriptive only.
+  Composition similarity is descriptive only.
+
+KNOWN PROTOCOL DEVIATION
+  TAC102 has no nucleotide reference in this pipeline.
+  Therefore the literal nucleotide-reference alignment criterion
+  cannot be performed.
+  It is substituted by original-HSP-frame, codon-anchored nucleotide
+  extraction followed by direct positional protein comparison.
+  This limitation is explicitly retained in the output.
+
+IMPORTANT INTERPRETIVE LIMITATION
+  query_gap_aa is an HSP-boundary coordinate measurement, not a
+  direct physical insert-size measurement.
+  Step 4B.3b tests whether the gap-facing raw-read sequence contains
+  sequence compatible with TAC102 positions 649-732.
+  It does not by itself establish TAC102 identity at the nucleotide
+  level in the absence of a TAC102 nucleotide reference.
+
+OUTPUTS
+  Full results: F:/PROJECTS/IVMT1_Gene_Validation_R/raw_read_analysis/reports/tac102_41pairs_unaligned_tails.csv
+  Gap evidence: F:/PROJECTS/IVMT1_Gene_Validation_R/raw_read_analysis/reports/tac102_41pairs_gap_evidence.csv
+  FASTQ recovery summary: F:/PROJECTS/IVMT1_Gene_Validation_R/raw_read_analysis/results/raw_read_derivative/tac102_fastq_recovery_summary.csv
+
+==============================================================
