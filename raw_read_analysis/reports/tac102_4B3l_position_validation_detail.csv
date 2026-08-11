@@ -1,208 +1,70 @@
-"pair_id","mate","orientation_role","target_position","note","dup_family"
-"SRR7910035.10334997","R2","N",653,"error: Translation sanity check FAILED.
-Expected internal-CDS standard-code translation.
-Observed: ATG=M, CTG=L, TTG=L, GTG=V, AAA=K, TTT=F, GGG=G",
-"SRR7910035.10897477","R2","N",653,"error: Translation sanity check FAILED.
-Expected internal-CDS standard-code translation.
-Observed: ATG=M, CTG=L, TTG=L, GTG=V, AAA=K, TTT=F, GGG=G",
-"SRR7910035.11023455","R2","N",653,"error: Translation sanity check FAILED.
-Expected internal-CDS standard-code translation.
-Observed: ATG=M, CTG=L, TTG=L, GTG=V, AAA=K, TTT=F, GGG=G",
-"SRR7910035.11156312","R2","N",653,"error: Translation sanity check FAILED.
-Expected internal-CDS standard-code translation.
-Observed: ATG=M, CTG=L, TTG=L, GTG=V, AAA=K, TTT=F, GGG=G",
-"SRR7910035.11900901","R2","N",653,"error: Translation sanity check FAILED.
-Expected internal-CDS standard-code translation.
-Observed: ATG=M, CTG=L, TTG=L, GTG=V, AAA=K, TTT=F, GGG=G",
-"SRR7910035.12937012","R2","N",653,"error: Translation sanity check FAILED.
-Expected internal-CDS standard-code translation.
-Observed: ATG=M, CTG=L, TTG=L, GTG=V, AAA=K, TTT=F, GGG=G",
-"SRR7910035.15436240","R2","N",653,"error: Translation sanity check FAILED.
-Expected internal-CDS standard-code translation.
-Observed: ATG=M, CTG=L, TTG=L, GTG=V, AAA=K, TTT=F, GGG=G",
-"SRR7910035.1964432","R2","N",653,"error: Translation sanity check FAILED.
-Expected internal-CDS standard-code translation.
-Observed: ATG=M, CTG=L, TTG=L, GTG=V, AAA=K, TTT=F, GGG=G",
-"SRR7910035.1970792","R2","N",653,"error: Translation sanity check FAILED.
-Expected internal-CDS standard-code translation.
-Observed: ATG=M, CTG=L, TTG=L, GTG=V, AAA=K, TTT=F, GGG=G",
-"SRR7910035.20819473","R2","N",653,"error: Translation sanity check FAILED.
-Expected internal-CDS standard-code translation.
-Observed: ATG=M, CTG=L, TTG=L, GTG=V, AAA=K, TTT=F, GGG=G",
-"SRR7910035.21033183","R2","N",653,"error: Translation sanity check FAILED.
-Expected internal-CDS standard-code translation.
-Observed: ATG=M, CTG=L, TTG=L, GTG=V, AAA=K, TTT=F, GGG=G",
-"SRR7910035.21299","R1","N",653,"error: Translation sanity check FAILED.
-Expected internal-CDS standard-code translation.
-Observed: ATG=M, CTG=L, TTG=L, GTG=V, AAA=K, TTT=F, GGG=G",
-"SRR7910035.21584664","R2","N",653,"error: Translation sanity check FAILED.
-Expected internal-CDS standard-code translation.
-Observed: ATG=M, CTG=L, TTG=L, GTG=V, AAA=K, TTT=F, GGG=G",
-"SRR7910035.23078712","R2","N",653,"error: Translation sanity check FAILED.
-Expected internal-CDS standard-code translation.
-Observed: ATG=M, CTG=L, TTG=L, GTG=V, AAA=K, TTT=F, GGG=G",
-"SRR7910035.23521289","R2","N",653,"error: Translation sanity check FAILED.
-Expected internal-CDS standard-code translation.
-Observed: ATG=M, CTG=L, TTG=L, GTG=V, AAA=K, TTT=F, GGG=G",
-"SRR7910035.24197645","R2","N",653,"error: Translation sanity check FAILED.
-Expected internal-CDS standard-code translation.
-Observed: ATG=M, CTG=L, TTG=L, GTG=V, AAA=K, TTT=F, GGG=G",
-"SRR7910035.24697138","R2","N",653,"error: Translation sanity check FAILED.
-Expected internal-CDS standard-code translation.
-Observed: ATG=M, CTG=L, TTG=L, GTG=V, AAA=K, TTT=F, GGG=G",
-"SRR7910035.25988092","R2","N",653,"error: Translation sanity check FAILED.
-Expected internal-CDS standard-code translation.
-Observed: ATG=M, CTG=L, TTG=L, GTG=V, AAA=K, TTT=F, GGG=G",
-"SRR7910035.26367709","R1","N",653,"error: Translation sanity check FAILED.
-Expected internal-CDS standard-code translation.
-Observed: ATG=M, CTG=L, TTG=L, GTG=V, AAA=K, TTT=F, GGG=G",
-"SRR7910035.27458563","R2","N",653,"error: Translation sanity check FAILED.
-Expected internal-CDS standard-code translation.
-Observed: ATG=M, CTG=L, TTG=L, GTG=V, AAA=K, TTT=F, GGG=G",
-"SRR7910035.3301201","R2","N",653,"error: Translation sanity check FAILED.
-Expected internal-CDS standard-code translation.
-Observed: ATG=M, CTG=L, TTG=L, GTG=V, AAA=K, TTT=F, GGG=G",
-"SRR7910035.3359319","R2","N",653,"error: Translation sanity check FAILED.
-Expected internal-CDS standard-code translation.
-Observed: ATG=M, CTG=L, TTG=L, GTG=V, AAA=K, TTT=F, GGG=G",
-"SRR7910035.3520646","R2","N",653,"error: Translation sanity check FAILED.
-Expected internal-CDS standard-code translation.
-Observed: ATG=M, CTG=L, TTG=L, GTG=V, AAA=K, TTT=F, GGG=G",
-"SRR7910035.3522774","R2","N",653,"error: Translation sanity check FAILED.
-Expected internal-CDS standard-code translation.
-Observed: ATG=M, CTG=L, TTG=L, GTG=V, AAA=K, TTT=F, GGG=G",
-"SRR7910035.3831778","R2","N",653,"error: Translation sanity check FAILED.
-Expected internal-CDS standard-code translation.
-Observed: ATG=M, CTG=L, TTG=L, GTG=V, AAA=K, TTT=F, GGG=G",
-"SRR7910035.621828","R2","N",653,"error: Translation sanity check FAILED.
-Expected internal-CDS standard-code translation.
-Observed: ATG=M, CTG=L, TTG=L, GTG=V, AAA=K, TTT=F, GGG=G",
-"SRR7910035.6537663","R2","N",653,"error: Translation sanity check FAILED.
-Expected internal-CDS standard-code translation.
-Observed: ATG=M, CTG=L, TTG=L, GTG=V, AAA=K, TTT=F, GGG=G",
-"SRR7910035.6717252","R2","N",653,"error: Translation sanity check FAILED.
-Expected internal-CDS standard-code translation.
-Observed: ATG=M, CTG=L, TTG=L, GTG=V, AAA=K, TTT=F, GGG=G",
-"SRR7910035.8621612","R2","N",653,"error: Translation sanity check FAILED.
-Expected internal-CDS standard-code translation.
-Observed: ATG=M, CTG=L, TTG=L, GTG=V, AAA=K, TTT=F, GGG=G",
-"SRR7910035.8944822","R2","N",653,"error: Translation sanity check FAILED.
-Expected internal-CDS standard-code translation.
-Observed: ATG=M, CTG=L, TTG=L, GTG=V, AAA=K, TTT=F, GGG=G",
-"SRR7910035.9218689","R2","N",653,"error: Translation sanity check FAILED.
-Expected internal-CDS standard-code translation.
-Observed: ATG=M, CTG=L, TTG=L, GTG=V, AAA=K, TTT=F, GGG=G",
-"SRR7910035.9264363","R2","N",653,"error: Translation sanity check FAILED.
-Expected internal-CDS standard-code translation.
-Observed: ATG=M, CTG=L, TTG=L, GTG=V, AAA=K, TTT=F, GGG=G",
-"SRR7910035.9295551","R2","N",653,"error: Translation sanity check FAILED.
-Expected internal-CDS standard-code translation.
-Observed: ATG=M, CTG=L, TTG=L, GTG=V, AAA=K, TTT=F, GGG=G",
-"SRR7910035.10334997","R2","N",698,"error: Translation sanity check FAILED.
-Expected internal-CDS standard-code translation.
-Observed: ATG=M, CTG=L, TTG=L, GTG=V, AAA=K, TTT=F, GGG=G",
-"SRR7910035.10897477","R2","N",698,"error: Translation sanity check FAILED.
-Expected internal-CDS standard-code translation.
-Observed: ATG=M, CTG=L, TTG=L, GTG=V, AAA=K, TTT=F, GGG=G",
-"SRR7910035.10897477","R1","C",698,"error: Translation sanity check FAILED.
-Expected internal-CDS standard-code translation.
-Observed: ATG=M, CTG=L, TTG=L, GTG=V, AAA=K, TTT=F, GGG=G",
-"SRR7910035.11023455","R1","C",698,"error: Translation sanity check FAILED.
-Expected internal-CDS standard-code translation.
-Observed: ATG=M, CTG=L, TTG=L, GTG=V, AAA=K, TTT=F, GGG=G",
-"SRR7910035.11156312","R1","C",698,"error: Translation sanity check FAILED.
-Expected internal-CDS standard-code translation.
-Observed: ATG=M, CTG=L, TTG=L, GTG=V, AAA=K, TTT=F, GGG=G",
-"SRR7910035.11900901","R1","C",698,"error: Translation sanity check FAILED.
-Expected internal-CDS standard-code translation.
-Observed: ATG=M, CTG=L, TTG=L, GTG=V, AAA=K, TTT=F, GGG=G",
-"SRR7910035.12937012","R2","N",698,"error: Translation sanity check FAILED.
-Expected internal-CDS standard-code translation.
-Observed: ATG=M, CTG=L, TTG=L, GTG=V, AAA=K, TTT=F, GGG=G",
-"SRR7910035.12937012","R1","C",698,"error: Translation sanity check FAILED.
-Expected internal-CDS standard-code translation.
-Observed: ATG=M, CTG=L, TTG=L, GTG=V, AAA=K, TTT=F, GGG=G",
-"SRR7910035.17087479","R1","C",698,"error: Translation sanity check FAILED.
-Expected internal-CDS standard-code translation.
-Observed: ATG=M, CTG=L, TTG=L, GTG=V, AAA=K, TTT=F, GGG=G",
-"SRR7910035.19346284","R1","C",698,"error: Translation sanity check FAILED.
-Expected internal-CDS standard-code translation.
-Observed: ATG=M, CTG=L, TTG=L, GTG=V, AAA=K, TTT=F, GGG=G",
-"SRR7910035.1964432","R2","N",698,"error: Translation sanity check FAILED.
-Expected internal-CDS standard-code translation.
-Observed: ATG=M, CTG=L, TTG=L, GTG=V, AAA=K, TTT=F, GGG=G",
-"SRR7910035.1964432","R1","C",698,"error: Translation sanity check FAILED.
-Expected internal-CDS standard-code translation.
-Observed: ATG=M, CTG=L, TTG=L, GTG=V, AAA=K, TTT=F, GGG=G",
-"SRR7910035.1970792","R2","N",698,"error: Translation sanity check FAILED.
-Expected internal-CDS standard-code translation.
-Observed: ATG=M, CTG=L, TTG=L, GTG=V, AAA=K, TTT=F, GGG=G",
-"SRR7910035.1970792","R1","C",698,"error: Translation sanity check FAILED.
-Expected internal-CDS standard-code translation.
-Observed: ATG=M, CTG=L, TTG=L, GTG=V, AAA=K, TTT=F, GGG=G",
-"SRR7910035.2051268","R1","C",698,"error: Translation sanity check FAILED.
-Expected internal-CDS standard-code translation.
-Observed: ATG=M, CTG=L, TTG=L, GTG=V, AAA=K, TTT=F, GGG=G",
-"SRR7910035.21033183","R1","C",698,"error: Translation sanity check FAILED.
-Expected internal-CDS standard-code translation.
-Observed: ATG=M, CTG=L, TTG=L, GTG=V, AAA=K, TTT=F, GGG=G",
-"SRR7910035.21584664","R1","C",698,"error: Translation sanity check FAILED.
-Expected internal-CDS standard-code translation.
-Observed: ATG=M, CTG=L, TTG=L, GTG=V, AAA=K, TTT=F, GGG=G",
-"SRR7910035.23078712","R2","N",698,"error: Translation sanity check FAILED.
-Expected internal-CDS standard-code translation.
-Observed: ATG=M, CTG=L, TTG=L, GTG=V, AAA=K, TTT=F, GGG=G",
-"SRR7910035.24197645","R1","C",698,"error: Translation sanity check FAILED.
-Expected internal-CDS standard-code translation.
-Observed: ATG=M, CTG=L, TTG=L, GTG=V, AAA=K, TTT=F, GGG=G",
-"SRR7910035.24697138","R2","N",698,"error: Translation sanity check FAILED.
-Expected internal-CDS standard-code translation.
-Observed: ATG=M, CTG=L, TTG=L, GTG=V, AAA=K, TTT=F, GGG=G",
-"SRR7910035.24697138","R1","C",698,"error: Translation sanity check FAILED.
-Expected internal-CDS standard-code translation.
-Observed: ATG=M, CTG=L, TTG=L, GTG=V, AAA=K, TTT=F, GGG=G",
-"SRR7910035.25988092","R1","C",698,"error: Translation sanity check FAILED.
-Expected internal-CDS standard-code translation.
-Observed: ATG=M, CTG=L, TTG=L, GTG=V, AAA=K, TTT=F, GGG=G",
-"SRR7910035.26317054","R1","C",698,"error: Translation sanity check FAILED.
-Expected internal-CDS standard-code translation.
-Observed: ATG=M, CTG=L, TTG=L, GTG=V, AAA=K, TTT=F, GGG=G",
-"SRR7910035.27458563","R1","C",698,"error: Translation sanity check FAILED.
-Expected internal-CDS standard-code translation.
-Observed: ATG=M, CTG=L, TTG=L, GTG=V, AAA=K, TTT=F, GGG=G",
-"SRR7910035.3359319","R2","N",698,"error: Translation sanity check FAILED.
-Expected internal-CDS standard-code translation.
-Observed: ATG=M, CTG=L, TTG=L, GTG=V, AAA=K, TTT=F, GGG=G",
-"SRR7910035.3359319","R1","C",698,"error: Translation sanity check FAILED.
-Expected internal-CDS standard-code translation.
-Observed: ATG=M, CTG=L, TTG=L, GTG=V, AAA=K, TTT=F, GGG=G",
-"SRR7910035.3520646","R1","C",698,"error: Translation sanity check FAILED.
-Expected internal-CDS standard-code translation.
-Observed: ATG=M, CTG=L, TTG=L, GTG=V, AAA=K, TTT=F, GGG=G",
-"SRR7910035.3522774","R1","C",698,"error: Translation sanity check FAILED.
-Expected internal-CDS standard-code translation.
-Observed: ATG=M, CTG=L, TTG=L, GTG=V, AAA=K, TTT=F, GGG=G",
-"SRR7910035.3831778","R2","N",698,"error: Translation sanity check FAILED.
-Expected internal-CDS standard-code translation.
-Observed: ATG=M, CTG=L, TTG=L, GTG=V, AAA=K, TTT=F, GGG=G",
-"SRR7910035.621828","R1","C",698,"error: Translation sanity check FAILED.
-Expected internal-CDS standard-code translation.
-Observed: ATG=M, CTG=L, TTG=L, GTG=V, AAA=K, TTT=F, GGG=G",
-"SRR7910035.6537663","R1","C",698,"error: Translation sanity check FAILED.
-Expected internal-CDS standard-code translation.
-Observed: ATG=M, CTG=L, TTG=L, GTG=V, AAA=K, TTT=F, GGG=G",
-"SRR7910035.6717252","R1","C",698,"error: Translation sanity check FAILED.
-Expected internal-CDS standard-code translation.
-Observed: ATG=M, CTG=L, TTG=L, GTG=V, AAA=K, TTT=F, GGG=G",
-"SRR7910035.8621612","R1","C",698,"error: Translation sanity check FAILED.
-Expected internal-CDS standard-code translation.
-Observed: ATG=M, CTG=L, TTG=L, GTG=V, AAA=K, TTT=F, GGG=G",
-"SRR7910035.8944822","R1","C",698,"error: Translation sanity check FAILED.
-Expected internal-CDS standard-code translation.
-Observed: ATG=M, CTG=L, TTG=L, GTG=V, AAA=K, TTT=F, GGG=G",
-"SRR7910035.9218689","R1","C",698,"error: Translation sanity check FAILED.
-Expected internal-CDS standard-code translation.
-Observed: ATG=M, CTG=L, TTG=L, GTG=V, AAA=K, TTT=F, GGG=G",
-"SRR7910035.9264363","R1","C",698,"error: Translation sanity check FAILED.
-Expected internal-CDS standard-code translation.
-Observed: ATG=M, CTG=L, TTG=L, GTG=V, AAA=K, TTT=F, GGG=G",
+"pair_id","mate","orientation_role","target_position","hsp_strand","read_start_coord","read_length","codon_nt_start","codon_nt_end","codon","codon_base1","codon_base2","codon_base3","codon_qual_pos1","codon_qual_pos2","codon_qual_pos3","codon_min_qual","codon_mean_qual","translated_aa","note","dup_family"
+"SRR7910035.10334997","R2","N",653,"forward",133,1,133,135,,,,,,,,,,,"codon window outside read bounds","R2_forward_F6"
+"SRR7910035.10897477","R2","N",653,"forward",125,1,125,127,,,,,,,,,,,"codon window outside read bounds","R2_forward_F4"
+"SRR7910035.11023455","R2","N",653,"forward",258,1,258,260,,,,,,,,,,,"codon window outside read bounds","R2_forward_F19"
+"SRR7910035.11156312","R2","N",653,"forward",174,1,174,176,,,,,,,,,,,"codon window outside read bounds","R2_forward_F10"
+"SRR7910035.11900901","R2","N",653,"forward",283,1,283,285,,,,,,,,,,,"codon window outside read bounds","R2_forward_F21"
+"SRR7910035.12937012","R2","N",653,"forward",138,1,138,140,,,,,,,,,,,"codon window outside read bounds","R2_forward_F7"
+"SRR7910035.15436240","R2","N",653,"forward",208,1,208,210,,,,,,,,,,,"codon window outside read bounds","R2_forward_F13"
+"SRR7910035.1964432","R2","N",653,"forward",145,1,145,147,,,,,,,,,,,"codon window outside read bounds","R2_forward_F8"
+"SRR7910035.1970792","R2","N",653,"forward",142,1,142,144,,,,,,,,,,,"codon window outside read bounds","R2_forward_F8"
+"SRR7910035.20819473","R2","N",653,"forward",254,1,254,256,,,,,,,,,,,"codon window outside read bounds","R2_forward_F18"
+"SRR7910035.21033183","R2","N",653,"forward",290,1,290,292,,,,,,,,,,,"codon window outside read bounds","R2_forward_F22"
+"SRR7910035.21299","R1","N",653,"forward",194,1,194,196,,,,,,,,,,,"codon window outside read bounds","R1_forward_F1"
+"SRR7910035.21584664","R2","N",653,"forward",205,1,205,207,,,,,,,,,,,"codon window outside read bounds","R2_forward_F13"
+"SRR7910035.23078712","R2","N",653,"forward",147,1,147,149,,,,,,,,,,,"codon window outside read bounds","R2_forward_F8"
+"SRR7910035.23521289","R2","N",653,"forward",204,1,204,206,,,,,,,,,,,"codon window outside read bounds","R2_forward_F13"
+"SRR7910035.24197645","R2","N",653,"forward",217,1,217,219,,,,,,,,,,,"codon window outside read bounds","R2_forward_F14"
+"SRR7910035.24697138","R2","N",653,"forward",156,1,156,158,,,,,,,,,,,"codon window outside read bounds","R2_forward_F9"
+"SRR7910035.25988092","R2","N",653,"forward",206,1,206,208,,,,,,,,,,,"codon window outside read bounds","R2_forward_F13"
+"SRR7910035.26367709","R1","N",653,"forward",273,1,273,275,,,,,,,,,,,"codon window outside read bounds","R1_forward_F2"
+"SRR7910035.27458563","R2","N",653,"forward",270,1,270,272,,,,,,,,,,,"codon window outside read bounds","R2_forward_F20"
+"SRR7910035.3301201","R2","N",653,"forward",178,1,178,180,,,,,,,,,,,"codon window outside read bounds","R2_forward_F11"
+"SRR7910035.3359319","R2","N",653,"forward",129,1,129,131,,,,,,,,,,,"codon window outside read bounds","R2_forward_F5"
+"SRR7910035.3520646","R2","N",653,"forward",253,1,253,255,,,,,,,,,,,"codon window outside read bounds","R2_forward_F18"
+"SRR7910035.3522774","R2","N",653,"forward",201,1,201,203,,,,,,,,,,,"codon window outside read bounds","R2_forward_F13"
+"SRR7910035.3831778","R2","N",653,"forward",118,1,118,120,,,,,,,,,,,"codon window outside read bounds","R2_forward_F3"
+"SRR7910035.621828","R2","N",653,"forward",199,1,199,201,,,,,,,,,,,"codon window outside read bounds","R2_forward_F13"
+"SRR7910035.6537663","R2","N",653,"forward",234,1,234,236,,,,,,,,,,,"codon window outside read bounds","R2_forward_F15"
+"SRR7910035.6717252","R2","N",653,"forward",248,1,248,250,,,,,,,,,,,"codon window outside read bounds","R2_forward_F17"
+"SRR7910035.8621612","R2","N",653,"forward",180,1,180,182,,,,,,,,,,,"codon window outside read bounds","R2_forward_F11"
+"SRR7910035.8944822","R2","N",653,"forward",242,1,242,244,,,,,,,,,,,"codon window outside read bounds","R2_forward_F16"
+"SRR7910035.9218689","R2","N",653,"forward",231,1,231,233,,,,,,,,,,,"codon window outside read bounds","R2_forward_F15"
+"SRR7910035.9264363","R2","N",653,"forward",241,1,241,243,,,,,,,,,,,"codon window outside read bounds","R2_forward_F16"
+"SRR7910035.9295551","R2","N",653,"forward",186,1,186,188,,,,,,,,,,,"codon window outside read bounds","R2_forward_F12"
+"SRR7910035.10334997","R2","N",698,"forward",268,1,268,270,,,,,,,,,,,"codon window outside read bounds","R2_forward_F13"
+"SRR7910035.10897477","R2","N",698,"forward",260,1,260,262,,,,,,,,,,,"codon window outside read bounds","R2_forward_F11"
+"SRR7910035.10897477","R1","C",698,"reverse",247,1,247,249,,,,,,,,,,,"codon window outside read bounds","R1_reverse_F5"
+"SRR7910035.11023455","R1","C",698,"reverse",237,1,237,239,,,,,,,,,,,"codon window outside read bounds","R1_reverse_F4"
+"SRR7910035.11156312","R1","C",698,"reverse",291,1,291,293,,,,,,,,,,,"codon window outside read bounds","R1_reverse_F9"
+"SRR7910035.11900901","R1","C",698,"reverse",295,1,295,297,,,,,,,,,,,"codon window outside read bounds","R1_reverse_F9"
+"SRR7910035.12937012","R2","N",698,"forward",273,1,273,275,,,,,,,,,,,"codon window outside read bounds","R2_forward_F14"
+"SRR7910035.12937012","R1","C",698,"reverse",233,1,233,235,,,,,,,,,,,"codon window outside read bounds","R1_reverse_F4"
+"SRR7910035.17087479","R1","C",698,"reverse",287,1,287,289,,,,,,,,,,,"codon window outside read bounds","R1_reverse_F9"
+"SRR7910035.19346284","R1","C",698,"reverse",239,1,239,241,,,,,,,,,,,"codon window outside read bounds","R1_reverse_F4"
+"SRR7910035.1964432","R2","N",698,"forward",280,1,280,282,,,,,,,,,,,"codon window outside read bounds","R2_forward_F15"
+"SRR7910035.1964432","R1","C",698,"reverse",211,1,211,213,,,,,,,,,,,"codon window outside read bounds","R1_reverse_F1"
+"SRR7910035.1970792","R2","N",698,"forward",277,1,277,279,,,,,,,,,,,"codon window outside read bounds","R2_forward_F15"
+"SRR7910035.1970792","R1","C",698,"reverse",267,1,267,269,,,,,,,,,,,"codon window outside read bounds","R1_reverse_F7"
+"SRR7910035.2051268","R1","C",698,"reverse",253,1,253,255,,,,,,,,,,,"codon window outside read bounds","R1_reverse_F6"
+"SRR7910035.21033183","R1","C",698,"reverse",273,1,273,275,,,,,,,,,,,"codon window outside read bounds","R1_reverse_F8"
+"SRR7910035.21584664","R1","C",698,"reverse",254,1,254,256,,,,,,,,,,,"codon window outside read bounds","R1_reverse_F6"
+"SRR7910035.23078712","R2","N",698,"forward",282,1,282,284,,,,,,,,,,,"codon window outside read bounds","R2_forward_F15"
+"SRR7910035.24197645","R1","C",698,"reverse",211,1,211,213,,,,,,,,,,,"codon window outside read bounds","R1_reverse_F1"
+"SRR7910035.24697138","R2","N",698,"forward",291,1,291,293,,,,,,,,,,,"codon window outside read bounds","R2_forward_F16"
+"SRR7910035.24697138","R1","C",698,"reverse",227,1,227,229,,,,,,,,,,,"codon window outside read bounds","R1_reverse_F3"
+"SRR7910035.25988092","R1","C",698,"reverse",265,1,265,267,,,,,,,,,,,"codon window outside read bounds","R1_reverse_F7"
+"SRR7910035.26317054","R1","C",698,"reverse",292,1,292,294,,,,,,,,,,,"codon window outside read bounds","R1_reverse_F9"
+"SRR7910035.27458563","R1","C",698,"reverse",215,1,215,217,,,,,,,,,,,"codon window outside read bounds","R1_reverse_F1"
+"SRR7910035.3359319","R2","N",698,"forward",264,1,264,266,,,,,,,,,,,"codon window outside read bounds","R2_forward_F12"
+"SRR7910035.3359319","R1","C",698,"reverse",213,1,213,215,,,,,,,,,,,"codon window outside read bounds","R1_reverse_F1"
+"SRR7910035.3520646","R1","C",698,"reverse",273,1,273,275,,,,,,,,,,,"codon window outside read bounds","R1_reverse_F8"
+"SRR7910035.3522774","R1","C",698,"reverse",265,1,265,267,,,,,,,,,,,"codon window outside read bounds","R1_reverse_F7"
+"SRR7910035.3831778","R2","N",698,"forward",253,1,253,255,,,,,,,,,,,"codon window outside read bounds","R2_forward_F10"
+"SRR7910035.621828","R1","C",698,"reverse",220,1,220,222,,,,,,,,,,,"codon window outside read bounds","R1_reverse_F2"
+"SRR7910035.6537663","R1","C",698,"reverse",296,1,296,298,,,,,,,,,,,"codon window outside read bounds","R1_reverse_F9"
+"SRR7910035.6717252","R1","C",698,"reverse",290,1,290,292,,,,,,,,,,,"codon window outside read bounds","R1_reverse_F9"
+"SRR7910035.8621612","R1","C",698,"reverse",287,1,287,289,,,,,,,,,,,"codon window outside read bounds","R1_reverse_F9"
+"SRR7910035.8944822","R1","C",698,"reverse",222,1,222,224,,,,,,,,,,,"codon window outside read bounds","R1_reverse_F2"
+"SRR7910035.9218689","R1","C",698,"reverse",236,1,236,238,,,,,,,,,,,"codon window outside read bounds","R1_reverse_F4"
+"SRR7910035.9264363","R1","C",698,"reverse",237,1,237,239,,,,,,,,,,,"codon window outside read bounds","R1_reverse_F4"

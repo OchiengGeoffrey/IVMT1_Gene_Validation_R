@@ -4,7 +4,23 @@ Step 4B.3l
 ==============================================================
 
 Date: 2026-08-11
-Time: 2026-08-11 09:22:34
+Time: 2026-08-11 19:06:27
+
+SOFTWARE / TRANSLATION
+  R version: R version 4.5.2 (2025-10-31 ucrt)
+  Biostrings version: 2.78.0
+
+  Internal TAC102 codons were translated using:
+    Biostrings::translate(..., no.init.codon=TRUE)
+
+  Translation sanity check:
+    ATG -> M
+    CTG -> L
+    TTG -> L
+    GTG -> V
+    AAA -> K
+    TTT -> F
+    GGG -> G
 
 METHOD
   Candidate reads were identified using the TAC102 unaligned-tail
@@ -29,20 +45,23 @@ METHOD
 
 POSITION 653
   Candidate records: 33
-  Usable records: 33
-  Independent read-start families: 22
-  Mean codon minimum Phred: 16.58
-  Minimum codon minimum Phred: 7
+  Usable records: 0
+  Independent read-start families: 0
+  Mean codon minimum Phred: NA
+  Minimum codon minimum Phred: NA
 
 POSITION 698
   Candidate records: 36
-  Usable records: 36
-  Independent read-start families: 16
-  Mean codon minimum Phred: 15.25
-  Minimum codon minimum Phred: 7
+  Usable records: 0
+  Independent read-start families: 0
+  Mean codon minimum Phred: NA
+  Minimum codon minimum Phred: NA
 
 CROSS-POSITION INDEPENDENCE
   Read pairs contributing to BOTH positions: 26
+
+ALLELE SUMMARY
+  See tac102_4B3l_position_validation_summary.csv
 
 INTERPRETATION GUIDE
   This script does not automatically declare a biological SNP.
