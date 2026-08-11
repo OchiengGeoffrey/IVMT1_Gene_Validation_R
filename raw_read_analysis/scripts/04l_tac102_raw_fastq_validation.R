@@ -722,20 +722,10 @@ stream_candidate_fastq <- function(
       # Store each recovered read
       # ------------------------------------------------------------------------
 
-      for (
-        k in seq_along(selected_names)
-      ) {
-
+      for (k in seq_along(selected_names)) {
         read_id <- selected_names[k]
-
-
-        sequences[[read_id]] <-
-          selected_sequences[k]
-
-
-        qualities[[read_id]] <-
-          selected_quality_int[[k]]
-
+        sequences[[read_id]] <- selected_sequences[[k]]
+        qualities[[read_id]] <- selected_quality_int[[k]]
 
         found <- c(
           found,
@@ -1198,9 +1188,7 @@ extract_base_evidence <- function(
   # Read length
   # --------------------------------------------------------------------------
 
-  read_length <- length(
-    seq_obj
-  )
+  read_length <- length(seq_obj)
 
 
   # --------------------------------------------------------------------------

@@ -4,7 +4,7 @@ Step 4B.3l
 ==============================================================
 
 Date: 2026-08-11
-Time: 2026-08-11 19:06:27
+Time: 2026-08-11 20:06:30
 
 SOFTWARE / TRANSLATION
   R version: R version 4.5.2 (2025-10-31 ucrt)
@@ -45,17 +45,17 @@ METHOD
 
 POSITION 653
   Candidate records: 33
-  Usable records: 0
-  Independent read-start families: 0
-  Mean codon minimum Phred: NA
-  Minimum codon minimum Phred: NA
+  Usable records: 33
+  Independent read-start families: 22
+  Mean codon minimum Phred: 16.58
+  Minimum codon minimum Phred: 7
 
 POSITION 698
   Candidate records: 36
-  Usable records: 0
-  Independent read-start families: 0
-  Mean codon minimum Phred: NA
-  Minimum codon minimum Phred: NA
+  Usable records: 36
+  Independent read-start families: 16
+  Mean codon minimum Phred: 15.25
+  Minimum codon minimum Phred: 7
 
 CROSS-POSITION INDEPENDENCE
   Read pairs contributing to BOTH positions: 26
