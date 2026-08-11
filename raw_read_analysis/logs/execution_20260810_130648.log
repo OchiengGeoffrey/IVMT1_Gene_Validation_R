@@ -31,3 +31,12 @@
 [2026-08-10 13:58:35] INFO: Step 4B.3b completed. Both-flank pairs: 41; candidate reads: 82; A:63 B:4 C:2 D:13. 
 [2026-08-10 14:33:39] INFO: Starting Step 4B.3b: TAC102 gap-facing sequence evidence. 
 [2026-08-10 14:46:40] INFO: Step 4B.3b completed. Both-flank pairs: 41; candidate reads: 82; A:63 B:2 C:2 D:15. 
+[2026-08-11 08:44:14] INFO: Starting Step 4B.3l: direct FASTQ base-level TAC102 validation. 
+[2026-08-11 09:07:31] INFO: Starting Step 4B.3l: direct FASTQ base-level TAC102 validation. 
+[2026-08-11 09:07:31] INFO: Input files verified. R1=F:/PROJECTS/IVMT1_Gene_Validation_R/data/reads/SRR7910035_1.fastq; R2=F:/PROJECTS/IVMT1_Gene_Validation_R/data/reads/SRR7910035_2.fastq; candidates=F:/PROJECTS/IVMT1_Gene_Validation_R/raw_read_analysis/reports/tac102_41pairs_unaligned_tails.csv 
+[2026-08-11 09:07:31] INFO: Identified 69 candidate-read/position combinations. 653=33; 698=36 
+[2026-08-11 09:15:23] INFO: Starting Step 4B.3l: direct FASTQ base-level TAC102 validation. 
+[2026-08-11 09:15:23] INFO: Input files verified. R1=F:/PROJECTS/IVMT1_Gene_Validation_R/data/reads/SRR7910035_1.fastq; R2=F:/PROJECTS/IVMT1_Gene_Validation_R/data/reads/SRR7910035_2.fastq; candidates=F:/PROJECTS/IVMT1_Gene_Validation_R/raw_read_analysis/reports/tac102_41pairs_unaligned_tails.csv 
+[2026-08-11 09:15:23] INFO: Identified 69 candidate-read/position combinations. 653=33; 698=36 
+[2026-08-11 09:22:24] INFO: Original FASTQ re-extraction complete. R1=37/37; R2=37/37 
+[2026-08-11 09:22:34] INFO: Step 4B.3l direct FASTQ base-level validation completed. 

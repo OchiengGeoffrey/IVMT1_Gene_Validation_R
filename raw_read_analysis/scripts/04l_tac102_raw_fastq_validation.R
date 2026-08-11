@@ -1,0 +1,2112 @@
+# ==============================================================================
+# Step 4B.3l: TAC102 Direct FASTQ Base-Level Validation
+#
+# PURPOSE
+# -------
+# Independently validate the two recurrent M -> L candidate substitutions
+# identified in Step 4B.3k:
+#
+#   TAC102 position 653
+#   TAC102 position 698
+#
+# This step re-derives nucleotide coordinates from the original BLAST HSP
+# coordinates and retrieves the nucleotide sequence AND Phred quality directly
+# from the original FASTQ files.
+#
+# IMPORTANT:
+# ---------
+# This script DOES NOT use:
+#   - gap_facing_sequence
+#   - reconstructed_codon
+#   - reconstructed_aa
+#   - translated_candidate
+#   - 4B.3k nucleotide calls
+#   - 4B.3j reconstructed nucleotide values
+#
+# The previous steps are used ONLY to identify which candidate reads need to
+# be examined.
+#
+# The biological base call is therefore made from:
+#   ORIGINAL FASTQ sequence + ORIGINAL FASTQ quality
+#
+# Additional checks:
+#   1. Per-base Phred quality
+#   2. Codon-level quality
+#   3. Strand/orientation
+#   4. Independent read-start families
+#   5. Cross-position shared read-pair check
+#
+# ==============================================================================
+
+
+# ==============================================================================
+# 0. INITIALIZATION
+# ==============================================================================
+
+cat("==============================================================\n")
+cat(" Step 4B.3l: TAC102 Direct FASTQ Base-Level Validation\n")
+cat(" Positions: 653, 698\n")
+cat("==============================================================\n\n")
+
+
+if (!exists("PATHS") ||
+    !exists("LOG_FILE") ||
+    !exists("CONFIG")) {
+
+  source(
+    here::here(
+      "raw_read_analysis",
+      "scripts",
+      "00_setup.R"
+    )
+  )
+}
+
+
+log_info(
+  "Starting Step 4B.3l: direct FASTQ base-level TAC102 validation.",
+  LOG_FILE
+)
+
+
+# ==============================================================================
+# 1. CONFIGURATION
+# ==============================================================================
+
+TARGET_POSITIONS <- c(653L, 698L)
+
+DUP_WINDOW <- 3L
+
+R1_FASTQ <- PATHS$fastq_r1
+R2_FASTQ <- PATHS$fastq_r2
+
+TAILS_FILE <- file.path(
+  PATHS$reports,
+  "tac102_41pairs_unaligned_tails.csv"
+)
+
+DETAIL_OUT <- file.path(
+  PATHS$reports,
+  "tac102_4B3l_position_validation_detail.csv"
+)
+
+SUMMARY_OUT <- file.path(
+  PATHS$reports,
+  "tac102_4B3l_position_validation_summary.csv"
+)
+
+REPORT_OUT <- file.path(
+  PATHS$reports,
+  "tac102_4B3l_position_validation_report.txt"
+)
+
+
+# ==============================================================================
+# 2. VERIFY INPUT FILES
+# ==============================================================================
+
+required_files <- c(
+  R1_FASTQ,
+  R2_FASTQ,
+  TAILS_FILE
+)
+
+missing_files <- required_files[
+  !file.exists(required_files)
+]
+
+if (length(missing_files) > 0) {
+
+  stop(
+    "Required input file(s) not found:\n",
+    paste(missing_files, collapse = "\n")
+  )
+}
+
+
+cat("Input files verified:\n")
+cat("R1 FASTQ: ", R1_FASTQ, "\n", sep = "")
+cat("R2 FASTQ: ", R2_FASTQ, "\n", sep = "")
+cat("Candidate table: ", TAILS_FILE, "\n\n", sep = "")
+
+
+log_info(
+  paste0(
+    "Input files verified. R1=",
+    R1_FASTQ,
+    "; R2=",
+    R2_FASTQ,
+    "; candidates=",
+    TAILS_FILE
+  ),
+  LOG_FILE
+)
+
+
+# ==============================================================================
+# 3. LOAD CANDIDATE READ TABLE
+#
+# This table supplies:
+#   - pair identity
+#   - mate
+#   - orientation
+#   - original BLAST HSP coordinates
+#   - extension coordinates
+#
+# It does NOT supply the nucleotide call used for the final validation.
+# ==============================================================================
+
+tails <- read.csv(
+  TAILS_FILE,
+  stringsAsFactors = FALSE,
+  check.names = FALSE
+)
+
+
+required_columns <- c(
+  "pair_id",
+  "mate",
+  "orientation_role",
+  "hsp_qstart",
+  "hsp_sstart",
+  "hsp_send",
+  "gap_position_start",
+  "gap_position_end"
+)
+
+
+missing_columns <- setdiff(
+  required_columns,
+  names(tails)
+)
+
+
+if (length(missing_columns) > 0) {
+
+  stop(
+    "Missing required columns in candidate table: ",
+    paste(missing_columns, collapse = ", ")
+  )
+}
+
+
+cat(
+  "Candidate HSP/read entries loaded: ",
+  nrow(tails),
+  "\n\n",
+  sep = ""
+)
+
+
+# ==============================================================================
+# 4. IDENTIFY READ/POSITION COMBINATIONS COVERING 653 OR 698
+#
+# A single read may cover both target positions, so we retain a separate
+# record for each target position.
+# ==============================================================================
+
+covers_position <- function(row, position) {
+
+  if (
+    is.na(row$gap_position_start) ||
+    is.na(row$gap_position_end)
+  ) {
+    return(FALSE)
+  }
+
+  position >= row$gap_position_start &&
+    position <= row$gap_position_end
+}
+
+
+candidate_rows <- list()
+
+
+for (i in seq_len(nrow(tails))) {
+
+  row <- tails[i, ]
+
+  for (position in TARGET_POSITIONS) {
+
+    if (covers_position(row, position)) {
+
+      candidate_rows[[length(candidate_rows) + 1L]] <- data.frame(
+
+        pair_id = as.character(row$pair_id),
+
+        mate = as.character(row$mate),
+
+        orientation_role =
+          as.character(row$orientation_role),
+
+        target_position = as.integer(position),
+
+        hsp_qstart_raw =
+          as.integer(row$hsp_qstart),
+
+        hsp_sstart_raw =
+          as.integer(row$hsp_sstart),
+
+        hsp_send_raw =
+          as.integer(row$hsp_send),
+
+        stringsAsFactors = FALSE
+      )
+    }
+  }
+}
+
+
+if (length(candidate_rows) == 0) {
+
+  stop(
+    "No candidate reads cover TAC102 positions 653 or 698."
+  )
+}
+
+
+candidates <- do.call(
+  rbind,
+  candidate_rows
+)
+
+
+row.names(candidates) <- NULL
+
+
+n_653 <- sum(
+  candidates$target_position == 653L
+)
+
+n_698 <- sum(
+  candidates$target_position == 698L
+)
+
+
+cat(
+  "Candidate read/position combinations:\n"
+)
+
+cat(
+  "  Position 653: ",
+  n_653,
+  "\n",
+  sep = ""
+)
+
+cat(
+  "  Position 698: ",
+  n_698,
+  "\n\n",
+  sep = ""
+)
+
+
+log_info(
+  paste0(
+    "Identified ",
+    nrow(candidates),
+    " candidate-read/position combinations. ",
+    "653=",
+    n_653,
+    "; 698=",
+    n_698
+  ),
+  LOG_FILE
+)
+
+
+target_read_ids <- unique(
+  as.character(candidates$pair_id)
+)
+
+
+cat(
+  "Unique candidate read-pair IDs: ",
+  length(target_read_ids),
+  "\n\n",
+  sep = ""
+)
+
+
+# ==============================================================================
+# 5. FASTQ READ IDENTIFIER NORMALIZATION
+#
+# FASTQ headers can contain:
+#
+#   SRR7910035.10897477/1
+#   SRR7910035.10897477/2
+#
+# or additional whitespace/header information.
+#
+# We normalize them to:
+#
+#   SRR7910035.10897477
+#
+# so that they match pair_id.
+# ==============================================================================
+
+clean_read_id <- function(x) {
+
+  x <- as.character(x)
+
+  x <- sub(
+    "\\s.*$",
+    "",
+    x
+  )
+
+  x <- sub(
+    "/[12]$",
+    "",
+    x
+  )
+
+  x
+}
+
+
+# ==============================================================================
+# 6. STREAM ORIGINAL FASTQ FILE
+#
+# IMPORTANT:
+# ----------
+# The quality accessor is deliberately called as:
+#
+#     quality(reads)
+#
+# NOT:
+#
+#     ShortRead::quality(reads)
+#
+# because quality() is not exported from the ShortRead namespace.
+# ==============================================================================
+
+stream_candidate_fastq <- function(
+    fastq_file,
+    target_ids,
+    mate_label) {
+
+  target_ids <- unique(
+    as.character(target_ids)
+  )
+
+  sequences <- vector(
+    "list",
+    length(target_ids)
+  )
+
+  qualities <- vector(
+    "list",
+    length(target_ids)
+  )
+
+  names(sequences) <- target_ids
+  names(qualities) <- target_ids
+
+  found <- character(0)
+
+  cat(
+    "Streaming ",
+    mate_label,
+    " FASTQ: ",
+    fastq_file,
+    "\n",
+    sep = ""
+  )
+
+
+  fq <- ShortRead::FastqStreamer(
+    fastq_file,
+    n = 100000L
+  )
+
+
+  on.exit(
+    try(
+      close(fq),
+      silent = TRUE
+    ),
+    add = TRUE
+  )
+
+
+  chunk_number <- 0L
+
+
+  repeat {
+
+    chunk_number <- chunk_number + 1L
+
+    reads <- ShortRead::yield(fq)
+
+
+    if (length(reads) == 0L) {
+      break
+    }
+
+
+    # --------------------------------------------------------------------------
+    # Read identifiers
+    # --------------------------------------------------------------------------
+
+    read_names <- clean_read_id(
+      ShortRead::id(reads)
+    )
+
+
+    keep <- read_names %in% target_ids
+
+
+    if (any(keep)) {
+
+      selected <- reads[keep]
+
+      selected_names <- read_names[keep]
+
+
+      # ------------------------------------------------------------------------
+      # Sequence
+      # ------------------------------------------------------------------------
+
+      selected_sequences <- ShortRead::sread(
+        selected
+      )
+
+
+      # ------------------------------------------------------------------------
+      # Phred quality
+      #
+      # CORRECTED:
+      # quality(selected)
+      #
+      # NOT:
+      # ShortRead::quality(selected)
+      # ------------------------------------------------------------------------
+
+      selected_quality <- quality(selected)   # ✅ no prefix
+
+# Convert to matrix of integer Phred scores (reads × positions)
+quality_matrix <- as(selected_quality, "matrix")
+
+# Convert to list of integer vectors (one per read)
+selected_quality_int <- lapply(
+  seq_len(nrow(quality_matrix)),
+  function(i) as.integer(quality_matrix[i, ])
+)
+
+names(selected_quality_int) <- selected_names
+
+
+      for (k in seq_along(selected_names)) {
+
+        read_id <- selected_names[k]
+
+
+        if (is.null(sequences[[read_id]])) {
+
+          sequences[[read_id]] <-
+            selected_sequences[[k]]
+
+          qualities[[read_id]] <-
+            selected_quality_int[[k]]
+
+          found <- c(
+            found,
+            read_id
+          )
+        }
+      }
+    }
+
+
+    if (
+      length(found) ==
+      length(target_ids)
+    ) {
+      break
+    }
+
+
+    if (
+      chunk_number %% 50L == 0L
+    ) {
+
+      cat(
+        "  ",
+        mate_label,
+        ": processed ",
+        chunk_number,
+        " chunks; found ",
+        length(found),
+        "/",
+        length(target_ids),
+        " target reads\n",
+        sep = ""
+      )
+    }
+  }
+
+
+  missing <- setdiff(
+    target_ids,
+    found
+  )
+
+
+  if (length(missing) > 0L) {
+
+    log_warn(
+      paste0(
+        mate_label,
+        ": ",
+        length(missing),
+        " target read(s) were not found in source FASTQ."
+      ),
+      LOG_FILE
+    )
+
+    cat(
+      "  WARNING: ",
+      length(missing),
+      " target reads not found.\n",
+      sep = ""
+    )
+  }
+
+
+  list(
+    sequences = sequences,
+    qualities = qualities,
+    found = unique(found)
+  )
+}
+
+
+# ==============================================================================
+# 7. RE-STREAM ORIGINAL FASTQ FILES
+# ==============================================================================
+
+cat(
+  "Re-streaming ORIGINAL FASTQ files...\n\n"
+)
+
+
+r1_data <- stream_candidate_fastq(
+  R1_FASTQ,
+  target_read_ids,
+  "R1"
+)
+
+
+r2_data <- stream_candidate_fastq(
+  R2_FASTQ,
+  target_read_ids,
+  "R2"
+)
+
+
+cat(
+  "\nFASTQ recovery summary:\n"
+)
+
+
+cat(
+  "  R1: ",
+  length(r1_data$found),
+  "/",
+  length(target_read_ids),
+  "\n",
+  sep = ""
+)
+
+
+cat(
+  "  R2: ",
+  length(r2_data$found),
+  "/",
+  length(target_read_ids),
+  "\n\n",
+  sep = ""
+)
+
+
+log_info(
+  paste0(
+    "Original FASTQ re-extraction complete. ",
+    "R1=",
+    length(r1_data$found),
+    "/",
+    length(target_read_ids),
+    "; R2=",
+    length(r2_data$found),
+    "/",
+    length(target_read_ids)
+  ),
+  LOG_FILE
+)
+
+
+# ==============================================================================
+# 8. CODON WINDOW CALCULATION
+#
+# This is derived ONLY from:
+#
+#   hsp_qstart_raw
+#   hsp_sstart_raw
+#   hsp_send_raw
+#
+# and the TAC102 amino-acid coordinate.
+#
+# ==============================================================================
+
+get_codon_window <- function(
+    qstart_raw,
+    sstart_raw,
+    send_raw,
+    protein_position) {
+
+  forward <- (
+    sstart_raw < send_raw
+  )
+
+
+  if (forward) {
+
+    nt_start <- (
+      sstart_raw +
+        (protein_position - qstart_raw) * 3L
+    )
+
+    nt_end <- (
+      nt_start + 2L
+    )
+
+  } else {
+
+    nt_high <- (
+      sstart_raw -
+        (protein_position - qstart_raw) * 3L
+    )
+
+    nt_start <- (
+      nt_high - 2L
+    )
+
+    nt_end <- nt_high
+  }
+
+
+  list(
+    nt_start = as.integer(nt_start),
+    nt_end = as.integer(nt_end),
+    forward = forward
+  )
+}
+
+
+GENCODE <- Biostrings::getGeneticCode(
+  "1"
+)
+
+
+# ==============================================================================
+# 9. PER-READ, PER-POSITION BASE-LEVEL EXTRACTION
+# ==============================================================================
+
+extract_base_evidence <- function(row) {
+
+  pair_id <- as.character(
+    row$pair_id
+  )
+
+  mate <- as.character(
+    row$mate
+  )
+
+  position <- as.integer(
+    row$target_position
+  )
+
+
+  # --------------------------------------------------------------------------
+  # Retrieve sequence + quality from the ORIGINAL FASTQ stream
+  # --------------------------------------------------------------------------
+
+  if (mate == "R1") {
+
+    seq_obj <- r1_data$sequences[[pair_id]]
+
+    qual_obj <- r1_data$qualities[[pair_id]]
+
+  } else if (mate == "R2") {
+
+    seq_obj <- r2_data$sequences[[pair_id]]
+
+    qual_obj <- r2_data$qualities[[pair_id]]
+
+  } else {
+
+    return(
+      data.frame(
+        pair_id = pair_id,
+        mate = mate,
+        orientation_role =
+          row$orientation_role,
+        target_position = position,
+        note = "unknown mate",
+        stringsAsFactors = FALSE
+      )
+    )
+  }
+
+
+  if (
+    is.null(seq_obj) ||
+    is.null(qual_obj)
+  ) {
+
+    return(
+      data.frame(
+        pair_id = pair_id,
+        mate = mate,
+        orientation_role =
+          row$orientation_role,
+        target_position = position,
+        note =
+          "read or quality not found in original FASTQ",
+        stringsAsFactors = FALSE
+      )
+    )
+  }
+
+
+  read_length <- length(
+    seq_obj
+  )
+
+
+  # --------------------------------------------------------------------------
+  # Re-derive codon coordinates
+  # --------------------------------------------------------------------------
+
+  window <- get_codon_window(
+    qstart_raw =
+      row$hsp_qstart_raw,
+
+    sstart_raw =
+      row$hsp_sstart_raw,
+
+    send_raw =
+      row$hsp_send_raw,
+
+    protein_position =
+      position
+  )
+
+
+  if (
+    window$nt_start < 1L ||
+    window$nt_end > read_length
+  ) {
+
+    return(
+      data.frame(
+        pair_id = pair_id,
+        mate = mate,
+        orientation_role =
+          row$orientation_role,
+        target_position = position,
+        hsp_strand =
+          ifelse(
+            window$forward,
+            "+",
+            "-"
+          ),
+        read_start_coord =
+          window$nt_start,
+        note =
+          "codon window outside read bounds",
+        stringsAsFactors = FALSE
+      )
+    )
+  }
+
+
+  # --------------------------------------------------------------------------
+  # Extract nucleotide codon directly from FASTQ sequence
+  # --------------------------------------------------------------------------
+
+  raw_codon_nt <- Biostrings::subseq(
+    seq_obj,
+    start = window$nt_start,
+    end = window$nt_end
+  )
+
+
+  # --------------------------------------------------------------------------
+  # Extract the corresponding Phred scores directly from FASTQ
+  # --------------------------------------------------------------------------
+
+  raw_codon_qual <- as.integer(
+    qual_obj[
+      window$nt_start:
+        window$nt_end
+    ]
+  )
+
+
+  if (length(raw_codon_qual) != 3L) {
+
+    return(
+      data.frame(
+        pair_id = pair_id,
+        mate = mate,
+        orientation_role =
+          row$orientation_role,
+        target_position = position,
+        note =
+          "failed to obtain three Phred scores",
+        stringsAsFactors = FALSE
+      )
+    )
+  }
+
+
+  # --------------------------------------------------------------------------
+  # Convert reverse-strand reads to biological orientation
+  #
+  # The nucleotide sequence is reverse-complemented.
+  # The quality vector must be reversed correspondingly.
+  # --------------------------------------------------------------------------
+
+  if (window$forward) {
+
+    final_codon <- raw_codon_nt
+
+    final_quality <- raw_codon_qual
+
+  } else {
+
+    final_codon <-
+      Biostrings::reverseComplement(
+        raw_codon_nt
+      )
+
+    final_quality <-
+      rev(raw_codon_qual)
+  }
+
+
+ # ==============================================================================
+# INTERNAL-CDS CODON TRANSLATION
+#
+# TAC102 positions examined in Step 4B.3l are INTERNAL protein positions,
+# not the first codon of a CDS.
+#
+# Biostrings::translate() defaults to:
+#
+#     no.init.codon = FALSE
+#
+# which allows alternative initiation codons such as CTG and TTG to be
+# translated as methionine when they occur at the beginning of a sequence.
+#
+# That behaviour is inappropriate here because the codons are being evaluated
+# at internal TAC102 protein positions.
+#
+# Therefore:
+#
+#     no.init.codon = TRUE
+#
+# is REQUIRED.
+#
+# This makes:
+#
+#     ATG -> M
+#     CTG -> L
+#     TTG -> L
+#     GTG -> V
+#
+# under the standard genetic code.
+# ==============================================================================
+
+translate_codon <- function(
+    codon
+) {
+
+  tryCatch(
+    as.character(
+      Biostrings::translate(
+        Biostrings::DNAString(codon),
+        no.init.codon = TRUE,
+        if.fuzzy.codon = "X"
+      )
+    ),
+    error = function(e) {
+      "X"
+    }
+  )
+}
+
+# ==============================================================================
+# TRANSLATION SANITY CHECK
+#
+# These are INTERNAL coding-sequence codons.
+# Alternative initiation-codon behaviour must therefore be disabled.
+# ==============================================================================
+
+translation_test_codons <- c(
+  ATG = "M",
+  CTG = "L",
+  TTG = "L",
+  GTG = "V",
+  AAA = "K",
+  TTT = "F",
+  GGG = "G"
+)
+
+translation_test_observed <- vapply(
+  names(translation_test_codons),
+  translate_codon,
+  character(1)
+)
+
+translation_test_expected <- unname(
+  translation_test_codons
+)
+
+if (
+  !identical(
+    translation_test_observed,
+    translation_test_expected
+  )
+) {
+
+  stop(
+    paste0(
+      "Translation sanity check FAILED.\n",
+      "Expected internal-CDS standard-code translation.\n",
+      "Observed: ",
+      paste(
+        names(translation_test_observed),
+        translation_test_observed,
+        sep = "=",
+        collapse = ", "
+      )
+    )
+  )
+}
+
+cat(
+  "Translation sanity check: PASSED\n",
+  "  ATG -> M\n",
+  "  CTG -> L\n",
+  "  TTG -> L\n",
+  "  GTG -> V\n",
+  "  AAA -> K\n",
+  "  TTT -> F\n",
+  "  GGG -> G\n\n",
+  sep = ""
+)
+  
+
+  # --------------------------------------------------------------------------
+  # Base-level information
+  # --------------------------------------------------------------------------
+
+  codon_string <- as.character(
+    final_codon
+  )
+
+
+  # First nucleotide of the biological codon
+  #
+  # This is the nucleotide whose change would convert ATG -> CTG/TTG.
+  # --------------------------------------------------------------------------
+
+  codon_base1 <- substr(
+    codon_string,
+    1L,
+    1L
+  )
+
+  codon_base2 <- substr(
+    codon_string,
+    2L,
+    2L
+  )
+
+  codon_base3 <- substr(
+    codon_string,
+    3L,
+    3L
+  )
+
+
+  data.frame(
+
+    pair_id = pair_id,
+
+    mate = mate,
+
+    orientation_role =
+      as.character(
+        row$orientation_role
+      ),
+
+    target_position = position,
+
+    hsp_strand =
+      ifelse(
+        window$forward,
+        "forward",
+        "reverse"
+      ),
+
+    read_start_coord =
+      window$nt_start,
+
+    read_length =
+      read_length,
+
+    codon_nt_start =
+      window$nt_start,
+
+    codon_nt_end =
+      window$nt_end,
+
+    codon = codon_string,
+
+    codon_base1 = codon_base1,
+
+    codon_base2 = codon_base2,
+
+    codon_base3 = codon_base3,
+
+    codon_qual_pos1 =
+      final_quality[1L],
+
+    codon_qual_pos2 =
+      final_quality[2L],
+
+    codon_qual_pos3 =
+      final_quality[3L],
+
+    codon_min_qual =
+      min(final_quality),
+
+    codon_mean_qual =
+      round(
+        mean(final_quality),
+        2
+      ),
+
+    translated_aa =
+      translated_aa,
+
+    note = "",
+
+    stringsAsFactors = FALSE
+  )
+}
+
+
+# ==============================================================================
+# 10. RUN EXTRACTION FOR ALL CANDIDATE READ/POSITION COMBINATIONS
+# ==============================================================================
+
+results_list <- vector(
+  "list",
+  nrow(candidates)
+)
+
+
+for (i in seq_len(nrow(candidates))) {
+
+  results_list[[i]] <- tryCatch(
+
+    extract_base_evidence(
+      candidates[i, ]
+    ),
+
+    error = function(e) {
+
+      data.frame(
+
+        pair_id =
+          candidates$pair_id[i],
+
+        mate =
+          candidates$mate[i],
+
+        orientation_role =
+          candidates$orientation_role[i],
+
+        target_position =
+          candidates$target_position[i],
+
+        note =
+          paste0(
+            "error: ",
+            conditionMessage(e)
+          ),
+
+        stringsAsFactors = FALSE
+      )
+    }
+  )
+}
+
+
+results <- do.call(
+  rbind,
+  results_list
+)
+
+
+row.names(results) <- NULL
+
+
+# ==============================================================================
+# 11. DUPLICATE / READ-FAMILY CHECK
+#
+# This is deliberately treated as a HEURISTIC.
+#
+# Sharing a read-start coordinate does not prove PCR duplication, but reads
+# with the same:
+#
+#   mate
+#   strand
+#   approximate start coordinate
+#
+# are flagged as belonging to the same potential read-start family.
+# ==============================================================================
+
+flag_duplicate_families <- function(df) {
+
+  df$dup_family <- NA_character_
+
+
+  if (
+    nrow(df) == 0L ||
+    !"read_start_coord" %in% names(df)
+  ) {
+
+    return(df)
+  }
+
+
+  valid <- (
+    !is.na(df$read_start_coord) &
+      !is.na(df$mate) &
+      !is.na(df$hsp_strand)
+  )
+
+
+  if (!any(valid)) {
+
+    return(df)
+  }
+
+
+  sub <- df[valid, ]
+
+
+  sub <- sub[
+    order(
+      sub$mate,
+      sub$hsp_strand,
+      sub$read_start_coord
+    ),
+    ,
+    drop = FALSE
+  ]
+
+
+  family_number <- 0L
+
+  family_ids <- character(
+    nrow(sub)
+  )
+
+
+  for (i in seq_len(nrow(sub))) {
+
+    new_family <- (
+      i == 1L ||
+        sub$mate[i] !=
+          sub$mate[i - 1L] ||
+        sub$hsp_strand[i] !=
+          sub$hsp_strand[i - 1L] ||
+        abs(
+          sub$read_start_coord[i] -
+            sub$read_start_coord[i - 1L]
+        ) > DUP_WINDOW
+    )
+
+
+    if (new_family) {
+
+      family_number <-
+        family_number + 1L
+    }
+
+
+    family_ids[i] <- paste0(
+      sub$mate[i],
+      "_",
+      sub$hsp_strand[i],
+      "_F",
+      family_number
+    )
+  }
+
+
+  sub$dup_family <- family_ids
+
+
+  # Restore family IDs to the original row order using a unique key.
+  #
+  # pair_id + mate + target position uniquely identifies the candidate
+  # record in this audit.
+  # --------------------------------------------------------------------------
+
+  key_original <- paste(
+    df$pair_id,
+    df$mate,
+    df$target_position,
+    sep = "|"
+  )
+
+
+  key_sub <- paste(
+    sub$pair_id,
+    sub$mate,
+    sub$target_position,
+    sep = "|"
+  )
+
+
+  match_index <- match(
+    key_original[valid],
+    key_sub
+  )
+
+
+  df$dup_family[valid] <-
+    sub$dup_family[match_index]
+
+
+  df
+}
+
+
+results_split <- split(
+  results,
+  results$target_position
+)
+
+
+results_split <- lapply(
+  results_split,
+  flag_duplicate_families
+)
+
+
+results <- do.call(
+  rbind,
+  results_split
+)
+
+
+row.names(results) <- NULL
+
+
+# ==============================================================================
+# 12. SAVE DETAILED OUTPUT
+# ==============================================================================
+
+write.csv(
+  results,
+  DETAIL_OUT,
+  row.names = FALSE,
+  na = ""
+)
+
+
+cat(
+  "Detailed validation output saved:\n  ",
+  DETAIL_OUT,
+  "\n\n",
+  sep = ""
+)
+
+
+# ==============================================================================
+# 13. POSITION SUMMARY FUNCTION
+# ==============================================================================
+
+summarize_position <- function(
+    df,
+    position) {
+
+  df <- df[
+    df$target_position == position,
+    ,
+    drop = FALSE
+  ]
+
+
+  usable <- df[
+    !is.na(df$translated_aa) &
+      df$translated_aa != "X" &
+      df$note == "",
+    ,
+    drop = FALSE
+  ]
+
+
+  n_total <- nrow(df)
+
+  n_usable <- nrow(usable)
+
+
+  if (n_usable > 0L) {
+
+    allele_counts <- table(
+      usable$translated_aa
+    )
+
+    allele_counts <- as.data.frame(
+      allele_counts,
+      stringsAsFactors = FALSE
+    )
+
+    names(allele_counts) <- c(
+      "translated_aa",
+      "read_count"
+    )
+
+  } else {
+
+    allele_counts <- data.frame(
+      translated_aa =
+        character(0),
+
+      read_count =
+        integer(0),
+
+      stringsAsFactors = FALSE
+    )
+  }
+
+
+  n_families <- if (
+    n_usable > 0L &&
+    "dup_family" %in% names(usable)
+  ) {
+
+    length(
+      unique(
+        usable$dup_family[
+          !is.na(
+            usable$dup_family
+          )
+        ]
+      )
+    )
+
+  } else {
+
+    NA_integer_
+  }
+
+
+  mean_quality <- if (
+    n_usable > 0L
+  ) {
+
+    round(
+      mean(
+        usable$codon_min_qual,
+        na.rm = TRUE
+      ),
+      2
+    )
+
+  } else {
+
+    NA_real_
+  }
+
+
+  minimum_quality <- if (
+    n_usable > 0L
+  ) {
+
+    min(
+      usable$codon_min_qual,
+      na.rm = TRUE
+    )
+
+  } else {
+
+    NA_real_
+  }
+
+
+  data.frame(
+
+    target_position = position,
+
+    candidate_records =
+      n_total,
+
+    usable_records =
+      n_usable,
+
+    independent_read_start_families =
+      n_families,
+
+    mean_codon_min_phred =
+      mean_quality,
+
+    minimum_codon_min_phred =
+      minimum_quality,
+
+    stringsAsFactors = FALSE
+  )
+}
+
+
+summary_653 <- summarize_position(
+  results,
+  653L
+)
+
+
+summary_698 <- summarize_position(
+  results,
+  698L
+)
+
+
+position_summary <- rbind(
+  summary_653,
+  summary_698
+)
+
+
+# ==============================================================================
+# POSITION / ALLELE SUMMARY
+#
+# One row = one target position + one observed translated amino acid.
+# This avoids data.frame() length mismatches when a position contains
+# multiple observed alleles.
+# ==============================================================================
+
+summary_rows <- lapply(
+  sort(unique(detail$target_position)),
+  function(pos) {
+
+    sub <- detail[
+      detail$target_position == pos &
+        !is.na(detail$translated_aa) &
+        nzchar(detail$translated_aa),
+      ,
+      drop = FALSE
+    ]
+
+    if (nrow(sub) == 0L) {
+
+      return(
+        data.frame(
+          target_position = as.integer(pos),
+          translated_aa = NA_character_,
+          read_count = 0L,
+          mean_min_phred = NA_real_,
+          minimum_min_phred = NA_real_,
+          independent_families = 0L,
+          stringsAsFactors = FALSE
+        )
+      )
+    }
+
+    allele_rows <- lapply(
+      sort(unique(sub$translated_aa)),
+      function(aa) {
+
+        allele_sub <- sub[
+          sub$translated_aa == aa,
+          ,
+          drop = FALSE
+        ]
+
+        data.frame(
+          target_position = as.integer(pos),
+          translated_aa = as.character(aa),
+          read_count = nrow(allele_sub),
+          mean_min_phred = round(
+            mean(
+              allele_sub$codon_min_qual,
+              na.rm = TRUE
+            ),
+            2
+          ),
+          minimum_min_phred = min(
+            allele_sub$codon_min_qual,
+            na.rm = TRUE
+          ),
+          independent_families = length(
+            unique(
+              allele_sub$dup_family
+            )
+          ),
+          stringsAsFactors = FALSE
+        )
+      }
+    )
+
+    do.call(
+      rbind,
+      allele_rows
+    )
+  }
+)
+
+position_summary <- do.call(
+  rbind,
+  summary_rows
+)
+
+position_summary <- position_summary[
+  order(
+    position_summary$target_position,
+    -position_summary$read_count,
+    position_summary$translated_aa
+  ),
+  ,
+  drop = FALSE
+]
+
+write.csv(
+  position_summary,
+  SUMMARY_FILE,
+  row.names = FALSE,
+  quote = TRUE
+)
+# ==============================================================================
+# 15. SAVE SUMMARY
+# ==============================================================================
+
+write.csv(
+  allele_summary,
+  SUMMARY_OUT,
+  row.names = FALSE,
+  na = ""
+)
+
+
+cat(
+  "Summary output saved:\n  ",
+  SUMMARY_OUT,
+  "\n\n",
+  sep = ""
+)
+
+
+# ==============================================================================
+# 16. CONSOLE SUMMARY
+# ==============================================================================
+
+cat(
+  "==============================================================\n"
+)
+
+cat(
+  " POSITION 653 SUMMARY\n"
+)
+
+cat(
+  "==============================================================\n"
+)
+
+
+print(
+  summary_653,
+  row.names = FALSE
+)
+
+
+cat("\nAllele distribution:\n")
+
+
+print(
+  allele_summary[
+    allele_summary$target_position == 653L,
+    ,
+    drop = FALSE
+  ],
+  row.names = FALSE
+)
+
+
+cat(
+  "\n==============================================================\n"
+)
+
+cat(
+  " POSITION 698 SUMMARY\n"
+)
+
+cat(
+  "==============================================================\n"
+)
+
+
+print(
+  summary_698,
+  row.names = FALSE
+)
+
+
+cat("\nAllele distribution:\n")
+
+
+print(
+  allele_summary[
+    allele_summary$target_position == 698L,
+    ,
+    drop = FALSE
+  ],
+  row.names = FALSE
+)
+
+
+# ==============================================================================
+# 17. CROSS-POSITION SHARED READ-PAIR CHECK
+#
+# PI REQUEST:
+#
+# Determine whether the reads contributing evidence to positions 653 and 698
+# come from overlapping physical fragments.
+#
+# ==============================================================================
+
+shared_pair_ids <- intersect(
+
+  unique(
+    results$pair_id[
+      results$target_position == 653L
+    ]
+  ),
+
+  unique(
+    results$pair_id[
+      results$target_position == 698L
+    ]
+  )
+)
+
+
+cat(
+  "\n==============================================================\n"
+)
+
+cat(
+  " CROSS-POSITION INDEPENDENCE CHECK\n"
+)
+
+cat(
+  "==============================================================\n"
+)
+
+
+cat(
+  "Read pairs contributing evidence to BOTH positions: ",
+  length(shared_pair_ids),
+  "\n",
+  sep = ""
+)
+
+
+if (length(shared_pair_ids) > 0L) {
+
+  cat(
+    "\nWARNING:\n"
+  )
+
+  cat(
+    "These read pairs cover both candidate positions and therefore\n"
+  )
+
+  cat(
+    "should NOT be counted as independent evidence across the two\n"
+  )
+
+  cat(
+    "positions.\n\n"
+  )
+
+  print(
+    shared_pair_ids
+  )
+
+} else {
+
+  cat(
+    "\nNo read pairs contribute to both positions.\n"
+  )
+
+  cat(
+    "The two candidate sites are supported by distinct sets of\n"
+  )
+
+  cat(
+    "candidate physical fragments.\n"
+  )
+}
+
+
+# ==============================================================================
+# 18. ALLELE-SPECIFIC DUPLICATE/FAMILY INFORMATION
+# ==============================================================================
+
+cat(
+  "\n==============================================================\n"
+)
+
+cat(
+  " ALLELE / FAMILY STRUCTURE\n"
+)
+
+cat(
+  "==============================================================\n"
+)
+
+
+for (position in TARGET_POSITIONS) {
+
+  cat(
+    "\nPosition ",
+    position,
+    ":\n",
+    sep = ""
+  )
+
+
+  df <- results[
+    results$target_position == position &
+      results$note == "" &
+      !is.na(results$translated_aa) &
+      results$translated_aa != "X",
+    ,
+    drop = FALSE
+  ]
+
+
+  if (nrow(df) == 0L) {
+
+    cat(
+      "  No usable nucleotide evidence.\n"
+    )
+
+    next
+  }
+
+
+  family_table <- aggregate(
+    dup_family ~ translated_aa,
+    data = df,
+    FUN = function(x) {
+
+      length(
+        unique(
+          x[
+            !is.na(x)
+          ]
+        )
+      )
+    }
+  )
+
+
+  names(family_table)[2] <-
+    "independent_families"
+
+
+  print(
+    family_table,
+    row.names = FALSE
+  )
+}
+
+
+# ==============================================================================
+# 19. TEXT REPORT
+# ==============================================================================
+
+report_lines <- c(
+
+  "==============================================================",
+
+  "TAC102 DIRECT FASTQ BASE-LEVEL VALIDATION",
+
+  "Step 4B.3l",
+
+  "==============================================================",
+
+  "",
+
+  paste0(
+    "Date: ",
+    Sys.Date()
+  ),
+
+  paste0(
+    "Time: ",
+    format(
+      Sys.time(),
+      "%Y-%m-%d %H:%M:%S"
+    )
+  ),
+
+  "",
+
+  "METHOD",
+
+  "  Candidate reads were identified using the TAC102 unaligned-tail",
+
+  "  candidate table and original BLAST HSP coordinates.",
+
+  "",
+
+  "  Nucleotide coordinates were independently re-derived from:",
+
+  "    hsp_qstart_raw",
+
+  "    hsp_sstart_raw",
+
+  "    hsp_send_raw",
+
+  "",
+
+  "  Sequence and Phred quality were re-extracted directly from the",
+
+  "  ORIGINAL R1/R2 FASTQ files.",
+
+  "",
+
+  "  The following reconstructed values were NOT used to make the",
+
+  "  nucleotide call:",
+
+  "    gap_facing_sequence",
+
+  "    reconstructed_codon",
+
+  "    reconstructed_aa",
+
+  "    translated_candidate",
+
+  "    4B.3j reconstructed values",
+
+  "    4B.3k provenance nucleotide values",
+
+  "",
+
+  "POSITION 653",
+
+  paste0(
+    "  Candidate records: ",
+    summary_653$candidate_records
+  ),
+
+  paste0(
+    "  Usable records: ",
+    summary_653$usable_records
+  ),
+
+  paste0(
+    "  Independent read-start families: ",
+    summary_653$independent_read_start_families
+  ),
+
+  paste0(
+    "  Mean codon minimum Phred: ",
+    summary_653$mean_codon_min_phred
+  ),
+
+  paste0(
+    "  Minimum codon minimum Phred: ",
+    summary_653$minimum_codon_min_phred
+  ),
+
+  "",
+
+  "POSITION 698",
+
+  paste0(
+    "  Candidate records: ",
+    summary_698$candidate_records
+  ),
+
+  paste0(
+    "  Usable records: ",
+    summary_698$usable_records
+  ),
+
+  paste0(
+    "  Independent read-start families: ",
+    summary_698$independent_read_start_families
+  ),
+
+  paste0(
+    "  Mean codon minimum Phred: ",
+    summary_698$mean_codon_min_phred
+  ),
+
+  paste0(
+    "  Minimum codon minimum Phred: ",
+    summary_698$minimum_codon_min_phred
+  ),
+
+  "",
+
+  "CROSS-POSITION INDEPENDENCE",
+
+  paste0(
+    "  Read pairs contributing to BOTH positions: ",
+    length(shared_pair_ids)
+  ),
+
+  "",
+
+  "INTERPRETATION GUIDE",
+
+  "  This script does not automatically declare a biological SNP.",
+
+  "",
+
+  "  Strong candidate evidence would consist of:",
+
+  "    - reproducible alternative base/codon calls",
+
+  "    - high Phred quality",
+
+  "    - multiple independent read-start families",
+
+  "    - consistent orientation handling",
+
+  "    - no concentration in a single duplicate family",
+
+  "    - no evidence that the signal is restricted to one problematic read",
+
+  "",
+
+  "  Low-quality or isolated alternative calls should remain suspect.",
+
+  "",
+
+  "OUTPUTS",
+
+  paste0(
+    "  Detailed per-read validation: ",
+    DETAIL_OUT
+  ),
+
+  paste0(
+    "  Position/allele summary: ",
+    SUMMARY_OUT
+  ),
+
+  paste0(
+    "  Text report: ",
+    REPORT_OUT
+  ),
+
+  "",
+
+  "=============================================================="
+)
+
+
+writeLines(
+  report_lines,
+  REPORT_OUT
+)
+
+
+# ==============================================================================
+# 20. FINAL LOGGING
+# ==============================================================================
+
+log_info(
+  "Step 4B.3l direct FASTQ base-level validation completed.",
+  LOG_FILE
+)
+
+
+file.copy(
+  LOG_FILE,
+  file.path(
+    PATHS$logs,
+    "latest_execution.log"
+  ),
+  overwrite = TRUE
+)
+
+
+cat(
+  "\n==============================================================\n"
+)
+
+cat(
+  "[COMPLETE] Step 4B.3l finished successfully.\n"
+)
+
+cat(
+  "==============================================================\n"
+)
+
+cat(
+  "Detailed output:\n  ",
+  DETAIL_OUT,
+  "\n",
+  sep = ""
+)
+
+cat(
+  "Summary output:\n  ",
+  SUMMARY_OUT,
+  "\n",
+  sep = ""
+)
+
+cat(
+  "Report:\n  ",
+  REPORT_OUT,
+  "\n",
+  sep = ""
+)
+
+cat(
+  "\nPosition 653 candidate records: ",
+  n_653,
+  "\n",
+  sep = ""
+)
+
+cat(
+  "Position 698 candidate records: ",
+  n_698,
+  "\n",
+  sep = ""
+)
+
+cat(
+  "Shared read pairs across positions: ",
+  length(shared_pair_ids),
+  "\n",
+  sep = ""
+)

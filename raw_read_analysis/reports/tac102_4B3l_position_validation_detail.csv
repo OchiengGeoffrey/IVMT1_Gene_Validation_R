@@ -1,0 +1,208 @@
+"pair_id","mate","orientation_role","target_position","note","dup_family"
+"SRR7910035.10334997","R2","N",653,"error: Translation sanity check FAILED.
+Expected internal-CDS standard-code translation.
+Observed: ATG=M, CTG=L, TTG=L, GTG=V, AAA=K, TTT=F, GGG=G",
+"SRR7910035.10897477","R2","N",653,"error: Translation sanity check FAILED.
+Expected internal-CDS standard-code translation.
+Observed: ATG=M, CTG=L, TTG=L, GTG=V, AAA=K, TTT=F, GGG=G",
+"SRR7910035.11023455","R2","N",653,"error: Translation sanity check FAILED.
+Expected internal-CDS standard-code translation.
+Observed: ATG=M, CTG=L, TTG=L, GTG=V, AAA=K, TTT=F, GGG=G",
+"SRR7910035.11156312","R2","N",653,"error: Translation sanity check FAILED.
+Expected internal-CDS standard-code translation.
+Observed: ATG=M, CTG=L, TTG=L, GTG=V, AAA=K, TTT=F, GGG=G",
+"SRR7910035.11900901","R2","N",653,"error: Translation sanity check FAILED.
+Expected internal-CDS standard-code translation.
+Observed: ATG=M, CTG=L, TTG=L, GTG=V, AAA=K, TTT=F, GGG=G",
+"SRR7910035.12937012","R2","N",653,"error: Translation sanity check FAILED.
+Expected internal-CDS standard-code translation.
+Observed: ATG=M, CTG=L, TTG=L, GTG=V, AAA=K, TTT=F, GGG=G",
+"SRR7910035.15436240","R2","N",653,"error: Translation sanity check FAILED.
+Expected internal-CDS standard-code translation.
+Observed: ATG=M, CTG=L, TTG=L, GTG=V, AAA=K, TTT=F, GGG=G",
+"SRR7910035.1964432","R2","N",653,"error: Translation sanity check FAILED.
+Expected internal-CDS standard-code translation.
+Observed: ATG=M, CTG=L, TTG=L, GTG=V, AAA=K, TTT=F, GGG=G",
+"SRR7910035.1970792","R2","N",653,"error: Translation sanity check FAILED.
+Expected internal-CDS standard-code translation.
+Observed: ATG=M, CTG=L, TTG=L, GTG=V, AAA=K, TTT=F, GGG=G",
+"SRR7910035.20819473","R2","N",653,"error: Translation sanity check FAILED.
+Expected internal-CDS standard-code translation.
+Observed: ATG=M, CTG=L, TTG=L, GTG=V, AAA=K, TTT=F, GGG=G",
+"SRR7910035.21033183","R2","N",653,"error: Translation sanity check FAILED.
+Expected internal-CDS standard-code translation.
+Observed: ATG=M, CTG=L, TTG=L, GTG=V, AAA=K, TTT=F, GGG=G",
+"SRR7910035.21299","R1","N",653,"error: Translation sanity check FAILED.
+Expected internal-CDS standard-code translation.
+Observed: ATG=M, CTG=L, TTG=L, GTG=V, AAA=K, TTT=F, GGG=G",
+"SRR7910035.21584664","R2","N",653,"error: Translation sanity check FAILED.
+Expected internal-CDS standard-code translation.
+Observed: ATG=M, CTG=L, TTG=L, GTG=V, AAA=K, TTT=F, GGG=G",
+"SRR7910035.23078712","R2","N",653,"error: Translation sanity check FAILED.
+Expected internal-CDS standard-code translation.
+Observed: ATG=M, CTG=L, TTG=L, GTG=V, AAA=K, TTT=F, GGG=G",
+"SRR7910035.23521289","R2","N",653,"error: Translation sanity check FAILED.
+Expected internal-CDS standard-code translation.
+Observed: ATG=M, CTG=L, TTG=L, GTG=V, AAA=K, TTT=F, GGG=G",
+"SRR7910035.24197645","R2","N",653,"error: Translation sanity check FAILED.
+Expected internal-CDS standard-code translation.
+Observed: ATG=M, CTG=L, TTG=L, GTG=V, AAA=K, TTT=F, GGG=G",
+"SRR7910035.24697138","R2","N",653,"error: Translation sanity check FAILED.
+Expected internal-CDS standard-code translation.
+Observed: ATG=M, CTG=L, TTG=L, GTG=V, AAA=K, TTT=F, GGG=G",
+"SRR7910035.25988092","R2","N",653,"error: Translation sanity check FAILED.
+Expected internal-CDS standard-code translation.
+Observed: ATG=M, CTG=L, TTG=L, GTG=V, AAA=K, TTT=F, GGG=G",
+"SRR7910035.26367709","R1","N",653,"error: Translation sanity check FAILED.
+Expected internal-CDS standard-code translation.
+Observed: ATG=M, CTG=L, TTG=L, GTG=V, AAA=K, TTT=F, GGG=G",
+"SRR7910035.27458563","R2","N",653,"error: Translation sanity check FAILED.
+Expected internal-CDS standard-code translation.
+Observed: ATG=M, CTG=L, TTG=L, GTG=V, AAA=K, TTT=F, GGG=G",
+"SRR7910035.3301201","R2","N",653,"error: Translation sanity check FAILED.
+Expected internal-CDS standard-code translation.
+Observed: ATG=M, CTG=L, TTG=L, GTG=V, AAA=K, TTT=F, GGG=G",
+"SRR7910035.3359319","R2","N",653,"error: Translation sanity check FAILED.
+Expected internal-CDS standard-code translation.
+Observed: ATG=M, CTG=L, TTG=L, GTG=V, AAA=K, TTT=F, GGG=G",
+"SRR7910035.3520646","R2","N",653,"error: Translation sanity check FAILED.
+Expected internal-CDS standard-code translation.
+Observed: ATG=M, CTG=L, TTG=L, GTG=V, AAA=K, TTT=F, GGG=G",
+"SRR7910035.3522774","R2","N",653,"error: Translation sanity check FAILED.
+Expected internal-CDS standard-code translation.
+Observed: ATG=M, CTG=L, TTG=L, GTG=V, AAA=K, TTT=F, GGG=G",
+"SRR7910035.3831778","R2","N",653,"error: Translation sanity check FAILED.
+Expected internal-CDS standard-code translation.
+Observed: ATG=M, CTG=L, TTG=L, GTG=V, AAA=K, TTT=F, GGG=G",
+"SRR7910035.621828","R2","N",653,"error: Translation sanity check FAILED.
+Expected internal-CDS standard-code translation.
+Observed: ATG=M, CTG=L, TTG=L, GTG=V, AAA=K, TTT=F, GGG=G",
+"SRR7910035.6537663","R2","N",653,"error: Translation sanity check FAILED.
+Expected internal-CDS standard-code translation.
+Observed: ATG=M, CTG=L, TTG=L, GTG=V, AAA=K, TTT=F, GGG=G",
+"SRR7910035.6717252","R2","N",653,"error: Translation sanity check FAILED.
+Expected internal-CDS standard-code translation.
+Observed: ATG=M, CTG=L, TTG=L, GTG=V, AAA=K, TTT=F, GGG=G",
+"SRR7910035.8621612","R2","N",653,"error: Translation sanity check FAILED.
+Expected internal-CDS standard-code translation.
+Observed: ATG=M, CTG=L, TTG=L, GTG=V, AAA=K, TTT=F, GGG=G",
+"SRR7910035.8944822","R2","N",653,"error: Translation sanity check FAILED.
+Expected internal-CDS standard-code translation.
+Observed: ATG=M, CTG=L, TTG=L, GTG=V, AAA=K, TTT=F, GGG=G",
+"SRR7910035.9218689","R2","N",653,"error: Translation sanity check FAILED.
+Expected internal-CDS standard-code translation.
+Observed: ATG=M, CTG=L, TTG=L, GTG=V, AAA=K, TTT=F, GGG=G",
+"SRR7910035.9264363","R2","N",653,"error: Translation sanity check FAILED.
+Expected internal-CDS standard-code translation.
+Observed: ATG=M, CTG=L, TTG=L, GTG=V, AAA=K, TTT=F, GGG=G",
+"SRR7910035.9295551","R2","N",653,"error: Translation sanity check FAILED.
+Expected internal-CDS standard-code translation.
+Observed: ATG=M, CTG=L, TTG=L, GTG=V, AAA=K, TTT=F, GGG=G",
+"SRR7910035.10334997","R2","N",698,"error: Translation sanity check FAILED.
+Expected internal-CDS standard-code translation.
+Observed: ATG=M, CTG=L, TTG=L, GTG=V, AAA=K, TTT=F, GGG=G",
+"SRR7910035.10897477","R2","N",698,"error: Translation sanity check FAILED.
+Expected internal-CDS standard-code translation.
+Observed: ATG=M, CTG=L, TTG=L, GTG=V, AAA=K, TTT=F, GGG=G",
+"SRR7910035.10897477","R1","C",698,"error: Translation sanity check FAILED.
+Expected internal-CDS standard-code translation.
+Observed: ATG=M, CTG=L, TTG=L, GTG=V, AAA=K, TTT=F, GGG=G",
+"SRR7910035.11023455","R1","C",698,"error: Translation sanity check FAILED.
+Expected internal-CDS standard-code translation.
+Observed: ATG=M, CTG=L, TTG=L, GTG=V, AAA=K, TTT=F, GGG=G",
+"SRR7910035.11156312","R1","C",698,"error: Translation sanity check FAILED.
+Expected internal-CDS standard-code translation.
+Observed: ATG=M, CTG=L, TTG=L, GTG=V, AAA=K, TTT=F, GGG=G",
+"SRR7910035.11900901","R1","C",698,"error: Translation sanity check FAILED.
+Expected internal-CDS standard-code translation.
+Observed: ATG=M, CTG=L, TTG=L, GTG=V, AAA=K, TTT=F, GGG=G",
+"SRR7910035.12937012","R2","N",698,"error: Translation sanity check FAILED.
+Expected internal-CDS standard-code translation.
+Observed: ATG=M, CTG=L, TTG=L, GTG=V, AAA=K, TTT=F, GGG=G",
+"SRR7910035.12937012","R1","C",698,"error: Translation sanity check FAILED.
+Expected internal-CDS standard-code translation.
+Observed: ATG=M, CTG=L, TTG=L, GTG=V, AAA=K, TTT=F, GGG=G",
+"SRR7910035.17087479","R1","C",698,"error: Translation sanity check FAILED.
+Expected internal-CDS standard-code translation.
+Observed: ATG=M, CTG=L, TTG=L, GTG=V, AAA=K, TTT=F, GGG=G",
+"SRR7910035.19346284","R1","C",698,"error: Translation sanity check FAILED.
+Expected internal-CDS standard-code translation.
+Observed: ATG=M, CTG=L, TTG=L, GTG=V, AAA=K, TTT=F, GGG=G",
+"SRR7910035.1964432","R2","N",698,"error: Translation sanity check FAILED.
+Expected internal-CDS standard-code translation.
+Observed: ATG=M, CTG=L, TTG=L, GTG=V, AAA=K, TTT=F, GGG=G",
+"SRR7910035.1964432","R1","C",698,"error: Translation sanity check FAILED.
+Expected internal-CDS standard-code translation.
+Observed: ATG=M, CTG=L, TTG=L, GTG=V, AAA=K, TTT=F, GGG=G",
+"SRR7910035.1970792","R2","N",698,"error: Translation sanity check FAILED.
+Expected internal-CDS standard-code translation.
+Observed: ATG=M, CTG=L, TTG=L, GTG=V, AAA=K, TTT=F, GGG=G",
+"SRR7910035.1970792","R1","C",698,"error: Translation sanity check FAILED.
+Expected internal-CDS standard-code translation.
+Observed: ATG=M, CTG=L, TTG=L, GTG=V, AAA=K, TTT=F, GGG=G",
+"SRR7910035.2051268","R1","C",698,"error: Translation sanity check FAILED.
+Expected internal-CDS standard-code translation.
+Observed: ATG=M, CTG=L, TTG=L, GTG=V, AAA=K, TTT=F, GGG=G",
+"SRR7910035.21033183","R1","C",698,"error: Translation sanity check FAILED.
+Expected internal-CDS standard-code translation.
+Observed: ATG=M, CTG=L, TTG=L, GTG=V, AAA=K, TTT=F, GGG=G",
+"SRR7910035.21584664","R1","C",698,"error: Translation sanity check FAILED.
+Expected internal-CDS standard-code translation.
+Observed: ATG=M, CTG=L, TTG=L, GTG=V, AAA=K, TTT=F, GGG=G",
+"SRR7910035.23078712","R2","N",698,"error: Translation sanity check FAILED.
+Expected internal-CDS standard-code translation.
+Observed: ATG=M, CTG=L, TTG=L, GTG=V, AAA=K, TTT=F, GGG=G",
+"SRR7910035.24197645","R1","C",698,"error: Translation sanity check FAILED.
+Expected internal-CDS standard-code translation.
+Observed: ATG=M, CTG=L, TTG=L, GTG=V, AAA=K, TTT=F, GGG=G",
+"SRR7910035.24697138","R2","N",698,"error: Translation sanity check FAILED.
+Expected internal-CDS standard-code translation.
+Observed: ATG=M, CTG=L, TTG=L, GTG=V, AAA=K, TTT=F, GGG=G",
+"SRR7910035.24697138","R1","C",698,"error: Translation sanity check FAILED.
+Expected internal-CDS standard-code translation.
+Observed: ATG=M, CTG=L, TTG=L, GTG=V, AAA=K, TTT=F, GGG=G",
+"SRR7910035.25988092","R1","C",698,"error: Translation sanity check FAILED.
+Expected internal-CDS standard-code translation.
+Observed: ATG=M, CTG=L, TTG=L, GTG=V, AAA=K, TTT=F, GGG=G",
+"SRR7910035.26317054","R1","C",698,"error: Translation sanity check FAILED.
+Expected internal-CDS standard-code translation.
+Observed: ATG=M, CTG=L, TTG=L, GTG=V, AAA=K, TTT=F, GGG=G",
+"SRR7910035.27458563","R1","C",698,"error: Translation sanity check FAILED.
+Expected internal-CDS standard-code translation.
+Observed: ATG=M, CTG=L, TTG=L, GTG=V, AAA=K, TTT=F, GGG=G",
+"SRR7910035.3359319","R2","N",698,"error: Translation sanity check FAILED.
+Expected internal-CDS standard-code translation.
+Observed: ATG=M, CTG=L, TTG=L, GTG=V, AAA=K, TTT=F, GGG=G",
+"SRR7910035.3359319","R1","C",698,"error: Translation sanity check FAILED.
+Expected internal-CDS standard-code translation.
+Observed: ATG=M, CTG=L, TTG=L, GTG=V, AAA=K, TTT=F, GGG=G",
+"SRR7910035.3520646","R1","C",698,"error: Translation sanity check FAILED.
+Expected internal-CDS standard-code translation.
+Observed: ATG=M, CTG=L, TTG=L, GTG=V, AAA=K, TTT=F, GGG=G",
+"SRR7910035.3522774","R1","C",698,"error: Translation sanity check FAILED.
+Expected internal-CDS standard-code translation.
+Observed: ATG=M, CTG=L, TTG=L, GTG=V, AAA=K, TTT=F, GGG=G",
+"SRR7910035.3831778","R2","N",698,"error: Translation sanity check FAILED.
+Expected internal-CDS standard-code translation.
+Observed: ATG=M, CTG=L, TTG=L, GTG=V, AAA=K, TTT=F, GGG=G",
+"SRR7910035.621828","R1","C",698,"error: Translation sanity check FAILED.
+Expected internal-CDS standard-code translation.
+Observed: ATG=M, CTG=L, TTG=L, GTG=V, AAA=K, TTT=F, GGG=G",
+"SRR7910035.6537663","R1","C",698,"error: Translation sanity check FAILED.
+Expected internal-CDS standard-code translation.
+Observed: ATG=M, CTG=L, TTG=L, GTG=V, AAA=K, TTT=F, GGG=G",
+"SRR7910035.6717252","R1","C",698,"error: Translation sanity check FAILED.
+Expected internal-CDS standard-code translation.
+Observed: ATG=M, CTG=L, TTG=L, GTG=V, AAA=K, TTT=F, GGG=G",
+"SRR7910035.8621612","R1","C",698,"error: Translation sanity check FAILED.
+Expected internal-CDS standard-code translation.
+Observed: ATG=M, CTG=L, TTG=L, GTG=V, AAA=K, TTT=F, GGG=G",
+"SRR7910035.8944822","R1","C",698,"error: Translation sanity check FAILED.
+Expected internal-CDS standard-code translation.
+Observed: ATG=M, CTG=L, TTG=L, GTG=V, AAA=K, TTT=F, GGG=G",
+"SRR7910035.9218689","R1","C",698,"error: Translation sanity check FAILED.
+Expected internal-CDS standard-code translation.
+Observed: ATG=M, CTG=L, TTG=L, GTG=V, AAA=K, TTT=F, GGG=G",
+"SRR7910035.9264363","R1","C",698,"error: Translation sanity check FAILED.
+Expected internal-CDS standard-code translation.
+Observed: ATG=M, CTG=L, TTG=L, GTG=V, AAA=K, TTT=F, GGG=G",
