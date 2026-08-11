@@ -1,0 +1,31 @@
+Step 4B.3k: TAC102 Targeted Nucleotide Provenance Audit
+==============================================================
+
+Total audited same-length discordant cases: 43
+
+Classification Breakdown:
+# A tibble: 4 × 3
+  provenance_classification           case_count percentage
+  <chr>                                    <int>      <dbl>
+1 E_insufficient_nucleotide_evidence          14       32.6
+2 C_codon_boundary_frame_interpretat…         11       25.6
+3 A_translation_bookkeeping_mismatch           9       20.9
+4 D_single_nucleotide_difference_can…          9       20.9
+
+Frame-Shift Summary:
+# A tibble: 2 × 3
+  frame_shift_restores_reported case_count percentage
+  <lgl>                              <int>      <dbl>
+1 FALSE                                 32       74.4
+2 TRUE                                  11       25.6
+
+Interpretation:
+This audit evaluates the nucleotide provenance of the same-length amino-acid discordances identified in Step 4B.3j.
+The reconstructed codon is derived from the stored gap-facing nucleotide sequence using the codon-anchored coordinate system established during Step 4B.3i.
+Amino-acid discordance alone is not interpreted as evidence of nucleotide variation.
+A Hamming distance of one identifies only a candidate single-nucleotide explanation and does not independently establish a biological SNP.
+
+Outputs:
+raw_read_analysis/reports/tac102_4B3k_provenance_detailed_audit.csv
+raw_read_analysis/reports/tac102_4B3k_provenance_classification_summary.csv
+raw_read_analysis/reports/tac102_4B3k_provenance_cause_summary.txt

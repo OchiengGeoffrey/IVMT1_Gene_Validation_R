@@ -1,0 +1,5 @@
+provenance_classification,case_count,percentage
+E_insufficient_nucleotide_evidence,14,32.56
+C_codon_boundary_frame_interpretation,11,25.58
+A_translation_bookkeeping_mismatch,9,20.93
+D_single_nucleotide_difference_candidate,9,20.93

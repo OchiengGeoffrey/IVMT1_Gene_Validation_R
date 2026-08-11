@@ -1,0 +1,25 @@
+Step 4B.3j: TAC102 Direct Cause-of-Discordance Audit
+==============================================================
+
+Total usable translated tail observations: 67
+Direct translations reproducing reported candidate: 24
+Translation-length discordances: 0
+Same-length amino-acid discordances: 43
+
+Discordance classification:
+# A tibble: 2 × 3
+  discordance_class                   case_count percentage
+  <chr>                                    <int>      <dbl>
+1 same_length_amino_acid_discordance          43       64.2
+2 direct_translation_reproduces_repo…         24       35.8
+
+Interpretation:
+
+This audit independently reconstructs the nucleotide window corresponding to each reported gap-position range from the stored gap-facing sequence.
+The independently translated nucleotide sequence is then compared directly with translated_candidate.
+This distinguishes coordinate/extraction problems from true nucleotide-supported amino-acid discordance.
+
+Outputs:
+raw_read_analysis/reports/tac102_4B3j_discordance_detailed_audit.csv
+raw_read_analysis/reports/tac102_4B3j_discordance_classification_summary.csv
+raw_read_analysis/reports/tac102_4B3j_discordance_cause_summary.txt
