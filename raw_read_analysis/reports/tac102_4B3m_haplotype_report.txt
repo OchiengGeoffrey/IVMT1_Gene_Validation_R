@@ -1,0 +1,46 @@
+==============================================================
+TAC102 DUAL-POSITION HAPLOTYPE & LINKAGE ANALYSIS
+Step 4B.3m
+==============================================================
+
+Date: 2026-08-11
+
+INPUT
+4B.3l detail file: F:/PROJECTS/IVMT1_Gene_Validation_R/raw_read_analysis/reports/tac102_4B3l_position_validation_detail.csv
+
+SHARED READ-PAIR ANALYSIS
+Position 653 read pairs: 33
+Position 698 read pairs: 30
+Shared read pairs: 26
+Complete phased records: 26
+
+HAPLOTYPE SUMMARY
+
+M653-L698 | ATG-CTG | n=16 | 61.5% | mean minimum Phred=13.75
+M653-P698 | ATG-CCG | n=3 | 11.5% | mean minimum Phred=7.33
+K653-L698 | AAG-CTG | n=1 | 3.8% | mean minimum Phred=9
+L653-L698 | CTG-CTG | n=1 | 3.8% | mean minimum Phred=7
+L653-L698 | TTG-CTG | n=1 | 3.8% | mean minimum Phred=7
+R653-L698 | AGG-CTG | n=1 | 3.8% | mean minimum Phred=9
+R653-L698 | CGC-CTG | n=1 | 3.8% | mean minimum Phred=7
+T653-L698 | ACG-CTG | n=1 | 3.8% | mean minimum Phred=7
+W653-L698 | TGG-CTG | n=1 | 3.8% | mean minimum Phred=11
+
+INTERPRETATION
+
+This analysis phases the two candidate positions among shared
+read pairs. It evaluates whether alternative amino-acid calls
+at positions 653 and 698 occur on the same paired sequencing
+templates.
+
+The analysis does NOT by itself establish population fixation
+of any allele. Candidate-read enrichment, sequencing depth,
+duplicate structure, and independent genomic confirmation must
+be considered before biological fixation is inferred.
+
+OUTPUTS
+Haplotype records: F:/PROJECTS/IVMT1_Gene_Validation_R/raw_read_analysis/reports/tac102_4B3m_haplotype_pairs.csv
+Haplotype summary: F:/PROJECTS/IVMT1_Gene_Validation_R/raw_read_analysis/reports/tac102_4B3m_haplotype_summary.csv
+Text report: F:/PROJECTS/IVMT1_Gene_Validation_R/raw_read_analysis/reports/tac102_4B3m_haplotype_report.txt
+
+==============================================================

@@ -1,0 +1,10 @@
+"haplotype_aa","haplotype_codon","pair_count","mean_qmin_both","min_qmin_both","max_qmin_both","percent"
+"M653-L698","ATG-CTG",16,13.75,7,29,61.5
+"M653-P698","ATG-CCG",3,7.33,7,8,11.5
+"K653-L698","AAG-CTG",1,9,9,9,3.8
+"L653-L698","CTG-CTG",1,7,7,7,3.8
+"L653-L698","TTG-CTG",1,7,7,7,3.8
+"R653-L698","AGG-CTG",1,9,9,9,3.8
+"R653-L698","CGC-CTG",1,7,7,7,3.8
+"T653-L698","ACG-CTG",1,7,7,7,3.8
+"W653-L698","TGG-CTG",1,11,11,11,3.8

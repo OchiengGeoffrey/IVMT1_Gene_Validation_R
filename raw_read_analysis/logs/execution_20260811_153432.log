@@ -32,3 +32,4 @@
 [2026-08-11 20:00:08] INFO: Identified 69 candidate-read/position combinations. 653=33; 698=36 
 [2026-08-11 20:06:20] INFO: Original FASTQ re-extraction complete. R1=37/37; R2=37/37 
 [2026-08-11 20:06:30] INFO: Step 4B.3l direct FASTQ base-level validation completed successfully. 
+[2026-08-11 22:05:23] INFO: Step 4B.3m complete. Phased 26 shared read-pair records. Haplotype summaries written to reports. 
