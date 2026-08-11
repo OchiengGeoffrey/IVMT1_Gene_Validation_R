@@ -1,0 +1,48 @@
+==============================================================
+TAC102 DUPLICATE READ-START FAMILY COLLAPSE
+Step 4B.3o
+==============================================================
+
+Date: 2026-08-11
+
+INPUT
+4B.3m haplotype file: F:/PROJECTS/IVMT1_Gene_Validation_R/raw_read_analysis/reports/tac102_4B3m_haplotype_pairs.csv
+
+METHOD
+Joint Phred threshold: Q >= 10
+
+Read pairs were grouped by the combination of the
+independent read-start family at position 653 and
+the independent read-start family at position 698.
+
+RESULTS
+Input phased records: 26
+Q-qualified phased records: 8
+Unique 653 read-start families: 7
+Unique 698 read-start families: 4
+653 M-supporting families: 6
+653 non-M families: 1
+698 L-supporting families: 4
+698 P-supporting families: 0
+M653-L698 phased pairs: 7
+M653-L698 unique family combinations: 7
+
+INTERPRETATION
+
+Family collapse is used to assess whether observations
+are concentrated within repeated read-start families.
+
+A haplotype supported by multiple distinct family
+combinations provides stronger evidence of independent
+molecular representation than repeated observations
+within one family.
+
+This analysis does not independently establish allele
+fixation or population frequency.
+
+OUTPUTS
+Family-collapse table: F:/PROJECTS/IVMT1_Gene_Validation_R/raw_read_analysis/reports/tac102_4B3o_family_collapse.csv
+Independent-family summary: F:/PROJECTS/IVMT1_Gene_Validation_R/raw_read_analysis/reports/tac102_4B3o_independent_family_summary.csv
+Report: F:/PROJECTS/IVMT1_Gene_Validation_R/raw_read_analysis/reports/tac102_4B3o_family_collapse_report.txt
+
+==============================================================
