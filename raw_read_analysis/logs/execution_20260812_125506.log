@@ -1,0 +1,21 @@
+[2026-08-12 12:55:06] INFO: Initialized Phase II project setup 
+[2026-08-12 12:55:06] INFO: Saved package_versions.csv to reports directory 
+[2026-08-12 12:55:06] INFO: Detected tab (\t) delimiter in gene_annotations.csv 
+[2026-08-12 12:55:06] INFO: Successfully loaded gene_annotations.csv and exported target_genes_metadata (RDS and CSV) 
+[2026-08-12 12:55:06] INFO: All directories have write permission 
+[2026-08-12 12:55:06] INFO: FASTQ R1: F:/PROJECTS/IVMT1_Gene_Validation_R/data/reads/SRR7910035_1.fastq 
+[2026-08-12 12:55:06] INFO: FASTQ R2: F:/PROJECTS/IVMT1_Gene_Validation_R/data/reads/SRR7910035_2.fastq 
+[2026-08-12 12:55:06] INFO: Reference FASTA OK: ATPF1G.fasta 
+[2026-08-12 12:55:06] INFO: Reference FASTA OK: ATPF1B.fasta 
+[2026-08-12 12:55:06] INFO: Reference FASTA OK: POLIB.fasta 
+[2026-08-12 12:55:06] INFO: Reference FASTA OK: ATOM40.fasta 
+[2026-08-12 12:55:06] INFO: Reference FASTA OK: TAC102.fasta 
+[2026-08-12 12:55:06] INFO: Reference FASTA OK: ATPF1A.fasta 
+[2026-08-12 12:55:06] INFO: Program 'makeblastdb' found at: C:\PROGRA~1\NCBI\BLAST-~1.0_\bin\MAKEBL~1.EXE 
+[2026-08-12 12:55:06] INFO: Program 'tblastn' found at: C:\PROGRA~1\NCBI\BLAST-~1.0_\bin\tblastn.exe 
+[2026-08-12 12:55:06] INFO: Program 'samtools' not found in PATH. (optional, skipping) 
+[2026-08-12 12:55:06] INFO: Program 'diamond' not found in PATH. (optional, skipping) 
+[2026-08-12 12:55:07] INFO: Memory info (Windows): {"TotalVisibleMemorySize":66742808,"FreePhysicalMemory":40707128} 
+[2026-08-12 12:55:07] INFO: Session info saved to reports/sessionInfo.txt 
+[2026-08-12 12:55:07] INFO: Step 0 Project Setup completed successfully. 
+[2026-08-12 17:42:36] INFO: 4B.3p pre-flight synthetic tests: ALL PASSED. 

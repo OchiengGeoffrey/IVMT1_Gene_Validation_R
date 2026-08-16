@@ -1,0 +1,3 @@
+"target_position","target_reference_aa","anchor_start","anchor_end","anchor_peptide","target_offset_in_anchor","pattern_type","target_codon_pattern","forward_pattern","reverse_complement_pattern","pattern_length_nt","prefilter_max_mismatch"
+653,"K",645,661,"VRSSTVATKETKKVGTT",9,"protein_derived_codon_degenerate","NNN","GTNMGNWSNWSNACNGTNGCNACNNNNGARACNAARAARGTNGGNACNACN","NGTNGTNCCNACYTTYTTNGTYTCNNNNGTNGCNACNGTNSWNSWNCKNAC",51,1
+698,"L",690,706,"ARKKAGKKLSKAAKKSG",9,"protein_derived_codon_degenerate","NNN","GCNMGNAARAARGCNGGNAARAARNNNWSNAARGCNGCNAARAARWSNGGN","NCCNSWYTTYTTNGCNGCYTTNSWNNNYTTYTTNCCNGCYTTYTTNCKNGC",51,1

@@ -1,0 +1,5 @@
+"read_id","mate","target_position","orientation","frame","anchor_identity","anchor_reference_start","anchor_reference_end","anchor_peptide","anchor_candidate","target_aa","target_codon","read_codon_start","read_codon_end","codon_min_qual","codon_mean_qual","read_length"
+"SRR7910035.17344","R1",653,"rev",1,1,645,661,"VRSSTVATKETKKVGTT","VRSSTVATMETKKVGTT","M","ATG",235,237,29,31.33,301
+"SRR7910035.17344","R1",698,"rev",1,1,690,706,"ARKKAGKKLSKAAKKSG","ARKKAGKKLSKAAKKSG","L","CTG",100,102,27,34.33,301
+"SRR7910035.21299","R1",653,"fwd",1,1,645,661,"VRSSTVATKETKKVGTT","VRSSTVATMETKKVGTT","M","ATG",194,196,28,32.67,299
+"SRR7910035.21476","R1",653,"rev",1,1,645,661,"VRSSTVATKETKKVGTT","VRSSTVATMETKKVGTT","M","ATG",79,81,34,36,301

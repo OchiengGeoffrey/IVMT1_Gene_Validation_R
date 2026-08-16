@@ -1,0 +1,5 @@
+"read_id","pair_id","mate","read_index","evidence_role","target_position","orientation","frame","anchor_reference_start","anchor_reference_end","anchor_peptide","anchor_candidate","anchor_identity","target_aa","target_codon","expected_reference_aa","pct_reference_aa","variant_class","read_codon_start","read_codon_end","codon_min_qual","codon_mean_qual","read_length","prefilter_forward_count","prefilter_reverse_count","validator_max_aa_mismatch"
+"SRR7910035.17344","SRR7910035.17344","R1",17344,"PRIMARY",653,"rev",2,645,661,"VRSSTVATKETKKVGTT","VRSSTVATMETKKVGTT",1,"M","ATG","K",0,"K653M",235,237,29,31.3333333333333,301,0,1,5
+"SRR7910035.17344","SRR7910035.17344","R1",17344,"PRIMARY",698,"rev",2,690,706,"ARKKAGKKLSKAAKKSG","ARKKAGKKLSKAAKKSG",1,"L","CTG","L",100,"REFERENCE_MATCH",100,102,27,34.3333333333333,301,0,1,5
+"SRR7910035.21299","SRR7910035.21299","R1",21299,"PRIMARY",653,"fwd",2,645,661,"VRSSTVATKETKKVGTT","VRSSTVATMETKKVGTT",1,"M","ATG","K",0,"K653M",194,196,28,32.6666666666667,299,1,0,5
+"SRR7910035.21476","SRR7910035.21476","R1",21476,"PRIMARY",653,"rev",2,645,661,"VRSSTVATKETKKVGTT","VRSSTVATMETKKVGTT",1,"M","ATG","K",0,"K653M",79,81,34,36,301,0,1,5
