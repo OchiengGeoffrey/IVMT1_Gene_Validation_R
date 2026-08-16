@@ -16,19 +16,36 @@
 #     653
 #     698
 #
-# This script uses:
+# Architecture:
 #
-#     1. fast nucleotide prefilter
-#     2. rigorous six-frame positional validation
-#     3. direct FASTQ nucleotide + Phred evidence
-#     4. paired-read validation
-#     5. resumable chunked evidence
+#     FASTQ
+#       |
+#       v
+#     Fast nucleotide prefilter
+#       |
+#       |  only candidate reads continue
+#       v
+#     Rigorous six-frame positional validation
+#       |
+#       v
+#     Original FASTQ nucleotide + Phred evidence
+#       |
+#       v
+#     Paired-read validation
+#       |
+#       v
+#     Resumable chunked evidence
 #
-# IMPORTANT:
-# The target codon in the prefilter is represented as NNN so that the
-# prefilter remains allele-neutral.
+# Important prefilter design:
 #
-# The rigorous validator rejects ambiguous target codons and stop codons.
+#     The target codon is represented as NNN so that the prefilter is
+#     allele-neutral.
+#
+# Important validator design:
+#
+#     The target codon must be unambiguous A/C/G/T.
+#     Ambiguous or stop translations at the target position are rejected.
+#
 # ==============================================================================
 
 
@@ -119,6 +136,35 @@ if (
 }
 
 
+RUN_SUFFIX <- Sys.getenv(
+  "TAC102_RUN_SUFFIX",
+  unset = ""
+)
+
+
+# ------------------------------------------------------------------------------
+# FULL-run namespace guard
+#
+# A FULL run must have an explicit output namespace. This prevents accidental
+# reuse of an old manifest/output directory unless the user intentionally
+# specifies that namespace.
+# ------------------------------------------------------------------------------
+
+if (
+  RUN_MODE == "FULL" &&
+  !nzchar(RUN_SUFFIX)
+) {
+
+  stop(
+    "FULL runs require an explicit output namespace.\n",
+    "Set TAC102_RUN_SUFFIX before sourcing the script, for example:\n\n",
+    "  Sys.setenv(TAC102_RUN_SUFFIX = \"_v1\")\n\n",
+    "This will create an output directory such as:\n",
+    "  tac102_4B3p_fast/full_v1\n"
+  )
+}
+
+
 MAX_READS <- if (RUN_MODE == "PILOT") {
 
   as.integer(
@@ -169,7 +215,10 @@ R2_FASTQ <- PATHS$fastq_r2
 RUN_ROOT <- file.path(
   PATHS$reports,
   "tac102_4B3p_fast",
-  tolower(RUN_MODE)
+  paste0(
+    tolower(RUN_MODE),
+    RUN_SUFFIX
+  )
 )
 
 
@@ -393,6 +442,9 @@ cat(
   "Run mode: ",
   RUN_MODE,
   "\n",
+  "Run suffix: ",
+  ifelse(nzchar(RUN_SUFFIX), RUN_SUFFIX, "(none)"),
+  "\n",
   "R1 FASTQ: ",
   R1_FASTQ,
   "\n",
@@ -548,8 +600,6 @@ tac_ref_chr <- toupper(
 
 # ------------------------------------------------------------------------------
 # Remove a terminal stop character if present.
-#
-# The project coordinate system is the protein sequence without terminal stop.
 # ------------------------------------------------------------------------------
 
 if (
@@ -934,6 +984,8 @@ PATTERN_SIGNATURE <- paste(
 CURRENT_METADATA <- data.frame(
 
   run_mode = RUN_MODE,
+
+  run_suffix = RUN_SUFFIX,
 
   max_reads = ifelse(
     is.infinite(MAX_READS),
@@ -1327,13 +1379,6 @@ normalize_pair_id <- function(ids) {
 
 # ==============================================================================
 # 15. QUALITY ACCESSOR / DECODER
-#
-# These helpers support:
-#
-#   - ShortReadQ objects with a direct quality slot
-#   - FastqQuality objects that cannot be coerced by as.character()
-#   - fixed-length reads as an integer matrix
-#   - variable-length reads as a list of integer vectors
 # ==============================================================================
 
 safe_quality <- function(reads) {
@@ -1357,10 +1402,6 @@ safe_quality <- function(reads) {
 
 quality_strings <- function(qobj) {
 
-  # --------------------------------------------------------------------------
-  # 1. Direct S4 coercion to character
-  # --------------------------------------------------------------------------
-
   out <- tryCatch(
     {
       x <- methods::as(qobj, "character")
@@ -1382,10 +1423,6 @@ quality_strings <- function(qobj) {
     return(out)
   }
 
-
-  # --------------------------------------------------------------------------
-  # 2. Coerce to BStringSet, then to character
-  # --------------------------------------------------------------------------
 
   out <- tryCatch(
     {
@@ -1410,10 +1447,6 @@ quality_strings <- function(qobj) {
     return(out)
   }
 
-
-  # --------------------------------------------------------------------------
-  # 3. Try known S4 slots
-  # --------------------------------------------------------------------------
 
   if (isS4(qobj)) {
 
@@ -1502,10 +1535,6 @@ safe_quality_data <- function(reads) {
   expected_n <- length(reads)
 
 
-  # --------------------------------------------------------------------------
-  # 1. Try native coercion first, but only accept it if completely NA-free
-  # --------------------------------------------------------------------------
-
   mat <- tryCatch(
     as(qobj, "matrix"),
     error = function(e) {
@@ -1532,10 +1561,6 @@ safe_quality_data <- function(reads) {
     }
   }
 
-
-  # --------------------------------------------------------------------------
-  # 2. Extract ASCII quality strings
-  # --------------------------------------------------------------------------
 
   qchar <- quality_strings(qobj)
 
@@ -1889,10 +1914,6 @@ validate_read_against_target <- function(
         target_aa_from_anchor <- cand_chars[target_offset]
 
 
-        # ----------------------------------------------------------------
-        # Reject ambiguous or stop residues at the target position.
-        # ----------------------------------------------------------------
-
         if (target_aa_from_anchor %in% c("X", "*")) {
 
           next
@@ -1943,10 +1964,6 @@ validate_read_against_target <- function(
         codon_string <- toupper(as.character(raw_codon))
 
 
-        # ----------------------------------------------------------------
-        # Target codon must be unambiguous A/C/G/T.
-        # ----------------------------------------------------------------
-
         if (grepl("[^ACGT]", codon_string)) {
 
           next
@@ -1955,10 +1972,6 @@ validate_read_against_target <- function(
 
         target_aa <- translate_codon(codon_string)
 
-
-        # ----------------------------------------------------------------
-        # Reject ambiguous or stop translations at the target position.
-        # ----------------------------------------------------------------
 
         if (target_aa %in% c("X", "*")) {
 
@@ -2534,6 +2547,163 @@ run_preflight_tests <- function() {
 
   results[["26_reference_698_assertion"]] <- (
     substr(tac_ref_chr, 698L, 698L) == "L"
+  )
+
+
+  # --------------------------------------------------------------------------
+  # 27
+  #
+  # An N outside the anchor should not prevent recovery of a valid candidate.
+  # --------------------------------------------------------------------------
+
+  syn_n_outside <- make_synthetic_read(
+    target_position = 653L,
+    target_aa = "M",
+    orientation = "fwd",
+    frame = 1L
+  )
+
+
+  s_outside <- as.character(
+    syn_n_outside$seq
+  )
+
+
+  substr(
+    s_outside,
+    1L,
+    1L
+  ) <- "N"
+
+
+  syn_n_outside$seq <- Biostrings::DNAString(
+    s_outside
+  )
+
+
+  n_outside_prefilter <- tryCatch(
+    fast_nucleotide_prefilter(
+      Biostrings::DNAStringSet(
+        syn_n_outside$seq
+      )
+    ),
+    error = function(e) {
+      NULL
+    }
+  )
+
+
+  n_outside_validation <- tryCatch(
+    validate_read_against_target(
+      seq_obj =
+        syn_n_outside$seq,
+
+      qual_vec =
+        syn_n_outside$quality,
+
+      read_id =
+        "SYNTHETIC_N_OUTSIDE_ANCHOR",
+
+      pair_id =
+        "SYNTHETIC_N_OUTSIDE_ANCHOR",
+
+      mate =
+        "R1",
+
+      read_index =
+        1L,
+
+      target_position =
+        653L
+    ),
+    error = function(e) {
+      NULL
+    }
+  )
+
+
+  results[[
+    "27_n_outside_anchor_recovery"
+  ]] <- (
+    !is.null(n_outside_prefilter) &&
+      !is.null(n_outside_validation) &&
+      isTRUE(n_outside_prefilter$any_653[1]) &&
+      any(n_outside_validation$target_aa == "M")
+  )
+
+
+  # --------------------------------------------------------------------------
+  # 28
+  #
+  # An N inside the target codon must not produce an amino-acid call.
+  # --------------------------------------------------------------------------
+
+  syn_n_target <- make_synthetic_read(
+    target_position = 653L,
+    target_aa = "M",
+    orientation = "fwd",
+    frame = 1L
+  )
+
+
+  s_target <- as.character(
+    syn_n_target$seq
+  )
+
+
+  target_codon_start <- 10L +
+    (TARGET_OFFSET_IN_ANCHOR - 1L) * 3L
+
+
+  substr(
+    s_target,
+    target_codon_start,
+    target_codon_start
+  ) <- "N"
+
+
+  syn_n_target$seq <- Biostrings::DNAString(
+    s_target
+  )
+
+
+  n_target_validation <- tryCatch(
+    validate_read_against_target(
+      seq_obj =
+        syn_n_target$seq,
+
+      qual_vec =
+        syn_n_target$quality,
+
+      read_id =
+        "SYNTHETIC_N_TARGET_CODON",
+
+      pair_id =
+        "SYNTHETIC_N_TARGET_CODON",
+
+      mate =
+        "R1",
+
+      read_index =
+        1L,
+
+      target_position =
+        653L
+    ),
+    error = function(e) {
+      "ERROR"
+    }
+  )
+
+
+  results[[
+    "28_n_target_codon_rejected"
+  ]] <- (
+    !identical(n_target_validation, "ERROR") &&
+      (
+        is.null(n_target_validation) ||
+          !any(n_target_validation$target_aa == "M")
+      )
   )
 
 
@@ -3680,6 +3850,401 @@ atomic_write_csv(ALL_EVIDENCE, FINAL_EVIDENCE_PATH)
 
 
 # ==============================================================================
+# 30B. CANDIDATE-TO-RECORD ACCOUNTING
+# ==============================================================================
+
+ALL_CANDIDATES <- read_chunk_files(
+  DIRS$candidates
+)
+
+
+if (is.null(ALL_CANDIDATES)) {
+
+  ALL_CANDIDATES <- empty_candidate_table()
+}
+
+
+CANDIDATE_ACCOUNTING_PATH <- file.path(
+  DIRS$summaries,
+  "tac102_candidate_to_record_accounting.csv"
+)
+
+
+if (nrow(ALL_CANDIDATES) > 0L) {
+
+  candidate_reads <- unique(
+    ALL_CANDIDATES[
+      ALL_CANDIDATES$any_candidate,
+      c(
+        "read_id",
+        "mate",
+        "pair_id"
+      ),
+      drop = FALSE
+    ]
+  )
+
+} else {
+
+  candidate_reads <- data.frame(
+    read_id = character(),
+    mate = character(),
+    pair_id = character(),
+    stringsAsFactors = FALSE
+  )
+}
+
+
+if (
+  nrow(candidate_reads) > 0L &&
+  nrow(ALL_EVIDENCE) > 0L
+) {
+
+  evidence_positions <- unique(
+    ALL_EVIDENCE[
+      ,
+      c(
+        "read_id",
+        "mate",
+        "pair_id",
+        "target_position"
+      ),
+      drop = FALSE
+    ]
+  )
+
+
+  pos_count <- aggregate(
+    target_position ~ read_id + mate + pair_id,
+    data = evidence_positions,
+    FUN = function(z) {
+      length(unique(z))
+    }
+  )
+
+
+  names(pos_count)[
+    names(pos_count) == "target_position"
+  ] <- "n_positions"
+
+
+  pos_string <- aggregate(
+    target_position ~ read_id + mate + pair_id,
+    data = evidence_positions,
+    FUN = function(z) {
+      paste(
+        sort(
+          unique(z)
+        ),
+        collapse = ","
+      )
+    }
+  )
+
+
+  names(pos_string)[
+    names(pos_string) == "target_position"
+  ] <- "positions_detected"
+
+
+  CANDIDATE_ACCOUNTING <- merge(
+    candidate_reads,
+    pos_count,
+    by = c(
+      "read_id",
+      "mate",
+      "pair_id"
+    ),
+    all.x = TRUE
+  )
+
+
+  CANDIDATE_ACCOUNTING <- merge(
+    CANDIDATE_ACCOUNTING,
+    pos_string,
+    by = c(
+      "read_id",
+      "mate",
+      "pair_id"
+    ),
+    all.x = TRUE
+  )
+
+
+  CANDIDATE_ACCOUNTING$n_positions[
+    is.na(CANDIDATE_ACCOUNTING$n_positions)
+  ] <- 0L
+
+
+  CANDIDATE_ACCOUNTING$positions_detected[
+    is.na(CANDIDATE_ACCOUNTING$positions_detected)
+  ] <- ""
+
+
+  CANDIDATE_ACCOUNTING <- CANDIDATE_ACCOUNTING[
+    order(
+      CANDIDATE_ACCOUNTING$mate,
+      CANDIDATE_ACCOUNTING$read_id
+    ),
+    ,
+    drop = FALSE
+  ]
+
+} else {
+
+  CANDIDATE_ACCOUNTING <- candidate_reads
+
+  CANDIDATE_ACCOUNTING$n_positions <- 0L
+
+  CANDIDATE_ACCOUNTING$positions_detected <- ""
+}
+
+
+rownames(CANDIDATE_ACCOUNTING) <- NULL
+
+
+atomic_write_csv(
+  CANDIDATE_ACCOUNTING,
+  CANDIDATE_ACCOUNTING_PATH
+)
+
+
+cat(
+  "\nCandidate-to-record accounting:\n"
+)
+
+
+print(
+  CANDIDATE_ACCOUNTING,
+  row.names = FALSE
+)
+
+
+cat(
+  "\nTotal candidate reads: ",
+  nrow(CANDIDATE_ACCOUNTING),
+  "\n",
+  "Total positional records: ",
+  sum(CANDIDATE_ACCOUNTING$n_positions),
+  "\n\n",
+  sep = ""
+)
+
+
+# ==============================================================================
+# 30C. PAIRED-READ AUDIT
+# ==============================================================================
+
+make_paired_audit <- function(
+    candidate_dir,
+    paired_dir
+) {
+
+  cand_files <- list.files(
+    candidate_dir,
+    pattern = "^chunk_[0-9]+\\.csv$",
+    full.names = TRUE
+  )
+
+
+  if (length(cand_files) == 0L) {
+
+    return(
+      data.frame(
+
+        chunk_id = integer(),
+
+        n_candidate_pairs = integer(),
+
+        n_r1_candidate_pairs = integer(),
+        n_r2_candidate_pairs = integer(),
+
+        n_r1_candidate_pairs_with_r2_mate = integer(),
+        n_r2_candidate_pairs_with_r1_mate = integer(),
+
+        n_partner_validated_records = integer(),
+        n_partner_validated_pairs = integer(),
+
+        stringsAsFactors = FALSE
+      )
+    )
+  }
+
+
+  out <- list()
+
+
+  for (i in seq_along(cand_files)) {
+
+    f <- cand_files[i]
+
+
+    chunk_id <- as.integer(
+      sub(
+        "^chunk_0*([0-9]+)\\.csv$",
+        "\\1",
+        basename(f)
+      )
+    )
+
+
+    cand <- read.csv(
+      f,
+      stringsAsFactors = FALSE
+    )
+
+
+    paired_path <- file.path(
+      paired_dir,
+      basename(f)
+    )
+
+
+    if (file.exists(paired_path)) {
+
+      paired <- read.csv(
+        paired_path,
+        stringsAsFactors = FALSE
+      )
+
+    } else {
+
+      paired <- data.frame(
+        pair_id = character(),
+        stringsAsFactors = FALSE
+      )
+    }
+
+
+    r1_pair_ids <- unique(
+      cand$pair_id[
+        cand$mate == "R1"
+      ]
+    )
+
+
+    r2_pair_ids <- unique(
+      cand$pair_id[
+        cand$mate == "R2"
+      ]
+    )
+
+
+    r1_candidate_pairs <- unique(
+      cand$pair_id[
+        cand$mate == "R1" &
+          cand$any_candidate
+      ]
+    )
+
+
+    r2_candidate_pairs <- unique(
+      cand$pair_id[
+        cand$mate == "R2" &
+          cand$any_candidate
+      ]
+    )
+
+
+    candidate_pairs <- union(
+      r1_candidate_pairs,
+      r2_candidate_pairs
+    )
+
+
+    partner_validated_pairs <- if (
+      nrow(paired) > 0L &&
+      "pair_id" %in% names(paired)
+    ) {
+
+      unique(paired$pair_id)
+
+    } else {
+
+      character()
+    }
+
+
+    out[[i]] <- data.frame(
+
+      chunk_id =
+        chunk_id,
+
+      n_candidate_pairs =
+        length(candidate_pairs),
+
+      n_r1_candidate_pairs =
+        length(r1_candidate_pairs),
+
+      n_r2_candidate_pairs =
+        length(r2_candidate_pairs),
+
+      n_r1_candidate_pairs_with_r2_mate =
+        sum(
+          r1_candidate_pairs %in% r2_pair_ids
+        ),
+
+      n_r2_candidate_pairs_with_r1_mate =
+        sum(
+          r2_candidate_pairs %in% r1_pair_ids
+        ),
+
+      n_partner_validated_records =
+        nrow(paired),
+
+      n_partner_validated_pairs =
+        length(partner_validated_pairs),
+
+      stringsAsFactors = FALSE
+    )
+  }
+
+
+  do.call(
+    rbind,
+    out
+  )
+}
+
+
+PAIRED_AUDIT <- make_paired_audit(
+  DIRS$candidates,
+  DIRS$paired
+)
+
+
+PAIRED_AUDIT_PATH <- file.path(
+  DIRS$summaries,
+  "tac102_paired_read_audit.csv"
+)
+
+
+atomic_write_csv(
+  PAIRED_AUDIT,
+  PAIRED_AUDIT_PATH
+)
+
+
+cat(
+  "\nPaired-read audit:\n"
+)
+
+
+print(
+  PAIRED_AUDIT,
+  row.names = FALSE
+)
+
+
+cat(
+  "\nPaired audit written to:\n",
+  PAIRED_AUDIT_PATH,
+  "\n\n",
+  sep = ""
+)
+
+
+# ==============================================================================
 # 31. POSITION SUMMARY
 # ==============================================================================
 
@@ -4201,6 +4766,7 @@ report_lines <- c(
   "",
   paste0("Date: ", Sys.time()),
   paste0("Run mode: ", RUN_MODE),
+  paste0("Run suffix: ", ifelse(nzchar(RUN_SUFFIX), RUN_SUFFIX, "(none)")),
   paste0(
     "Maximum reads per FASTQ: ",
     ifelse(
@@ -4289,6 +4855,8 @@ report_lines <- c(
   paste0("  Validated chunks: ", DIRS$validated),
   paste0("  Paired chunks: ", DIRS$paired),
   paste0("  Final evidence: ", FINAL_EVIDENCE_PATH),
+  paste0("  Candidate accounting: ", CANDIDATE_ACCOUNTING_PATH),
+  paste0("  Paired-read audit: ", PAIRED_AUDIT_PATH),
   paste0("  Position summary: ", POSITION_SUMMARY_PATH),
   paste0("  Allele summary: ", ALLELE_SUMMARY_PATH),
   paste0("  Single-read haplotypes: ", HAPLOTYPE_SUMMARY_PATH),
@@ -4330,6 +4898,14 @@ cat(
   "Final evidence:\n",
   "  ",
   FINAL_EVIDENCE_PATH,
+  "\n\n",
+  "Candidate accounting:\n",
+  "  ",
+  CANDIDATE_ACCOUNTING_PATH,
+  "\n\n",
+  "Paired-read audit:\n",
+  "  ",
+  PAIRED_AUDIT_PATH,
   "\n\n",
   "Position summary:\n",
   "  ",

@@ -3,8 +3,9 @@ TAC102 FAST ALL-READ POSITIONAL VALIDATION
 Step 04p2
 ====================================================================
 
-Date: 2026-08-16 14:17:06.964296
+Date: 2026-08-16 16:27:50.692965
 Run mode: PILOT
+Run suffix: (none)
 Maximum reads per FASTQ: 100,000
 Chunk size: 100,000
 
@@ -31,17 +32,17 @@ VALIDATOR
   Ambiguous target codons rejected
 
 PRE-FLIGHT
-  Synthetic tests passed: 26/26
+  Synthetic tests passed: 28/28
   FASTQ pair preflight: PASSED
 
 PROCESSING
   Chunks: 1
   R1 reads: 100,000
   R2 reads: 100,000
-  Primary validated records: 4
+  Primary validated records: 0
   Paired-partner validated records: 0
-  Elapsed seconds: 22.35
-  Combined read rate: 8948.60 reads/sec
+  Elapsed seconds: 0.77
+  Combined read rate: 260573.39 reads/sec
 
 SCIENTIFIC INTERPRETATION
   The script identifies reads that can be independently anchored
@@ -71,6 +72,8 @@ OUTPUTS
   Validated chunks: F:/PROJECTS/IVMT1_Gene_Validation_R/raw_read_analysis/reports/tac102_4B3p_fast/pilot/validated
   Paired chunks: F:/PROJECTS/IVMT1_Gene_Validation_R/raw_read_analysis/reports/tac102_4B3p_fast/pilot/paired
   Final evidence: F:/PROJECTS/IVMT1_Gene_Validation_R/raw_read_analysis/reports/tac102_4B3p_fast/pilot/summaries/tac102_final_deduplicated_evidence.csv
+  Candidate accounting: F:/PROJECTS/IVMT1_Gene_Validation_R/raw_read_analysis/reports/tac102_4B3p_fast/pilot/summaries/tac102_candidate_to_record_accounting.csv
+  Paired-read audit: F:/PROJECTS/IVMT1_Gene_Validation_R/raw_read_analysis/reports/tac102_4B3p_fast/pilot/summaries/tac102_paired_read_audit.csv
   Position summary: F:/PROJECTS/IVMT1_Gene_Validation_R/raw_read_analysis/reports/tac102_4B3p_fast/pilot/summaries/tac102_position_summary.csv
   Allele summary: F:/PROJECTS/IVMT1_Gene_Validation_R/raw_read_analysis/reports/tac102_4B3p_fast/pilot/summaries/tac102_allele_summary.csv
   Single-read haplotypes: F:/PROJECTS/IVMT1_Gene_Validation_R/raw_read_analysis/reports/tac102_4B3p_fast/pilot/summaries/tac102_single_read_haplotype_summary.csv

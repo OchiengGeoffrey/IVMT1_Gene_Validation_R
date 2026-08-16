@@ -1,0 +1,2 @@
+"status","legacy_unique_read_position_records","fast_unique_read_position_records","overlap_records","legacy_records_not_recovered_by_fast","fast_records_not_in_legacy","legacy_recovery_percent"
+"COMPARED",4,508,4,0,504,100
