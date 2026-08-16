@@ -1,0 +1,81 @@
+====================================================================
+TAC102 FAST ALL-READ POSITIONAL VALIDATION
+Step 04p2
+====================================================================
+
+Date: 2026-08-16 14:17:06.964296
+Run mode: PILOT
+Maximum reads per FASTQ: 100,000
+Chunk size: 100,000
+
+REFERENCE
+  TAC102 reference length: 951 aa
+  Position 653 reference: K
+  Position 698 reference: L
+
+TARGETS
+  Position 653 anchor: VRSSTVATKETKKVGTT
+  Position 698 anchor: ARKKAGKKLSKAAKKSG
+
+PREFILTER
+  Type: protein-derived codon-degenerate nucleotide pattern
+  Target codon represented as NNN
+  Maximum nucleotide mismatches: 1
+  Both forward and reverse-complement patterns searched
+
+VALIDATOR
+  Minimum anchor identity: 0.75
+  Maximum AA mismatches during anchor localization: 5
+  Six frames evaluated only for nucleotide-prefilter candidates
+  Internal codons translated with no.init.codon=TRUE
+  Ambiguous target codons rejected
+
+PRE-FLIGHT
+  Synthetic tests passed: 26/26
+  FASTQ pair preflight: PASSED
+
+PROCESSING
+  Chunks: 1
+  R1 reads: 100,000
+  R2 reads: 100,000
+  Primary validated records: 4
+  Paired-partner validated records: 0
+  Elapsed seconds: 22.35
+  Combined read rate: 8948.60 reads/sec
+
+SCIENTIFIC INTERPRETATION
+  The script identifies reads that can be independently anchored
+  to TAC102 positions 653 and 698.
+
+  The current reference is:
+      K653
+      L698
+
+  A read carrying M at position 653 is therefore classified as:
+      K653M
+
+  A read carrying L at position 698 is classified as:
+      L698 reference match
+
+  This analysis does NOT establish genomic fixation, population
+  allele frequency, or phenotype by itself.
+
+  Paired-read support should be evaluated separately from primary
+  positional observations.
+
+OUTPUTS
+  Pattern catalogue: F:/PROJECTS/IVMT1_Gene_Validation_R/raw_read_analysis/reports/tac102_4B3p_fast/pilot/patterns/tac102_pattern_catalogue.csv
+  Preflight: F:/PROJECTS/IVMT1_Gene_Validation_R/raw_read_analysis/reports/tac102_4B3p_fast/pilot/summaries/preflight_results.csv
+  Chunk manifest: F:/PROJECTS/IVMT1_Gene_Validation_R/raw_read_analysis/reports/tac102_4B3p_fast/pilot/manifest/chunk_manifest.csv
+  Candidate chunks: F:/PROJECTS/IVMT1_Gene_Validation_R/raw_read_analysis/reports/tac102_4B3p_fast/pilot/candidates
+  Validated chunks: F:/PROJECTS/IVMT1_Gene_Validation_R/raw_read_analysis/reports/tac102_4B3p_fast/pilot/validated
+  Paired chunks: F:/PROJECTS/IVMT1_Gene_Validation_R/raw_read_analysis/reports/tac102_4B3p_fast/pilot/paired
+  Final evidence: F:/PROJECTS/IVMT1_Gene_Validation_R/raw_read_analysis/reports/tac102_4B3p_fast/pilot/summaries/tac102_final_deduplicated_evidence.csv
+  Position summary: F:/PROJECTS/IVMT1_Gene_Validation_R/raw_read_analysis/reports/tac102_4B3p_fast/pilot/summaries/tac102_position_summary.csv
+  Allele summary: F:/PROJECTS/IVMT1_Gene_Validation_R/raw_read_analysis/reports/tac102_4B3p_fast/pilot/summaries/tac102_allele_summary.csv
+  Single-read haplotypes: F:/PROJECTS/IVMT1_Gene_Validation_R/raw_read_analysis/reports/tac102_4B3p_fast/pilot/summaries/tac102_single_read_haplotype_summary.csv
+  Paired-read summary: F:/PROJECTS/IVMT1_Gene_Validation_R/raw_read_analysis/reports/tac102_4B3p_fast/pilot/summaries/tac102_paired_read_summary.csv
+  Legacy pilot comparison: F:/PROJECTS/IVMT1_Gene_Validation_R/raw_read_analysis/reports/tac102_4B3p_fast/pilot/summaries/tac102_fast_vs_legacy_pilot_comparison.csv
+  Report: F:/PROJECTS/IVMT1_Gene_Validation_R/raw_read_analysis/reports/tac102_4B3p_fast/pilot/summaries/tac102_4B3p_fast_report.txt
+
+====================================================================
