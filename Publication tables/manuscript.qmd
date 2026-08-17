@@ -1,0 +1,27 @@
+---
+title: "Assembly-level tBLASTn recovery in *Trypanosoma equiperdum* IVM-t1"
+format:
+  pdf:
+    papersize: a4            # physical page = 210 x 297 mm
+    geometry:                # margins, via the LaTeX 'geometry' package
+      - margin=2cm
+    classoption:             # page orientation
+      - landscape
+---
+
+Some introductory text. See @tbl-tblastn for the recovery panel.
+
+```{r setup}
+#| include: false
+library(tidyverse)
+library(gt)
+source("Publication tables/build_tblastn_table.R")  # builds tblastn_gt
+```
+
+```{r tbl-tblastn}
+#| echo: false
+#| tbl-cap: "Assembly-level recovery of the IVM-t1 mitochondrial-maintenance
+#|   gene panel. tBLASTn comparison of *T. brucei* reference proteins against
+#|   the assembled *T. equiperdum* IVM-t1 genome."
+tblastn_gt
+```
